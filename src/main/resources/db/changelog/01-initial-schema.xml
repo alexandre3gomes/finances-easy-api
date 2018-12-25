@@ -7,7 +7,7 @@
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 	<changeSet author="admin" id="1">
 		<createTable tableName="user">
-			<column name="id" type="int">
+			<column name="id" type="int" autoIncrement="true">
 				<constraints nullable="false" primaryKey="true" />
 			</column>
 			<column name="name" type="varchar(100)">
@@ -20,5 +20,79 @@
 				<constraints nullable="false" />
 			</column>
 		</createTable>
+		
+		<createTable tableName="category">
+			<column name="id" type="int" autoIncrement="true">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="name" type="varchar(100)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		
+		<createTable tableName="budget">
+			<column name="id" type="int" autoIncrement="true">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="user" type="int">
+				<constraints nullable="false"
+					foreignKeyName="user_budget" references="user(id)" />
+			</column>
+			<column name="start_date" type="datetime"/>
+			<column name="end_date" type="datetime"/>
+		</createTable>
+		
+		<createTable tableName="budget_categories">
+			<column name="category" type="int">
+				<constraints nullable="false"
+					foreignKeyName="category_bud_cat" references="category(id)" />
+			</column>
+			<column name="budget" type="int">
+				<constraints nullable="false"
+					foreignKeyName="budget_bud_cat" references="budget(id)" />
+			</column>
+			<column name="value" type="currency">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		
+		<createTable tableName="expense">
+			<column name="id" type="int" autoIncrement="true">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="category" type="int">
+				<constraints nullable="false"
+					foreignKeyName="category_expense" references="category(id)" />
+			</column>
+			<column name="user" type="int">
+				<constraints nullable="false"
+					foreignKeyName="user_expense" references="user(id)" />
+			</column>
+			<column name="name" type="varchar(100)">
+				<constraints nullable="false" />
+			</column>
+			<column name="value" type="currency">
+				<constraints nullable="false" />
+			</column>
+			<column name="expire_at" type="datetime"/>
+		</createTable>
+		
+		<createTable tableName="income">
+			<column name="id" type="int" autoIncrement="true">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="user" type="int">
+				<constraints nullable="false"
+					foreignKeyName="user_income" references="user(id)" />
+			</column>
+			<column name="name" type="varchar(100)">
+				<constraints nullable="false" />
+			</column>
+			<column name="value" type="currency">
+				<constraints nullable="false" />
+			</column>
+			<column name="date" type="datetime"/>
+		</createTable>
+		
 	</changeSet>
 </databaseChangeLog>

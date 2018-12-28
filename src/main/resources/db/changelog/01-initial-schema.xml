@@ -6,14 +6,14 @@
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 	<changeSet author="admin" id="1">
-		<createTable tableName="user">
+		<createTable tableName="app_users">
 			<column name="id" type="int" autoIncrement="true">
 				<constraints nullable="false" primaryKey="true" />
 			</column>
 			<column name="name" type="varchar(100)">
 				<constraints nullable="false" />
 			</column>
-			<column name="login" type="varchar(50)">
+			<column name="username" type="varchar(50)">
 				<constraints nullable="false" />
 			</column>
 			<column name="password" type="varchar(100)">
@@ -34,9 +34,9 @@
 			<column name="id" type="int" autoIncrement="true">
 				<constraints nullable="false" primaryKey="true" />
 			</column>
-			<column name="user" type="int">
+			<column name="app_user" type="int">
 				<constraints nullable="false"
-					foreignKeyName="user_budget" references="user(id)" />
+					foreignKeyName="user_budget" references="app_users(id)" />
 			</column>
 			<column name="start_date" type="datetime"/>
 			<column name="end_date" type="datetime"/>
@@ -64,9 +64,9 @@
 				<constraints nullable="false"
 					foreignKeyName="category_expense" references="category(id)" />
 			</column>
-			<column name="user" type="int">
+			<column name="app_user" type="int">
 				<constraints nullable="false"
-					foreignKeyName="user_expense" references="user(id)" />
+					foreignKeyName="user_expense" references="app_users(id)" />
 			</column>
 			<column name="name" type="varchar(100)">
 				<constraints nullable="false" />
@@ -81,9 +81,9 @@
 			<column name="id" type="int" autoIncrement="true">
 				<constraints nullable="false" primaryKey="true" />
 			</column>
-			<column name="user" type="int">
+			<column name="app_user" type="int">
 				<constraints nullable="false"
-					foreignKeyName="user_income" references="user(id)" />
+					foreignKeyName="user_income" references="app_users(id)" />
 			</column>
 			<column name="name" type="varchar(100)">
 				<constraints nullable="false" />

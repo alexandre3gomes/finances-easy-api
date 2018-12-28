@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.org/dtd/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+  <table-filter match-schema="public" match-name="budget"/>
+  <table-filter match-schema="public" match-name="budget_categories"/>
+  <table-filter match-schema="public" match-name="category"/>
+  <table-filter match-schema="public" match-name="expense"/>
+  <table-filter match-schema="public" match-name="income"/>
+</hibernate-reverse-engineering>

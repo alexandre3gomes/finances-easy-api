@@ -12,22 +12,41 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.NonNull;
 import net.finance.dao.UserDao;
 import net.finance.entity.User;
 
-import lombok.NonNull;
-
 @Service
 @Transactional
-public class UserBo {
+public class UserBo implements GenericBo<User> {
 
 	protected Map<String, User> loggedUsers = new HashMap<>();
 
-	@NonNull private final UserDao devDao;
+	@NonNull
+	private final UserDao devDao;
 
 	@Autowired
 	public UserBo(final UserDao devDao) {
 		this.devDao = devDao;
+	}
+
+	@Override
+	public User create(final User dev) {
+		return devDao.create(dev);
+	}
+
+	@Override
+	public void delete(final Integer id) {
+		devDao.delete(id);
+	}
+
+	@Override
+	public User findById(final Integer id) {
+		return devDao.find(id);
+	}
+
+	public Optional<User> findByToken(final String token) {
+		return Optional.ofNullable(loggedUsers.get(token));
 	}
 
 	/**
@@ -43,6 +62,11 @@ public class UserBo {
 		loggedUsers.put("7cd2f9e1-a6e9-4675-9176-b9219b0fd8d8", admin);
 	}
 
+	@Override
+	public List<User> listAll() {
+		return devDao.list();
+	}
+
 	public Optional<String> login(final String username, final String password) {
 		final String token = UUID.randomUUID().toString();
 		final Optional<User> optDev = devDao.getUserByUsernameAndPass(username, password);
@@ -53,10 +77,6 @@ public class UserBo {
 		return Optional.of(token);
 	}
 
-	public Optional<User> findByToken(final String token) {
-		return Optional.ofNullable(loggedUsers.get(token));
-	}
-
 	public void logout(final User dev) {
 		for (final Map.Entry<String, User> entry : loggedUsers.entrySet()) {
 			if (entry.getValue() == dev) {
@@ -65,24 +85,9 @@ public class UserBo {
 		}
 	}
 
-	public User create(final User dev) {
-		return devDao.create(dev);
-	}
-
+	@Override
 	public User update(final User dev) {
 		return devDao.update(dev);
-	}
-
-	public void delete(final Integer id) {
-		devDao.delete(id);
-	}
-
-	public List<User> listAll() {
-		return devDao.list();
-	}
-
-	public User findById(final Integer id) {
-		return devDao.find(id);
 	}
 
 }

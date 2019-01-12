@@ -15,12 +15,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "Budget")
+@Table(name = "income")
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode
 public class Income implements Serializable {
 
 	/**
@@ -30,15 +32,15 @@ public class Income implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false, precision = 3, scale = 0)
-	private int id;
+	private Integer id;
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "user", referencedColumnName = "id")
+	@JoinColumn(name = "app_user", referencedColumnName = "id")
 	private User user;
 	@Column(name = "name", nullable = false, length = 100)
 	private String name;
 	@Column(name = "value", nullable = false)
 	private BigDecimal value;
-	@Column(name = "expire_at", nullable = false)
+	@Column(name = "date", nullable = false)
 	private Date date;
 
 }

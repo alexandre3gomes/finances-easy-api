@@ -3,11 +3,15 @@ package net.finance.bo;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.NonNull;
 import net.finance.dao.BudgetDao;
 import net.finance.entity.Budget;
 
+@Service
+@Transactional
 public class BudgetBo implements GenericBo<Budget> {
 
 	@NonNull
@@ -19,17 +23,17 @@ public class BudgetBo implements GenericBo<Budget> {
 	}
 
 	@Override
-	public Budget create(Budget budget) {
+	public Budget create(final Budget budget) {
 		return budgetDao.create(budget);
 	}
 
 	@Override
-	public void delete(Integer id) {
+	public void delete(final Integer id) {
 		budgetDao.delete(id);
 	}
 
 	@Override
-	public Budget findById(Integer id) {
+	public Budget findById(final Integer id) {
 		return budgetDao.find(id);
 	}
 
@@ -39,7 +43,7 @@ public class BudgetBo implements GenericBo<Budget> {
 	}
 
 	@Override
-	public Budget update(Budget budget) {
+	public Budget update(final Budget budget) {
 		return budgetDao.update(budget);
 	}
 

@@ -3,26 +3,30 @@ package net.finance.entity;
 
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 @Entity
-@Table(name = "Budget")
+@Table(name = "category")
 @Data
 @NoArgsConstructor
+@RequiredArgsConstructor
+@EqualsAndHashCode
 public class Category implements Serializable {
 
 	/**
@@ -32,12 +36,13 @@ public class Category implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false, precision = 3, scale = 0)
-	private int id;
+	@NonNull
+	private Integer id;
 	@Column(name = "name")
 	private String name;
 	@OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
 	private Set<Expense> expenses = new HashSet<>(0);
-	@ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
-	private List<Budget> budgets;
+	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<BudgetCategories> budgetCategories;
 
 }

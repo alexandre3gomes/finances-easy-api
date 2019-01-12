@@ -43,11 +43,11 @@
 		</createTable>
 		
 		<createTable tableName="budget_categories">
-			<column name="category" type="int">
+			<column name="category_id" type="int">
 				<constraints nullable="false"
 					foreignKeyName="category_bud_cat" references="category(id)" />
 			</column>
-			<column name="budget" type="int">
+			<column name="budget_id" type="int">
 				<constraints nullable="false"
 					foreignKeyName="budget_bud_cat" references="budget(id)" />
 			</column>

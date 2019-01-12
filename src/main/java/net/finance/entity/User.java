@@ -20,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -29,6 +30,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "app_users")
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode
 public class User implements Serializable, UserDetails {
 
 	/**
@@ -45,10 +47,13 @@ public class User implements Serializable, UserDetails {
 	private String username;
 	@Column(name = "password", nullable = true, length = 100)
 	private String password;
+	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	private List<Budget> budgets = new ArrayList<>();
+	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	private List<Expense> expensies = new ArrayList<>();
+	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	private List<Income> incomes = new ArrayList<>();
 

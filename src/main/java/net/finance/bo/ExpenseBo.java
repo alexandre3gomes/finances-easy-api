@@ -3,33 +3,37 @@ package net.finance.bo;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.NonNull;
 import net.finance.dao.ExpenseDao;
 import net.finance.entity.Expense;
 
+@Service
+@Transactional
 public class ExpenseBo implements GenericBo<Expense> {
 
 	@NonNull
 	ExpenseDao expDao;
 
 	@Autowired
-	public ExpenseBo(ExpenseDao expDao) {
+	public ExpenseBo(final ExpenseDao expDao) {
 		this.expDao = expDao;
 	}
 
 	@Override
-	public Expense create(Expense exp) {
+	public Expense create(final Expense exp) {
 		return expDao.create(exp);
 	}
 
 	@Override
-	public void delete(Integer id) {
+	public void delete(final Integer id) {
 		expDao.delete(id);
 	}
 
 	@Override
-	public Expense findById(Integer id) {
+	public Expense findById(final Integer id) {
 		return expDao.find(id);
 	}
 
@@ -39,7 +43,7 @@ public class ExpenseBo implements GenericBo<Expense> {
 	}
 
 	@Override
-	public Expense update(Expense exp) {
+	public Expense update(final Expense exp) {
 		return expDao.update(exp);
 	}
 

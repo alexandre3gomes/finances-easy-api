@@ -7,14 +7,15 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 import net.finance.bo.UserBo;
+import net.finance.entity.User;
 
 @RestController
 @RequestMapping("/public/logon")
@@ -27,9 +28,9 @@ public class LogonService {
 
 	@SuppressWarnings("unused")
 	@PostMapping("/login")
-	String login(final HttpServletRequest request, @RequestParam("username") final String username,
-			@RequestParam("password") final String password) {
-		return devBo.login(username, password).orElseThrow(() -> new RuntimeException("invalid login and/or password"));
+	String login(final HttpServletRequest request, @RequestBody final User user) {
+		return devBo.login(user.getUsername(), user.getPassword())
+				.orElseThrow(() -> new RuntimeException("invalid login and/or password"));
 	}
 
 	@GetMapping("/test")

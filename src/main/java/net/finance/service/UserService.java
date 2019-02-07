@@ -47,7 +47,7 @@ public class UserService {
 	}
 
 	@GetMapping("/current")
-	public User getusereloper(@AuthenticationPrincipal final User user) {
+	public User getUser(@AuthenticationPrincipal final User user) {
 		return user;
 	}
 

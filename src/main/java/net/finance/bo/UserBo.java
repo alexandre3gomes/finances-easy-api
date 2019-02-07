@@ -3,6 +3,7 @@ package net.finance.bo;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -68,7 +69,7 @@ public class UserBo implements GenericBo<User> {
 		return userDao.list();
 	}
 
-	public Optional<String> login(final String username, final String password) {
+	public Optional<String> login(final String username, final String password) throws NoSuchElementException {
 		final String token = UUID.randomUUID().toString();
 		final Optional<User> optDev = userDao.getUserByUsernameAndPass(username,
 				EncryptUtils.hashPassword(password).get());

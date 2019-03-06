@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +29,7 @@ public class ExpenseService {
 		this.expenseBo = expenseBo;
 	}
 
-	@PutMapping("/create")
+	@PostMapping("/create")
 	public ResponseEntity<Expense> create(@RequestBody final Expense expense) {
 		return new ResponseEntity<>(expenseBo.create(expense), HttpStatus.OK);
 	}
@@ -50,7 +50,7 @@ public class ExpenseService {
 		return new ResponseEntity<>(expenseBo.listAll(), HttpStatus.OK);
 	}
 
-	@PutMapping("/update")
+	@PostMapping("/update")
 	public ResponseEntity<Expense> update(@RequestBody final Expense dev) {
 		return new ResponseEntity<>(expenseBo.update(dev), HttpStatus.OK);
 	}

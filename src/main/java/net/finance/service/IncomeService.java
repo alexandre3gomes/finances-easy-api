@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +29,7 @@ public class IncomeService {
 		this.incomeBo = incomeBo;
 	}
 
-	@PutMapping("/create")
+	@PostMapping("/create")
 	public ResponseEntity<Income> create(@RequestBody final Income income) {
 		return new ResponseEntity<>(incomeBo.create(income), HttpStatus.OK);
 	}
@@ -50,9 +50,9 @@ public class IncomeService {
 		return new ResponseEntity<>(incomeBo.listAll(), HttpStatus.OK);
 	}
 
-	@PutMapping("/update")
-	public ResponseEntity<Income> update(@RequestBody final Income dev) {
-		return new ResponseEntity<>(incomeBo.update(dev), HttpStatus.OK);
+	@PostMapping("/update")
+	public ResponseEntity<Income> update(@RequestBody final Income income) {
+		return new ResponseEntity<>(incomeBo.update(income), HttpStatus.OK);
 	}
 
 }

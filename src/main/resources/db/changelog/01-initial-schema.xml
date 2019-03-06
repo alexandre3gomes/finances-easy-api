@@ -38,8 +38,8 @@
 				<constraints nullable="false"
 					foreignKeyName="user_budget" references="app_users(id)" />
 			</column>
-			<column name="start_date" type="datetime"/>
-			<column name="end_date" type="datetime"/>
+			<column name="start_date" type="timestamp with time zone"/>
+			<column name="end_date" type="timestamp with time zone"/>
 		</createTable>
 		
 		<createTable tableName="budget_categories">
@@ -74,7 +74,7 @@
 			<column name="value" type="currency">
 				<constraints nullable="false" />
 			</column>
-			<column name="expire_at" type="datetime"/>
+			<column name="expire_at" type="timestamp with time zone"/>
 		</createTable>
 		
 		<createTable tableName="income">
@@ -91,7 +91,7 @@
 			<column name="value" type="currency">
 				<constraints nullable="false" />
 			</column>
-			<column name="date" type="datetime"/>
+			<column name="date" type="timestamp with timezone"/>
 		</createTable>
 		
 	</changeSet>

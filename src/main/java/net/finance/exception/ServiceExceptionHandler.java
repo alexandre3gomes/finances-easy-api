@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class ServiceExceptionHandler {
 
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	@ExceptionHandler(NullPointerException.class)
+	@ExceptionHandler(Exception.class)
 	public void handleGenericError() {
 		// JUST MAPPING HTTP STATUS
 	}

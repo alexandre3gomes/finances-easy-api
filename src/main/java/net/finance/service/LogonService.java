@@ -26,7 +26,6 @@ public class LogonService {
 	@NonNull
 	UserBo devBo;
 
-	@SuppressWarnings("unused")
 	@PostMapping("/login")
 	String login(final HttpServletRequest request, @RequestBody final User user) {
 		return devBo.login(user.getUsername(), user.getPassword())

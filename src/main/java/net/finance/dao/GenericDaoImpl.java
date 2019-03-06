@@ -23,8 +23,7 @@ public class GenericDaoImpl<T> implements GenericDao<T> {
 
 	@Override
 	public T create(final T entity) {
-		em.persist(entity);
-		return entity;
+		return em.merge(entity);
 	}
 
 	@Override

@@ -57,10 +57,10 @@ public class UserBo implements GenericBo<User> {
 	public void initTestUser() {
 		System.out.println("Creating test user...");
 		final User admin = new User();
-		admin.setId(0);
-		admin.setName("Admin");
-		admin.setUsername("admin");
-		admin.setPassword("admin");
+		admin.setId(1);
+		admin.setName("Alexandre");
+		admin.setUsername("alexandre");
+		admin.setPassword("e10adc3949ba59abbe56e057f20f883e");
 		loggedUsers.put("7cd2f9e1-a6e9-4675-9176-b9219b0fd8d8", admin);
 	}
 
@@ -70,12 +70,14 @@ public class UserBo implements GenericBo<User> {
 	}
 
 	public Optional<String> login(final String username, final String password) throws NoSuchElementException {
-		final String token = UUID.randomUUID().toString();
+		String token = UUID.randomUUID().toString();
 		final Optional<User> optDev = userDao.getUserByUsernameAndPass(username,
 				EncryptUtils.hashPassword(password).get());
 		if (optDev.isPresent()) {
 			final User dev = optDev.get();
 			loggedUsers.put(token, dev);
+		} else {
+			token = null;
 		}
 		return Optional.of(token);
 	}

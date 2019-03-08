@@ -9,7 +9,8 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>Api to financial services</name>
+	<name>Finances easy API</name>
+	<description>API do finances easy web and app</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -123,7 +124,4 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
-
-
-	<description>Api boilerplate</description>
 </project>

@@ -7,20 +7,30 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CorsFilter implements Filter {
+	
+	@Autowired
+	Environment environment;
+	
 
 	@Override
 	public void doFilter(final ServletRequest req, final ServletResponse res, final FilterChain chain) {
 		final HttpServletResponse response = (HttpServletResponse) res;
 		final HttpServletRequest request = (HttpServletRequest) req;
-
-		response.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+		String allowOrigin = "http://localhost:4200";
+		if(environment.getActiveProfiles()[0].contains("prod")) {
+			allowOrigin = "https://finances-easy-web.herokuapp.com";
+		}
+		System.out.println(allowOrigin);
+		response.setHeader("Access-Control-Allow-Origin", allowOrigin);
 		response.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE");
 		response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
 		response.setHeader("Access-Control-Max-Age", "3600");

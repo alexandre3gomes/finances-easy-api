@@ -53,7 +53,7 @@ public class UserBo implements GenericBo<User> {
 	}
 
 	@Bean
-	@Profile("development")
+	@Profile("dev")
 	public void initTestUser() {
 		System.out.println("Creating test user...");
 		final User admin = new User();

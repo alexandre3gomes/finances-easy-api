@@ -40,8 +40,6 @@ public class Category implements Serializable {
 	private Integer id;
 	@Column(name = "name")
 	private String name;
-	@OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
-	private Set<Expense> expenses = new HashSet<>(0);
 	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<BudgetCategories> budgetCategories;
 

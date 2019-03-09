@@ -5,6 +5,8 @@ import static lombok.AccessLevel.PRIVATE;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,9 +29,8 @@ public class LogonService {
 	UserBo devBo;
 
 	@PostMapping("/login")
-	String login(final HttpServletRequest request, @RequestBody final User user) {
-		return devBo.login(user.getUsername(), user.getPassword())
-				.orElseThrow(() -> new RuntimeException("invalid login and/or password"));
+	ResponseEntity<User> login(final HttpServletRequest request, @RequestBody final User user) {
+		return new ResponseEntity<>(devBo.login(user.getUsername(), user.getPassword()).get(), HttpStatus.OK);
 	}
 
 	@GetMapping("/test")

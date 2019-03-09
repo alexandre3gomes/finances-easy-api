@@ -13,11 +13,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -47,6 +49,9 @@ public class User implements Serializable, UserDetails {
 	private String username;
 	@Column(name = "password", nullable = true, length = 100)
 	private String password;
+	@Transient
+	@JsonInclude()
+	private String token;
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	private List<Budget> budgets = new ArrayList<>();

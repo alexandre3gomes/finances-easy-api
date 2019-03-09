@@ -69,17 +69,19 @@ public class UserBo implements GenericBo<User> {
 		return userDao.list();
 	}
 
-	public Optional<String> login(final String username, final String password) throws NoSuchElementException {
+	public Optional<User> login(final String username, final String password) throws NoSuchElementException {
 		String token = UUID.randomUUID().toString();
+		User user = null;
 		final Optional<User> optDev = userDao.getUserByUsernameAndPass(username,
 				EncryptUtils.hashPassword(password).get());
 		if (optDev.isPresent()) {
-			final User dev = optDev.get();
-			loggedUsers.put(token, dev);
+			user = optDev.get();
+			user.setToken(token);
+			loggedUsers.put(token, user);
 		} else {
 			token = null;
 		}
-		return Optional.of(token);
+		return Optional.of(user);
 	}
 
 	public void logout(final User user) {

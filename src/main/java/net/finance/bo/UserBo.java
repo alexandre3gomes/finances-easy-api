@@ -83,10 +83,15 @@ public class UserBo implements GenericBo<User> {
 	}
 
 	public void logout(final User user) {
+		String keyToRemove = null;
 		for (final Map.Entry<String, User> entry : loggedUsers.entrySet()) {
 			if (entry.getValue() == user) {
-				loggedUsers.remove(entry.getKey());
+				keyToRemove = entry.getKey();
+				break;
 			}
+		}
+		if (keyToRemove != null) {
+			loggedUsers.remove(keyToRemove);
 		}
 	}
 

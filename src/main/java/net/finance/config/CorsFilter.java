@@ -16,20 +16,18 @@ import org.springframework.stereotype.Component;
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CorsFilter implements Filter {
-	
+
 	@Autowired
 	Environment environment;
-	
 
 	@Override
 	public void doFilter(final ServletRequest req, final ServletResponse res, final FilterChain chain) {
 		final HttpServletResponse response = (HttpServletResponse) res;
 		final HttpServletRequest request = (HttpServletRequest) req;
 		String allowOrigin = "http://localhost:4200";
-		if(environment.getActiveProfiles()[0].contains("prod")) {
+		if (environment.getActiveProfiles()[0].contains("prod")) {
 			allowOrigin = "https://finances-easy-web.herokuapp.com";
 		}
-		System.out.println(allowOrigin);
 		response.setHeader("Access-Control-Allow-Origin", allowOrigin);
 		response.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE");
 		response.setHeader("Access-Control-Allow-Headers", "x-requested-with");

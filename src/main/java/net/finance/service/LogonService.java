@@ -26,11 +26,11 @@ import net.finance.entity.User;
 public class LogonService {
 
 	@NonNull
-	UserBo devBo;
+	UserBo userBo;
 
 	@PostMapping("/login")
 	ResponseEntity<User> login(final HttpServletRequest request, @RequestBody final User user) {
-		return new ResponseEntity<>(devBo.login(user.getUsername(), user.getPassword()).get(), HttpStatus.OK);
+		return new ResponseEntity<>(userBo.login(user.getUsername(), user.getPassword()).get(), HttpStatus.OK);
 	}
 
 	@GetMapping("/test")

@@ -18,9 +18,6 @@ import javax.persistence.Transient;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -50,43 +47,34 @@ public class User implements Serializable, UserDetails {
 	@Column(name = "password", nullable = true, length = 100)
 	private String password;
 	@Transient
-	@JsonInclude()
 	private String token;
-	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	private List<Budget> budgets = new ArrayList<>();
-	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	private List<Expense> expensies = new ArrayList<>();
-	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	private List<Income> incomes = new ArrayList<>();
 
-	@JsonIgnore
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return new ArrayList<>();
 	}
 
-	@JsonIgnore
 	@Override
 	public boolean isAccountNonExpired() {
 		return true;
 	}
 
-	@JsonIgnore
 	@Override
 	public boolean isAccountNonLocked() {
 		return true;
 	}
 
-	@JsonIgnore
 	@Override
 	public boolean isCredentialsNonExpired() {
 		return true;
 	}
 
-	@JsonIgnore
 	@Override
 	public boolean isEnabled() {
 		return true;

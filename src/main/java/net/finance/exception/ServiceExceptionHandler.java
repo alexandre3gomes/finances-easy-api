@@ -2,6 +2,7 @@ package net.finance.exception;
 
 import java.util.NoSuchElementException;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -22,4 +23,9 @@ public class ServiceExceptionHandler {
 		// JUST MAPPING HTTP STATUS
 	}
 
+	@ResponseStatus(HttpStatus.CONFLICT)
+	@ExceptionHandler(DataIntegrityViolationException.class)
+	public void handleConstraintException() {
+		// JUST MAPPING HTTP STATUS
+	}
 }

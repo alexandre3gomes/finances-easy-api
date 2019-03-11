@@ -1,8 +1,9 @@
 package net.finance.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -12,21 +13,27 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.NonNull;
 import net.finance.bo.UserBo;
 import net.finance.entity.User;
+import net.finance.repository.UserRepository;
 
 @RestController()
 @RequestMapping("/user")
 public class UserService {
 
 	@NonNull
+	private final UserRepository userRep;
+
+	@NonNull
 	private final UserBo userBo;
 
 	@Autowired
-	public UserService(final UserBo userBo) {
+	public UserService(final UserRepository userRep, final UserBo userBo) {
+		this.userRep = userRep;
 		this.userBo = userBo;
 	}
 
@@ -37,13 +44,13 @@ public class UserService {
 
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<Void> delete(@PathVariable("id") final Integer id) {
-		userBo.delete(id);
+		userRep.deleteById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@GetMapping("/get/{id}")
 	public ResponseEntity<User> get(@PathVariable("id") final Integer id) {
-		return new ResponseEntity<>(userBo.findById(id), HttpStatus.OK);
+		return new ResponseEntity<>(userRep.findById(id).get(), HttpStatus.OK);
 	}
 
 	@GetMapping("/current")
@@ -52,8 +59,11 @@ public class UserService {
 	}
 
 	@GetMapping("/list")
-	public ResponseEntity<List<User>> list() {
-		return new ResponseEntity<>(userBo.listAll(), HttpStatus.OK);
+	public ResponseEntity<Page<User>> list(@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "name") String order,
+			@RequestParam(defaultValue = "DESC") Sort.Direction direction) {
+		return new ResponseEntity<>(userRep.findAll(PageRequest.of(page, size, new Sort(direction, order))),
+				HttpStatus.OK);
 	}
 
 	@GetMapping("/logout")
@@ -64,7 +74,7 @@ public class UserService {
 
 	@PostMapping("/update")
 	public ResponseEntity<User> update(@RequestBody final User user) {
-		return new ResponseEntity<>(userBo.update(user), HttpStatus.OK);
+		return new ResponseEntity<>(userRep.save(user), HttpStatus.OK);
 	}
 
 }

@@ -18,6 +18,7 @@ import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 import net.finance.bo.UserBo;
 import net.finance.entity.User;
+import net.finance.repository.BudgetRepository;
 
 @RestController
 @RequestMapping("/public/logon")
@@ -27,6 +28,9 @@ public class LogonService {
 
 	@NonNull
 	UserBo userBo;
+
+	@NonNull
+	BudgetRepository budRep;
 
 	@PostMapping("/login")
 	ResponseEntity<User> login(final HttpServletRequest request, @RequestBody final User user) {

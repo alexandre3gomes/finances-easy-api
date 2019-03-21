@@ -4,44 +4,48 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.Table;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "budget_categories")
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode
 @NoArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@RequiredArgsConstructor
 public class BudgetCategories implements Serializable {
 
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = -7040527905669918246L;
-	@EqualsAndHashCode.Include
-	@EmbeddedId
-	private BudgetCategoryId pk = new BudgetCategoryId();
-	@NonNull
-	@ManyToOne(fetch = FetchType.LAZY)
-	@MapsId("budget")
+	@Id
+	@ManyToOne
+	@JoinColumn(name = "budget_id", insertable = false, updatable = false)
+	@JsonIgnore
 	private Budget budget;
-	@NonNull
-	@ManyToOne(fetch = FetchType.LAZY)
-	@MapsId("category")
+	@Id
+	@ManyToOne
+	@JoinColumn(name = "category_id", insertable = false, updatable = false)
 	private Category category;
 	@NonNull
 	@Column(name = "value")
 	private BigDecimal value;
+
+	public BudgetCategories(Category category, BigDecimal value) {
+		this.category = category;
+		this.value = value;
+	}
 
 }

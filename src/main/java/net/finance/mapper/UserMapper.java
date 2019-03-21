@@ -11,10 +11,10 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import net.finance.entity.User;
 
 @JsonComponent
-public class UserSerializer extends JsonSerializer<User> {
+public class UserMapper extends JsonSerializer<User> {
 
 	@Override
-	public void serialize(User value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+	public void serialize(User value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
 		gen.writeStartObject();
 		gen.writeNumberField("id", value.getId());
 		gen.writeStringField("name", value.getName());

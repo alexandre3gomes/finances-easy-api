@@ -1,13 +1,11 @@
 package net.finance.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,20 +17,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import net.finance.CategoryValueDTO;
+import lombok.Setter;
 
 @Entity
 @Table(name = "Budget")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
-@EqualsAndHashCode
 public class Budget implements Serializable {
 
 	/**
@@ -50,28 +44,17 @@ public class Budget implements Serializable {
 	private Date startDate;
 	@Column(name = "endDate", nullable = false)
 	private Date endDate;
-	@Transient
-	private List<CategoryValueDTO> categories = new ArrayList<>();
-	@JsonIgnore
-	@OneToMany(mappedBy = "budget", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<BudgetCategories> budgetCategories = new HashSet<>();
+	@OneToMany(mappedBy = "budget", cascade = CascadeType.ALL)
+	private Set<BudgetCategories> categories = new HashSet<>();
 
-	public void addCategory(final Category cat, final BigDecimal value) {
-		final BudgetCategories budCat = new BudgetCategories(this, cat, value);
-		budgetCategories.add(budCat);
-	}
-
-	public void removeCategory(final Category cat) {
-		final Iterator<BudgetCategories> it = budgetCategories.iterator();
-		while (it.hasNext()) {
-			final BudgetCategories budCat = it.next();
-			if (budCat.getBudget().equals(this) && budCat.getCategory().equals(cat)) {
-				it.remove();
-				budCat.getCategory().getBudgetCategories().remove(budCat);
-				budCat.setBudget(null);
-				budCat.setCategory(null);
-			}
+	public Budget(User user, Date startDate, Date endDate, BudgetCategories... categories) {
+		this.user = user;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		for (final BudgetCategories cat : categories) {
+			cat.setBudget(this);
 		}
+		this.categories = Stream.of(categories).collect(Collectors.toSet());
 	}
 
 }

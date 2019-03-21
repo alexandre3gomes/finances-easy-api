@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.NonNull;
-import net.finance.CategoryValueDTO;
 import net.finance.entity.Budget;
+import net.finance.entity.BudgetCategories;
 import net.finance.repository.BudgetRepository;
 import net.finance.repository.CategoryRepository;
 
@@ -32,17 +32,17 @@ public class BudgetService {
 	private final CategoryRepository catRep;
 
 	@Autowired
-	public BudgetService(final BudgetRepository budgetRepository, final CategoryRepository catRep) {
-		this.budgetRep = budgetRepository;
+	public BudgetService(final BudgetRepository budgetRepository, CategoryRepository catRep) {
+		budgetRep = budgetRepository;
 		this.catRep = catRep;
 	}
 
 	@PostMapping("/create")
 	public ResponseEntity<Budget> create(@RequestBody final Budget budget) {
-		for (final CategoryValueDTO catVal : budget.getCategories()) {
-			budget.addCategory(catRep.findById(catVal.getCategory().getId()).get(), catVal.getValue());
-		}
-		return new ResponseEntity<>(budgetRep.save(budget), HttpStatus.OK);
+		final BudgetCategories[] budCat = budget.getCategories().stream().toArray(BudgetCategories[]::new);
+		return new ResponseEntity<>(
+				budgetRep.save(new Budget(budget.getUser(), budget.getStartDate(), budget.getEndDate(), budCat)),
+				HttpStatus.OK);
 	}
 
 	@DeleteMapping("/delete/{id}")

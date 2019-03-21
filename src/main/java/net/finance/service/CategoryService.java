@@ -56,8 +56,8 @@ public class CategoryService {
 	}
 
 	@PostMapping("/update")
-	public ResponseEntity<Category> update(@RequestBody final Category dev) {
-		return new ResponseEntity<>(categoryRep.save(dev), HttpStatus.OK);
+	public ResponseEntity<Category> update(@RequestBody final Category cat) {
+		return new ResponseEntity<>(categoryRep.save(cat), HttpStatus.OK);
 	}
 
 }

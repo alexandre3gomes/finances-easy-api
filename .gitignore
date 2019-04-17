@@ -35,3 +35,6 @@ hs_err_pid*
 
 #Java#
 *META-INF*
+
+#Mac Os
+*DS_Store*

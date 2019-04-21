@@ -67,7 +67,6 @@ public class BudgetService {
 	@PostMapping("/update")
 	public ResponseEntity<Budget> update(@RequestBody final Budget budget) {
 		budgetRep.deleteById(budget.getId());
-		budget.setId(null);
 		final BudgetCategories[] budCat = budget.getCategories().stream().toArray(BudgetCategories[]::new);
 		return new ResponseEntity<>(
 				budgetRep.save(new Budget(budget.getUser(), budget.getStartDate(), budget.getEndDate(), budCat)),

@@ -46,6 +46,7 @@ public class Budget implements Serializable {
 	private Date endDate;
 	@OneToMany(mappedBy = "budget", cascade = CascadeType.ALL)
 	private Set<BudgetCategories> categories = new HashSet<>();
+	private transient Integer breakpoint;
 
 	public Budget(User user, Date startDate, Date endDate, BudgetCategories... categories) {
 		this.user = user;

@@ -28,7 +28,7 @@ import net.finance.entity.User;
 @JsonComponent
 public class BudgetMapper {
 
-	private static final String DATE_FORMAT = "yyyy-MM-dd";
+	private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX";
 
 	public static class BudgetSerializer extends JsonSerializer<Budget> {
 
@@ -59,10 +59,8 @@ public class BudgetMapper {
 			final Budget ret = new Budget();
 			ret.setId(json.get("id").asInt());
 			try {
-				ret.setStartDate(df.parse(
-						json.get("startDate").asText().substring(0, json.get("startDate").asText().indexOf('T'))));
-				ret.setEndDate(
-						df.parse(json.get("endDate").asText().substring(0, json.get("endDate").asText().indexOf('T'))));
+				ret.setStartDate(df.parse(json.get("startDate").asText()));
+				ret.setEndDate(df.parse(json.get("endDate").asText()));
 			} catch (final ParseException e) {
 				e.printStackTrace();
 			}
@@ -72,7 +70,8 @@ public class BudgetMapper {
 			while (it.hasNext()) {
 				final JsonNode node = it.next();
 				if (node.get("category") != null) {
-					final BudgetCategories budCat = new BudgetCategories(new Category(node.get("category").asInt()),
+					final BudgetCategories budCat = new BudgetCategories(
+							new Category(node.get("category").get("id").asInt()),
 							new BigDecimal(node.get("value").asInt()));
 					categories.add(budCat);
 				}

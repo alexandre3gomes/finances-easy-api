@@ -16,61 +16,48 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.NonNull;
+import net.finance.bo.BudgetBo;
 import net.finance.entity.Budget;
-import net.finance.entity.BudgetCategories;
-import net.finance.repository.BudgetRepository;
-import net.finance.repository.CategoryRepository;
 
 @RestController
 @RequestMapping("/budget")
 public class BudgetService {
 
 	@NonNull
-	private final BudgetRepository budgetRep;
-
-	@NonNull
-	private final CategoryRepository catRep;
+	private final BudgetBo budgetBo;
 
 	@Autowired
-	public BudgetService(final BudgetRepository budgetRepository, CategoryRepository catRep) {
-		budgetRep = budgetRepository;
-		this.catRep = catRep;
+	public BudgetService(final BudgetBo budgetRepository) {
+		budgetBo = budgetRepository;
 	}
 
 	@PostMapping("/create")
 	public ResponseEntity<Budget> create(@RequestBody final Budget budget) {
-		final BudgetCategories[] budCat = budget.getCategories().stream().toArray(BudgetCategories[]::new);
-		return new ResponseEntity<>(
-				budgetRep.save(new Budget(budget.getUser(), budget.getStartDate(), budget.getEndDate(), budCat)),
-				HttpStatus.OK);
+		return new ResponseEntity<>(budgetBo.create(budget), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<Void> delete(@PathVariable("id") final Integer id) {
-		budgetRep.deleteById(id);
+		budgetBo.delete(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@GetMapping("/get/{id}")
 	public ResponseEntity<Budget> get(@PathVariable("id") final Integer id) {
-		return new ResponseEntity<>(budgetRep.findById(id).get(), HttpStatus.OK);
+		return new ResponseEntity<>(budgetBo.get(id), HttpStatus.OK);
 	}
 
 	@GetMapping("/list")
 	public ResponseEntity<Page<Budget>> list(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "startDate") String order,
 			@RequestParam(defaultValue = "DESC") Sort.Direction direction) {
-		return new ResponseEntity<>(budgetRep.findAll(PageRequest.of(page, size, new Sort(direction, order))),
+		return new ResponseEntity<>(budgetBo.list(PageRequest.of(page, size, new Sort(direction, order))),
 				HttpStatus.OK);
 	}
 
 	@PostMapping("/update")
 	public ResponseEntity<Budget> update(@RequestBody final Budget budget) {
-		budgetRep.deleteById(budget.getId());
-		final BudgetCategories[] budCat = budget.getCategories().stream().toArray(BudgetCategories[]::new);
-		return new ResponseEntity<>(
-				budgetRep.save(new Budget(budget.getUser(), budget.getStartDate(), budget.getEndDate(), budCat)),
-				HttpStatus.OK);
+		return new ResponseEntity<>(budgetBo.update(budget), HttpStatus.OK);
 	}
 
 }

@@ -40,6 +40,7 @@ public class BudgetMapper {
 			gen.writeNumberField("id", value.getId());
 			gen.writeStringField("startDate", df.format(value.getStartDate()));
 			gen.writeStringField("endDate", df.format(value.getEndDate()));
+			gen.writeNumberField("breakpoint", value.getBreakpoint());
 			gen.writeObjectField("user", value.getUser());
 			gen.writeObjectField("categories", value.getCategories());
 			gen.writeEndObject();
@@ -64,6 +65,7 @@ public class BudgetMapper {
 			} catch (final ParseException e) {
 				e.printStackTrace();
 			}
+			ret.setBreakpoint(json.get("breakpoint").asInt());
 			ret.setUser(mapper.readValue(json.get("user").traverse(), User.class));
 			final Iterator<JsonNode> it = json.get("categories").elements();
 			final Set<BudgetCategories> categories = new HashSet<>();

@@ -40,22 +40,30 @@ public class Budget implements Serializable {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "app_user", referencedColumnName = "id")
 	private User user;
-	@Column(name = "startDate", nullable = false)
+	@Column(name = "start_date", nullable = false)
 	private Date startDate;
-	@Column(name = "endDate", nullable = false)
+	@Column(name = "end_date", nullable = false)
 	private Date endDate;
 	@OneToMany(mappedBy = "budget", cascade = CascadeType.ALL)
 	private Set<BudgetCategories> categories = new HashSet<>();
-	private transient Integer breakpoint;
+	@OneToMany(mappedBy = "budget", cascade = CascadeType.ALL)
+	private Set<BudgetPeriods> periods = new HashSet<>();
+	@Column(name = "breakpoint")
+	private Integer breakpoint;
 
-	public Budget(User user, Date startDate, Date endDate, BudgetCategories... categories) {
+	public Budget(User user, Date startDate, Date endDate, Integer breakpoint, Set<BudgetPeriods> periods,
+			BudgetCategories... categories) {
 		this.user = user;
 		this.startDate = startDate;
 		this.endDate = endDate;
+		this.breakpoint = breakpoint;
 		for (final BudgetCategories cat : categories) {
 			cat.setBudget(this);
 		}
+		for (final BudgetPeriods per : periods) {
+			per.setBudget(this);
+		}
+		this.periods = periods;
 		this.categories = Stream.of(categories).collect(Collectors.toSet());
 	}
-
 }

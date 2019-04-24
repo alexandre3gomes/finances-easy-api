@@ -76,6 +76,10 @@
 			<artifactId>guava</artifactId>
 			<version>23.2-jre</version>
 		</dependency>
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

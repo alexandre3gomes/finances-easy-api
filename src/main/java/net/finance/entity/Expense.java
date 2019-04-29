@@ -21,8 +21,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "expense")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode
-public class Expense implements Serializable {
+@EqualsAndHashCode(callSuper = false)
+public class Expense extends BaseAuditEntity implements Serializable {
 
 	/**
 	 *

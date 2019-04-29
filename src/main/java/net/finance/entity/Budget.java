@@ -27,7 +27,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Budget implements Serializable {
+public class Budget extends BaseAuditEntity implements Serializable {
 
 	/**
 	 *

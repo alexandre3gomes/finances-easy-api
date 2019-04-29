@@ -22,8 +22,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "income")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode
-public class Income implements Serializable {
+@EqualsAndHashCode(callSuper = false)
+public class Income extends BaseAuditEntity implements Serializable {
 
 	/**
 	 *
@@ -42,5 +42,4 @@ public class Income implements Serializable {
 	private BigDecimal value;
 	@Column(name = "date", nullable = false)
 	private Date date;
-
 }

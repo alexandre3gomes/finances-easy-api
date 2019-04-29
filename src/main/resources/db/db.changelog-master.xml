@@ -6,4 +6,5 @@
 
   <include file="changelog/01-initial-schema.xml" relativeToChangelogFile="true"/>
   <include file="changelog/02-budget-period.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/03-audit-data.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

@@ -12,11 +12,11 @@
 					foreignKeyName="budget_bud_periods" references="budget(id)" />
 			</column>
 			<column name="id_period" type="int"/>
-			<column name="start_date" type="timestamp with time zone"/>
-			<column name="end_date" type="timestamp with time zone"/>
+			<column name="start_date" type="timestamp"/>
+			<column name="end_date" type="timestamp"/>
 		</createTable>
 		<addColumn tableName="budget">
-			<column name="breakpoint" type="int"></column>
+			<column name="breakperiod" type="int"></column>
 		</addColumn>
 	</changeSet>
 </databaseChangeLog>

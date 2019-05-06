@@ -9,6 +9,8 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +35,22 @@ public class UserBo {
 
 	public Optional<User> findByToken(final String token) {
 		return Optional.ofNullable(loggedUsers.get(token));
+	}
+
+	public void delete(final Integer id) {
+		userRep.deleteById(id);
+	}
+
+	public User get(final Integer id) {
+		return userRep.findById(id).get();
+	}
+
+	public Page<User> list(PageRequest pageReq) {
+		return userRep.findAll(pageReq);
+	}
+
+	public User update(final User user) {
+		return userRep.save(user);
 	}
 
 	@Bean

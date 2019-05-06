@@ -32,18 +32,5 @@
 			<column name="last_modified_date"
 				type="timestamp with time zone" defaultValueComputed="CURRENT_TIMESTAMP"/>
 		</addColumn>
-		<addColumn tableName="budget">
-			<column name="created_by" type="int" defaultValueNumeric="1">
-				<constraints nullable="false"
-					foreignKeyName="created_user_budget" references="app_users(id)" />
-			</column>
-			<column name="created_date" type="timestamp with time zone" defaultValueComputed="CURRENT_TIMESTAMP"/>
-			<column name="last_modified_by" type="int" defaultValueNumeric="1">
-				<constraints nullable="false"
-					foreignKeyName="modified_user_budget" references="app_users(id)" />
-			</column>
-			<column name="last_modified_date"
-				type="timestamp with time zone" defaultValueComputed="CURRENT_TIMESTAMP"/>
-		</addColumn>
 	</changeSet>
 </databaseChangeLog>

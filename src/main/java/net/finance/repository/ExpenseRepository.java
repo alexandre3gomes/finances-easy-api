@@ -2,6 +2,7 @@ package net.finance.repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -24,6 +25,6 @@ public interface ExpenseRepository extends JpaRepositoryImplementation<Expense, 
 			+ " group by bp.idPeriod, bp.startDate, bp.endDate, bc.value" + " order by bp.idPeriod")
 	List<PeriodValueDto> getValuesByCategories(Integer budgetId, Integer categoryId);
 
-	List<Expense> findByExpireAtBetween(Date startDate, Date endDate);
+	Optional<List<Expense>> findByExpireAtBetween(Date startDate, Date endDate);
 
 }

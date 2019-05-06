@@ -2,6 +2,7 @@ package net.finance.bo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,9 +23,10 @@ public class ReportBo {
 	@Autowired
 	BudgetRepository budgetRepository;
 
-	public List<CategoryAggregValuesDto> byCategory(Integer budgetId) {
+	public List<CategoryAggregValuesDto> byCategory(final Integer budgetId) {
 		final List<CategoryAggregValuesDto> ret = new ArrayList<>();
-		for (final Category cat : budgetRepository.getCategoriesByBudget(budgetId)) {
+		final Optional<List<Category>> categories = budgetRepository.getCategoriesByBudget(budgetId);
+		for (final Category cat : categories.get()) {
 			final CategoryAggregValuesDto catValues = new CategoryAggregValuesDto();
 			catValues.setCategory(cat);
 			catValues.setPeriodValue(expenseRepository.getValuesByCategories(budgetId, cat.getId()));

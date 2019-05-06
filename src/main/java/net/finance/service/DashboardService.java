@@ -1,6 +1,8 @@
 package net.finance.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,12 +32,22 @@ public class DashboardService {
 
 	@GetMapping("/actualExpense")
 	public ResponseEntity<List<Expense>> getActualExpense() {
-		return new ResponseEntity<>(expenseBo.getActualExpense(), HttpStatus.OK);
+		final Optional<List<Expense>> optExpenses = expenseBo.getActualExpense();
+		List<Expense> expenses = new ArrayList<>();
+		if (optExpenses.isPresent()) {
+			expenses = optExpenses.get();
+		}
+		return new ResponseEntity<>(expenses, HttpStatus.OK);
 	}
 
 	@GetMapping("/actualIncome")
 	public ResponseEntity<List<Income>> sumIncome() {
-		return new ResponseEntity<>(incomeBo.getActualIncome(), HttpStatus.OK);
+		final Optional<List<Income>> optIncomes = incomeBo.getActualIncome();
+		List<Income> incomes = new ArrayList<>();
+		if (optIncomes.isPresent()) {
+			incomes = optIncomes.get();
+		}
+		return new ResponseEntity<>(incomes, HttpStatus.OK);
 	}
 
 }

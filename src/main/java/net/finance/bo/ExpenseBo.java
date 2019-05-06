@@ -3,6 +3,7 @@ package net.finance.bo;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -51,10 +52,14 @@ public class ExpenseBo {
 		return expenseRepository.save(dev);
 	}
 
-	public List<Expense> getActualExpense() {
+	public Optional<List<Expense>> getActualExpense() {
 		final Date now = Calendar.getInstance().getTime();
-		final BudgetPeriods period = budgetRepository.getPeriodsByDate(now);
-		return expenseRepository.findByExpireAtBetween(period.getStartDate(), period.getEndDate());
+		final Optional<BudgetPeriods> period = budgetRepository.getPeriodsByDate(now);
+		if (period.isPresent()) {
+			return expenseRepository.findByExpireAtBetween(period.get().getStartDate(), period.get().getEndDate());
+		} else {
+			return Optional.empty();
+		}
 	}
 
 }

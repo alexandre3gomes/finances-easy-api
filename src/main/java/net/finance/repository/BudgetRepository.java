@@ -14,7 +14,7 @@ import net.finance.entity.Category;
 public interface BudgetRepository extends JpaRepository<Budget, Integer> {
 
 	@Query("select bc.category from BudgetCategories bc where bc.budget.id = :budgetId")
-	Optional<List<Category>> getCategoriesByBudget(Integer budgetId);
+	List<Category> getCategoriesByBudget(Integer budgetId);
 
 	@Query("select bp.budget, bp.idPeriod, bp.startDate, bp.endDate from BudgetPeriods bp where bp.budget.id = :budgetId order by bp.idPeriod")
 	Optional<List<BudgetPeriods>> getPeriodsByBudget(Integer budgetId);

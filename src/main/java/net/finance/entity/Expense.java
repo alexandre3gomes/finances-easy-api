@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,8 +21,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "expense")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode
-public class Expense implements Serializable {
+@EqualsAndHashCode(callSuper = false)
+public class Expense extends BaseAuditEntity implements Serializable {
 
 	/**
 	 *
@@ -33,7 +32,7 @@ public class Expense implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false, precision = 3, scale = 0)
 	private Integer id;
-	@ManyToOne(optional = false, cascade = CascadeType.PERSIST)
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "category", referencedColumnName = "id")
 	private Category category;
 	@ManyToOne(optional = false)

@@ -16,48 +16,48 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.NonNull;
+import net.finance.bo.ExpenseBo;
 import net.finance.entity.Expense;
-import net.finance.repository.ExpenseRepository;
 
 @RestController
 @RequestMapping("/expense")
 public class ExpenseService {
 
 	@NonNull
-	private ExpenseRepository expenseRep;
+	private final ExpenseBo expenseBo;
 
 	@Autowired
-	public ExpenseService(ExpenseRepository expenseRep) {
-		this.expenseRep = expenseRep;
+	public ExpenseService(ExpenseBo expenseBo) {
+		this.expenseBo = expenseBo;
 	}
 
 	@PostMapping("/create")
 	public ResponseEntity<Expense> create(@RequestBody final Expense expense) {
-		return new ResponseEntity<>(expenseRep.save(expense), HttpStatus.OK);
+		return new ResponseEntity<>(expenseBo.create(expense), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<Void> delete(@PathVariable("id") final Integer id) {
-		expenseRep.deleteById(id);
+		expenseBo.delete(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@GetMapping("/get/{id}")
 	public ResponseEntity<Expense> get(@PathVariable("id") final Integer id) {
-		return new ResponseEntity<>(expenseRep.findById(id).get(), HttpStatus.OK);
+		return new ResponseEntity<>(expenseBo.get(id), HttpStatus.OK);
 	}
 
 	@GetMapping("/list")
 	public ResponseEntity<Page<Expense>> list(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "expireAt") String order,
 			@RequestParam(defaultValue = "DESC") Sort.Direction direction) {
-		return new ResponseEntity<>(expenseRep.findAll(PageRequest.of(page, size, new Sort(direction, order))),
+		return new ResponseEntity<>(expenseBo.list(PageRequest.of(page, size, new Sort(direction, order))),
 				HttpStatus.OK);
 	}
 
 	@PostMapping("/update")
 	public ResponseEntity<Expense> update(@RequestBody final Expense dev) {
-		return new ResponseEntity<>(expenseRep.save(dev), HttpStatus.OK);
+		return new ResponseEntity<>(expenseBo.update(dev), HttpStatus.OK);
 	}
 
 }

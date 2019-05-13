@@ -19,21 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.NonNull;
 import net.finance.bo.UserBo;
 import net.finance.entity.User;
-import net.finance.repository.UserRepository;
 
 @RestController()
 @RequestMapping("/user")
 public class UserService {
 
 	@NonNull
-	private final UserRepository userRep;
-
-	@NonNull
 	private final UserBo userBo;
 
 	@Autowired
-	public UserService(final UserRepository userRep, final UserBo userBo) {
-		this.userRep = userRep;
+	public UserService(final UserBo userBo) {
 		this.userBo = userBo;
 	}
 
@@ -44,13 +39,13 @@ public class UserService {
 
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<Void> delete(@PathVariable("id") final Integer id) {
-		userRep.deleteById(id);
+		userBo.delete(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@GetMapping("/get/{id}")
 	public ResponseEntity<User> get(@PathVariable("id") final Integer id) {
-		return new ResponseEntity<>(userRep.findById(id).get(), HttpStatus.OK);
+		return new ResponseEntity<>(userBo.get(id), HttpStatus.OK);
 	}
 
 	@GetMapping("/current")
@@ -62,8 +57,7 @@ public class UserService {
 	public ResponseEntity<Page<User>> list(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "name") String order,
 			@RequestParam(defaultValue = "DESC") Sort.Direction direction) {
-		return new ResponseEntity<>(userRep.findAll(PageRequest.of(page, size, new Sort(direction, order))),
-				HttpStatus.OK);
+		return new ResponseEntity<>(userBo.list(PageRequest.of(page, size, new Sort(direction, order))), HttpStatus.OK);
 	}
 
 	@GetMapping("/logout")
@@ -74,7 +68,7 @@ public class UserService {
 
 	@PostMapping("/update")
 	public ResponseEntity<User> update(@RequestBody final User user) {
-		return new ResponseEntity<>(userRep.save(user), HttpStatus.OK);
+		return new ResponseEntity<>(userBo.update(user), HttpStatus.OK);
 	}
 
 }

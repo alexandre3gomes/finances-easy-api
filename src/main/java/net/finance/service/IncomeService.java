@@ -16,48 +16,48 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.NonNull;
+import net.finance.bo.IncomeBo;
 import net.finance.entity.Income;
-import net.finance.repository.IncomeRepository;
 
 @RestController
 @RequestMapping("/income")
 public class IncomeService {
 
 	@NonNull
-	private final IncomeRepository incomeRep;
+	private final IncomeBo incomeBo;
 
 	@Autowired
-	public IncomeService(final IncomeRepository incomeRep) {
-		this.incomeRep = incomeRep;
+	public IncomeService(final IncomeBo incomeBo) {
+		this.incomeBo = incomeBo;
 	}
 
 	@PostMapping("/create")
 	public ResponseEntity<Income> create(@RequestBody final Income income) {
-		return new ResponseEntity<>(incomeRep.save(income), HttpStatus.OK);
+		return new ResponseEntity<>(incomeBo.create(income), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<Void> delete(@PathVariable("id") final Integer id) {
-		incomeRep.deleteById(id);
+		incomeBo.delete(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@GetMapping("/get/{id}")
 	public ResponseEntity<Income> get(@PathVariable("id") final Integer id) {
-		return new ResponseEntity<>(incomeRep.findById(id).get(), HttpStatus.OK);
+		return new ResponseEntity<>(incomeBo.get(id), HttpStatus.OK);
 	}
 
 	@GetMapping("/list")
-	public ResponseEntity<Page<Income>> list(@RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "date") String order,
-			@RequestParam(defaultValue = "DESC") Sort.Direction direction) {
-		return new ResponseEntity<>(incomeRep.findAll(PageRequest.of(page, size, new Sort(direction, order))),
+	public ResponseEntity<Page<Income>> list(@RequestParam(defaultValue = "0") final int page,
+			@RequestParam(defaultValue = "10") final int size, @RequestParam(defaultValue = "date") final String order,
+			@RequestParam(defaultValue = "DESC") final Sort.Direction direction) {
+		return new ResponseEntity<>(incomeBo.list(PageRequest.of(page, size, new Sort(direction, order))),
 				HttpStatus.OK);
 	}
 
 	@PostMapping("/update")
 	public ResponseEntity<Income> update(@RequestBody final Income income) {
-		return new ResponseEntity<>(incomeRep.save(income), HttpStatus.OK);
+		return new ResponseEntity<>(incomeBo.update(income), HttpStatus.OK);
 	}
 
 }

@@ -1,32 +1,34 @@
+
 package net.finance.entity;
 // Generated Dec 28, 2018 2:10:35 PM by Hibernate Tools 5.3.6.Final
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "category")
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
-@EqualsAndHashCode
 public class Category implements Serializable {
 
 	/**
@@ -40,7 +42,8 @@ public class Category implements Serializable {
 	private Integer id;
 	@Column(name = "name")
 	private String name;
-	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<BudgetCategories> budgetCategories;
+	@JsonIgnore
+	@OneToMany(mappedBy = "category")
+	private Set<BudgetCategories> budgets;
 
 }

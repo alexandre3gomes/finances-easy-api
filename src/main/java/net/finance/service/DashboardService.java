@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import net.finance.bo.BudgetBo;
 import net.finance.bo.ExpenseBo;
 import net.finance.bo.IncomeBo;
+import net.finance.dto.report.CategoryAggregValuesDto;
 import net.finance.entity.Expense;
 import net.finance.entity.Income;
 
@@ -22,11 +24,13 @@ public class DashboardService {
 
 	private final ExpenseBo expenseBo;
 	private final IncomeBo incomeBo;
+	private final BudgetBo budgetBo;
 
 	@Autowired
-	public DashboardService(final ExpenseBo expenseBo, final IncomeBo incomeBo) {
+	public DashboardService(final ExpenseBo expenseBo, final IncomeBo incomeBo, final BudgetBo budgetBo) {
 		this.expenseBo = expenseBo;
 		this.incomeBo = incomeBo;
+		this.budgetBo = budgetBo;
 
 	}
 
@@ -48,6 +52,11 @@ public class DashboardService {
 			incomes = optIncomes.get();
 		}
 		return new ResponseEntity<>(incomes, HttpStatus.OK);
+	}
+
+	@GetMapping("/actualBalance")
+	public ResponseEntity<List<CategoryAggregValuesDto>> getActualBalance() {
+		return new ResponseEntity<>(budgetBo.getActualBalance(), HttpStatus.OK);
 	}
 
 }

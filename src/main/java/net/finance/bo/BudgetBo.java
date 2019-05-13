@@ -1,6 +1,9 @@
 package net.finance.bo;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -11,21 +14,26 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import net.finance.dto.report.CategoryAggregValuesDto;
 import net.finance.entity.Budget;
 import net.finance.entity.BudgetCategories;
 import net.finance.entity.BudgetPeriods;
+import net.finance.entity.Category;
 import net.finance.enums.BreakpointEnum;
 import net.finance.repository.BudgetRepository;
+import net.finance.repository.CategoryRepository;
 
 @Service
 @Transactional
 public class BudgetBo {
 
 	BudgetRepository budgetRepository;
+	private final CategoryRepository categoryRepository;
 
 	@Autowired
-	public BudgetBo(BudgetRepository budgetRepository) {
+	public BudgetBo(final BudgetRepository budgetRepository, final CategoryRepository categoryRepository) {
 		this.budgetRepository = budgetRepository;
+		this.categoryRepository = categoryRepository;
 	}
 
 	public Budget create(final Budget budget) {
@@ -40,7 +48,7 @@ public class BudgetBo {
 		return budgetRepository.findById(id).get();
 	}
 
-	public Page<Budget> list(PageRequest pageRequest) {
+	public Page<Budget> list(final PageRequest pageRequest) {
 		return budgetRepository.findAll(pageRequest);
 	}
 
@@ -49,14 +57,27 @@ public class BudgetBo {
 		return budgetRepository.save(getNewBudget(budget));
 	}
 
-	private Budget getNewBudget(Budget budget) {
+	public List<CategoryAggregValuesDto> getActualBalance() {
+		final List<CategoryAggregValuesDto> ret = new ArrayList<>();
+		final Date now = Calendar.getInstance().getTime();
+		final List<Category> categories = categoryRepository.getCategoriesByPeriod(now);
+		for (final Category cat : categories) {
+			final CategoryAggregValuesDto catAg = new CategoryAggregValuesDto();
+			catAg.setCategory(cat);
+			catAg.setPeriodValue(budgetRepository.getAggregateValueByDate(now, cat.getId()));
+			ret.add(catAg);
+		}
+		return ret;
+	}
+
+	private Budget getNewBudget(final Budget budget) {
 		final BudgetCategories[] budCat = budget.getCategories().stream().toArray(BudgetCategories[]::new);
 		final Budget newBudget = new Budget(budget.getUser(), budget.getStartDate(), budget.getEndDate(),
 				budget.getBreakPeriod(), splitInMonths(budget), budCat);
 		return newBudget;
 	}
 
-	private static Set<BudgetPeriods> splitInMonths(Budget budget) {
+	private static Set<BudgetPeriods> splitInMonths(final Budget budget) {
 		final Set<BudgetPeriods> periods = new TreeSet<>();
 		LocalDateTime sDate = new LocalDateTime(budget.getStartDate());
 		final LocalDateTime eDate = new LocalDateTime(budget.getEndDate());

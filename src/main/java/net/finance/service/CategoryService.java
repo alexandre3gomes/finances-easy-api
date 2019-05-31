@@ -37,9 +37,9 @@ public class CategoryService {
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Void> delete(@PathVariable("id") final Integer id) {
+	public ResponseEntity<Integer> delete(@PathVariable("id") final Integer id) {
 		categoryBo.delete(id);
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(id, HttpStatus.OK);
 	}
 
 	@GetMapping("/get/{id}")
@@ -48,9 +48,9 @@ public class CategoryService {
 	}
 
 	@GetMapping("/list")
-	public ResponseEntity<Page<Category>> list(@RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "id") String order,
-			@RequestParam(defaultValue = "DESC") Sort.Direction direction) {
+	public ResponseEntity<Page<Category>> list(@RequestParam(defaultValue = "0") final int page,
+			@RequestParam(defaultValue = "10") final int size, @RequestParam(defaultValue = "id") final String order,
+			@RequestParam(defaultValue = "DESC") final Sort.Direction direction) {
 		return new ResponseEntity<>(categoryBo.list(PageRequest.of(page, size, new Sort(direction, order))),
 				HttpStatus.OK);
 	}

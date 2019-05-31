@@ -38,9 +38,9 @@ public class UserService {
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Void> delete(@PathVariable("id") final Integer id) {
+	public ResponseEntity<Integer> delete(@PathVariable("id") final Integer id) {
 		userBo.delete(id);
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(id, HttpStatus.OK);
 	}
 
 	@GetMapping("/get/{id}")
@@ -54,9 +54,9 @@ public class UserService {
 	}
 
 	@GetMapping("/list")
-	public ResponseEntity<Page<User>> list(@RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "name") String order,
-			@RequestParam(defaultValue = "DESC") Sort.Direction direction) {
+	public ResponseEntity<Page<User>> list(@RequestParam(defaultValue = "0") final int page,
+			@RequestParam(defaultValue = "10") final int size, @RequestParam(defaultValue = "name") final String order,
+			@RequestParam(defaultValue = "DESC") final Sort.Direction direction) {
 		return new ResponseEntity<>(userBo.list(PageRequest.of(page, size, new Sort(direction, order))), HttpStatus.OK);
 	}
 

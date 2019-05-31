@@ -27,7 +27,7 @@ public class ExpenseService {
 	private final ExpenseBo expenseBo;
 
 	@Autowired
-	public ExpenseService(ExpenseBo expenseBo) {
+	public ExpenseService(final ExpenseBo expenseBo) {
 		this.expenseBo = expenseBo;
 	}
 
@@ -37,9 +37,9 @@ public class ExpenseService {
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Void> delete(@PathVariable("id") final Integer id) {
+	public ResponseEntity<Integer> delete(@PathVariable("id") final Integer id) {
 		expenseBo.delete(id);
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(id, HttpStatus.OK);
 	}
 
 	@GetMapping("/get/{id}")
@@ -48,9 +48,10 @@ public class ExpenseService {
 	}
 
 	@GetMapping("/list")
-	public ResponseEntity<Page<Expense>> list(@RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "expireAt") String order,
-			@RequestParam(defaultValue = "DESC") Sort.Direction direction) {
+	public ResponseEntity<Page<Expense>> list(@RequestParam(defaultValue = "0") final int page,
+			@RequestParam(defaultValue = "10") final int size,
+			@RequestParam(defaultValue = "expireAt") final String order,
+			@RequestParam(defaultValue = "DESC") final Sort.Direction direction) {
 		return new ResponseEntity<>(expenseBo.list(PageRequest.of(page, size, new Sort(direction, order))),
 				HttpStatus.OK);
 	}

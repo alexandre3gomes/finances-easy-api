@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Income extends BaseAuditEntity implements Serializable {
+public class Income implements Serializable {
 
 	/**
 	 *

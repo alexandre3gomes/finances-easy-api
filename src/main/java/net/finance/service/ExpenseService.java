@@ -37,9 +37,9 @@ public class ExpenseService {
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Integer> delete(@PathVariable("id") final Integer id) {
+	public ResponseEntity<Void> delete(@PathVariable("id") final Integer id) {
 		expenseBo.delete(id);
-		return new ResponseEntity<>(id, HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@GetMapping("/get/{id}")

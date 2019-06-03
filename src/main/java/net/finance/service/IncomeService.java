@@ -37,9 +37,9 @@ public class IncomeService {
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Integer> delete(@PathVariable("id") final Integer id) {
+	public ResponseEntity<Void> delete(@PathVariable("id") final Integer id) {
 		incomeBo.delete(id);
-		return new ResponseEntity<>(id, HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@GetMapping("/get/{id}")

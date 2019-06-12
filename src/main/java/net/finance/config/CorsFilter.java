@@ -24,11 +24,7 @@ public class CorsFilter implements Filter {
 	public void doFilter(final ServletRequest req, final ServletResponse res, final FilterChain chain) {
 		final HttpServletResponse response = (HttpServletResponse) res;
 		final HttpServletRequest request = (HttpServletRequest) req;
-		String allowOrigin = "*";
-		if (environment.getActiveProfiles()[0].contains("prod")) {
-			allowOrigin = "https://finances-easy-web.herokuapp.com";
-		}
-		response.setHeader("Access-Control-Allow-Origin", allowOrigin);
+		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE");
 		response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
 		response.setHeader("Access-Control-Max-Age", "3600");

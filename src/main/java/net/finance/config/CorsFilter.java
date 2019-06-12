@@ -24,7 +24,7 @@ public class CorsFilter implements Filter {
 	public void doFilter(final ServletRequest req, final ServletResponse res, final FilterChain chain) {
 		final HttpServletResponse response = (HttpServletResponse) res;
 		final HttpServletRequest request = (HttpServletRequest) req;
-		String allowOrigin = "http://localhost:4200";
+		String allowOrigin = "*";
 		if (environment.getActiveProfiles()[0].contains("prod")) {
 			allowOrigin = "https://finances-easy-web.herokuapp.com";
 		}

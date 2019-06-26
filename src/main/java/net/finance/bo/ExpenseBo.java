@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.NonNull;
 import net.finance.entity.BudgetPeriods;
+import net.finance.entity.Category;
 import net.finance.entity.Expense;
 import net.finance.repository.BudgetRepository;
 import net.finance.repository.ExpenseRepository;
@@ -60,6 +61,15 @@ public class ExpenseBo {
 		} else {
 			return Optional.empty();
 		}
+	}
+
+	public Page<Expense> getExpenseByCategory(final Category category, final PageRequest page) {
+		return expenseRepository.findByCategory(category, page);
+	}
+
+	public Page<Expense> getExpenseByCategoryAndDates(final Category category, final Date startDate, final Date endDate,
+			final PageRequest page) {
+		return expenseRepository.findByCategoryAndExpireAtBetween(category, startDate, endDate, page);
 	}
 
 }

@@ -1,5 +1,7 @@
 package net.finance.service;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.NonNull;
 import net.finance.bo.ExpenseBo;
+import net.finance.entity.Category;
 import net.finance.entity.Expense;
 
 @RestController
@@ -59,6 +62,25 @@ public class ExpenseService {
 	@PostMapping("/update")
 	public ResponseEntity<Expense> update(@RequestBody final Expense dev) {
 		return new ResponseEntity<>(expenseBo.update(dev), HttpStatus.OK);
+	}
+
+	@GetMapping("/list/{categoryId}")
+	public ResponseEntity<Page<Expense>> listByCategory(@PathVariable("categoryId") final Integer categoryId,
+			@RequestParam(defaultValue = "0") final int page, @RequestParam(defaultValue = "10") final int size,
+			@RequestParam(defaultValue = "expireAt") final String order,
+			@RequestParam(defaultValue = "DESC") final Sort.Direction direction) {
+		return new ResponseEntity<>(expenseBo.getExpenseByCategory(new Category(categoryId),
+				PageRequest.of(page, size, new Sort(direction, order))), HttpStatus.OK);
+	}
+
+	@GetMapping("/list/{categoryId}/{startDate}/{endDate}")
+	public ResponseEntity<Page<Expense>> listByCategoryAndDates(@PathVariable("categoryId") final Integer categoryId,
+			@PathVariable("startDate") final Date startDate, @PathVariable("endDate") final Date endDate,
+			@RequestParam(defaultValue = "0") final int page, @RequestParam(defaultValue = "10") final int size,
+			@RequestParam(defaultValue = "expireAt") final String order,
+			@RequestParam(defaultValue = "DESC") final Sort.Direction direction) {
+		return new ResponseEntity<>(expenseBo.getExpenseByCategoryAndDates(new Category(categoryId), startDate, endDate,
+				PageRequest.of(page, size, new Sort(direction, order))), HttpStatus.OK);
 	}
 
 }

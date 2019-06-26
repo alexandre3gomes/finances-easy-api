@@ -7,8 +7,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -45,31 +43,12 @@ public class UserBo {
 		return userRep.findById(id).get();
 	}
 
-	public Page<User> list(PageRequest pageReq) {
+	public Page<User> list(final PageRequest pageReq) {
 		return userRep.findAll(pageReq);
 	}
 
 	public User update(final User user) {
 		return userRep.save(user);
-	}
-
-	@Bean
-	@Profile("dev")
-	public void initTestUser() {
-		System.out.println("Creating test user...");
-		final Optional<User> alexandre = userRep.getUserByUsernameAndPassword("alexandre",
-				EncryptUtils.hashPassword("spfc2408").get());
-		User admin = new User();
-		if (alexandre.isPresent()) {
-			admin = alexandre.get();
-		} else {
-			admin.setId(1);
-			admin.setName("Alexandre");
-			admin.setUsername("alexandre");
-			admin.setPassword("924d5413f06c0fba1ded3a11f61171ee");
-			userRep.save(admin);
-		}
-		loggedUsers.put("7cd2f9e1-a6e9-4675-9176-b9219b0fd8d8", admin);
 	}
 
 	public User create(final User user) {

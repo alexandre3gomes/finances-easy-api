@@ -1,6 +1,7 @@
 package net.finance.service;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -75,11 +76,13 @@ public class ExpenseService {
 
 	@GetMapping("/list/{categoryId}/{startDate}/{endDate}")
 	public ResponseEntity<Page<Expense>> listByCategoryAndDates(@PathVariable("categoryId") final Integer categoryId,
-			@PathVariable("startDate") final Date startDate, @PathVariable("endDate") final Date endDate,
+			@PathVariable("startDate") final String startDate, @PathVariable("endDate") final String endDate,
 			@RequestParam(defaultValue = "0") final int page, @RequestParam(defaultValue = "10") final int size,
 			@RequestParam(defaultValue = "expireAt") final String order,
 			@RequestParam(defaultValue = "DESC") final Sort.Direction direction) {
-		return new ResponseEntity<>(expenseBo.getExpenseByCategoryAndDates(new Category(categoryId), startDate, endDate,
+		return new ResponseEntity<>(expenseBo.getExpenseByCategoryAndDates(new Category(categoryId),
+				LocalDate.parse(startDate, DateTimeFormatter.BASIC_ISO_DATE),
+				LocalDate.parse(endDate, DateTimeFormatter.BASIC_ISO_DATE),
 				PageRequest.of(page, size, new Sort(direction, order))), HttpStatus.OK);
 	}
 

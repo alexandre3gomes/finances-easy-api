@@ -1,5 +1,6 @@
 package net.finance.bo;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -67,9 +68,10 @@ public class ExpenseBo {
 		return expenseRepository.findByCategory(category, page);
 	}
 
-	public Page<Expense> getExpenseByCategoryAndDates(final Category category, final Date startDate, final Date endDate,
-			final PageRequest page) {
-		return expenseRepository.findByCategoryAndExpireAtBetween(category, startDate, endDate, page);
+	public Page<Expense> getExpenseByCategoryAndDates(final Category category, final LocalDate startDate,
+			final LocalDate endDate, final PageRequest page) {
+		return expenseRepository.findByCategoryAndExpireAtBetween(category, java.sql.Date.valueOf(startDate),
+				java.sql.Date.valueOf(endDate), page);
 	}
 
 }

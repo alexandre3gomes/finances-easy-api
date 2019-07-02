@@ -31,23 +31,23 @@ public class IncomeService {
 		this.incomeBo = incomeBo;
 	}
 
-	@PostMapping("/create")
+	@PostMapping("")
 	public ResponseEntity<Income> create(@RequestBody final Income income) {
 		return new ResponseEntity<>(incomeBo.create(income), HttpStatus.OK);
 	}
 
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable("id") final Integer id) {
 		incomeBo.delete(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@GetMapping("/get/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<Income> get(@PathVariable("id") final Integer id) {
 		return new ResponseEntity<>(incomeBo.get(id), HttpStatus.OK);
 	}
 
-	@GetMapping("/list")
+	@GetMapping("")
 	public ResponseEntity<Page<Income>> list(@RequestParam(defaultValue = "0") final int page,
 			@RequestParam(defaultValue = "10") final int size, @RequestParam(defaultValue = "date") final String order,
 			@RequestParam(defaultValue = "DESC") final Sort.Direction direction) {

@@ -31,23 +31,23 @@ public class CategoryService {
 		this.categoryBo = categoryBo;
 	}
 
-	@PostMapping("/create")
+	@PostMapping("")
 	public ResponseEntity<Category> create(@RequestBody final Category budget) {
 		return new ResponseEntity<>(categoryBo.create(budget), HttpStatus.OK);
 	}
 
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable("id") final Integer id) {
 		categoryBo.delete(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@GetMapping("/get/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<Category> get(@PathVariable("id") final Integer id) {
 		return new ResponseEntity<>(categoryBo.get(id), HttpStatus.OK);
 	}
 
-	@GetMapping("/list")
+	@GetMapping("")
 	public ResponseEntity<Page<Category>> list(@RequestParam(defaultValue = "0") final int page,
 			@RequestParam(defaultValue = "10") final int size, @RequestParam(defaultValue = "id") final String order,
 			@RequestParam(defaultValue = "DESC") final Sort.Direction direction) {

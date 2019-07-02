@@ -31,23 +31,23 @@ public class BudgetService {
 		budgetBo = budgetRepository;
 	}
 
-	@PostMapping("/create")
+	@PostMapping("")
 	public ResponseEntity<Budget> create(@RequestBody final Budget budget) {
 		return new ResponseEntity<>(budgetBo.create(budget), HttpStatus.OK);
 	}
 
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable("id") final Integer id) {
 		budgetBo.delete(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@GetMapping("/get/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<Budget> get(@PathVariable("id") final Integer id) {
 		return new ResponseEntity<>(budgetBo.get(id), HttpStatus.OK);
 	}
 
-	@GetMapping("/list")
+	@GetMapping("")
 	public ResponseEntity<Page<Budget>> list(@RequestParam(defaultValue = "0") final int page,
 			@RequestParam(defaultValue = "10") final int size,
 			@RequestParam(defaultValue = "startDate") final String order,

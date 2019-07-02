@@ -1,4 +1,4 @@
-package net.finance;
+package net.finance.dto;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

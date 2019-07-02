@@ -32,18 +32,18 @@ public class UserService {
 		this.userBo = userBo;
 	}
 
-	@PostMapping("/create")
+	@PostMapping("")
 	public ResponseEntity<User> create(@RequestBody final User user) {
 		return new ResponseEntity<>(userBo.create(user), HttpStatus.OK);
 	}
 
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable("id") final Integer id) {
 		userBo.delete(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@GetMapping("/get/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<User> get(@PathVariable("id") final Integer id) {
 		return new ResponseEntity<>(userBo.get(id), HttpStatus.OK);
 	}
@@ -53,7 +53,7 @@ public class UserService {
 		return user;
 	}
 
-	@GetMapping("/list")
+	@GetMapping("")
 	public ResponseEntity<Page<User>> list(@RequestParam(defaultValue = "0") final int page,
 			@RequestParam(defaultValue = "10") final int size, @RequestParam(defaultValue = "name") final String order,
 			@RequestParam(defaultValue = "DESC") final Sort.Direction direction) {

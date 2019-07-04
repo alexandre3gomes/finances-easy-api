@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.NonNull;
 import net.finance.bo.ExpenseBo;
-import net.finance.entity.Category;
+import net.finance.dto.ExpenseFilterDTO;
 import net.finance.entity.Expense;
 
 @RestController
@@ -55,25 +55,18 @@ public class ExpenseService {
 	public ResponseEntity<Page<Expense>> list(@RequestParam(defaultValue = "0") final int page,
 			@RequestParam(defaultValue = "10") final int size,
 			@RequestParam(defaultValue = "expireAt") final String order,
-			@RequestParam(defaultValue = "DESC") final Sort.Direction direction) {
-		return new ResponseEntity<>(expenseBo.list(PageRequest.of(page, size, new Sort(direction, order))),
+			@RequestParam(defaultValue = "DESC") final Sort.Direction direction,
+			@RequestParam("categoryId") final Integer categoryId,
+			@RequestParam("startDate") @DateTimeFormat(pattern = "yyyyMMdd") final Date startDate,
+			@RequestParam("endDate") @DateTimeFormat(pattern = "yyyyMMdd") final Date endDate) {
+		final ExpenseFilterDTO expFilter = new ExpenseFilterDTO(categoryId, startDate, endDate);
+		return new ResponseEntity<>(expenseBo.list(PageRequest.of(page, size, new Sort(direction, order)), expFilter),
 				HttpStatus.OK);
 	}
 
 	@PostMapping("/update")
 	public ResponseEntity<Expense> update(@RequestBody final Expense dev) {
 		return new ResponseEntity<>(expenseBo.update(dev), HttpStatus.OK);
-	}
-
-	@GetMapping("/{categoryId}/{startDate}/{endDate}")
-	public ResponseEntity<Page<Expense>> listByCategoryAndDates(@PathVariable("categoryId") final Integer categoryId,
-			@PathVariable("startDate") @DateTimeFormat(pattern = "yyyyMMdd") final Date startDate,
-			@PathVariable("endDate") @DateTimeFormat(pattern = "yyyyMMdd") final Date endDate,
-			@RequestParam(defaultValue = "0") final int page, @RequestParam(defaultValue = "10") final int size,
-			@RequestParam(defaultValue = "expireAt") final String order,
-			@RequestParam(defaultValue = "DESC") final Sort.Direction direction) {
-		return new ResponseEntity<>(expenseBo.getExpenseByCategoryAndDates(new Category(categoryId), startDate, endDate,
-				PageRequest.of(page, size, new Sort(direction, order))), HttpStatus.OK);
 	}
 
 }

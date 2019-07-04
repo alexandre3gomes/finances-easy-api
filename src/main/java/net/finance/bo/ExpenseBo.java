@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import lombok.NonNull;
+import net.finance.dto.ExpenseFilterDTO;
 import net.finance.entity.BudgetPeriods;
 import net.finance.entity.Category;
 import net.finance.entity.Expense;
@@ -45,8 +46,16 @@ public class ExpenseBo {
 		return expenseRepository.findById(id).get();
 	}
 
-	public Page<Expense> list(final PageRequest pageReq) {
-		return expenseRepository.findAll(pageReq);
+	public Page<Expense> list(final PageRequest pageReq, final ExpenseFilterDTO expFilter) {
+		if (expFilter.getCategoryId() == null && (expFilter.getStartDate() == null || expFilter.getEndDate() == null)) {
+			return expenseRepository.findAll(pageReq);
+		} else if (expFilter.getCategoryId() != null
+				&& (expFilter.getStartDate() == null || expFilter.getEndDate() == null)) {
+			return expenseRepository.findByCategory(new Category(expFilter.getCategoryId()), pageReq);
+		} else {
+			return expenseRepository.findByCategoryAndExpireAtBetween(new Category(expFilter.getCategoryId()),
+					expFilter.getStartDate(), expFilter.getEndDate(), pageReq);
+		}
 	}
 
 	public Expense update(final Expense dev) {

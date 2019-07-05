@@ -56,10 +56,10 @@ public class ExpenseService {
 			@RequestParam(defaultValue = "10") final int size,
 			@RequestParam(defaultValue = "expireAt") final String order,
 			@RequestParam(defaultValue = "DESC") final Sort.Direction direction,
-			@RequestParam("categoryId") final Integer categoryId,
-			@RequestParam("startDate") @DateTimeFormat(pattern = "yyyyMMdd") final Date startDate,
-			@RequestParam("endDate") @DateTimeFormat(pattern = "yyyyMMdd") final Date endDate) {
-		final ExpenseFilterDTO expFilter = new ExpenseFilterDTO(categoryId, startDate, endDate);
+			@RequestParam("category") final Integer category,
+			@RequestParam("start") @DateTimeFormat(pattern = "yyyyMMdd") final Date startDate,
+			@RequestParam("end") @DateTimeFormat(pattern = "yyyyMMdd") final Date endDate) {
+		final ExpenseFilterDTO expFilter = new ExpenseFilterDTO(category, startDate, endDate);
 		return new ResponseEntity<>(expenseBo.list(PageRequest.of(page, size, new Sort(direction, order)), expFilter),
 				HttpStatus.OK);
 	}

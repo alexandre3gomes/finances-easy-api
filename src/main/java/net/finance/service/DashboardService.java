@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,7 +37,7 @@ public class DashboardService {
 
 	@GetMapping("/actualExpense")
 	public ResponseEntity<List<Expense>> getActualExpense() {
-		final Optional<List<Expense>> optExpenses = expenseBo.getActualExpense();
+		final Optional<List<Expense>> optExpenses = expenseBo.getActualExpense(PageRequest.of(0, Integer.MAX_VALUE));
 		List<Expense> expenses = new ArrayList<>();
 		if (optExpenses.isPresent()) {
 			expenses = optExpenses.get();

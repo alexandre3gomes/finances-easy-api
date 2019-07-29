@@ -1,8 +1,6 @@
 package net.finance.repository;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -20,7 +18,7 @@ public interface ExpenseRepository extends JpaRepositoryImplementation<Expense, 
 
 	Page<Expense> findByCategory(Category category, Pageable page);
 
-	Optional<List<Expense>> findByExpireAtBetween(Date startDate, Date endDate);
+	Page<Expense> findByExpireAtBetween(Date startDate, Date endDate, Pageable page);
 
 	Page<Expense> findByCategoryAndExpireAtBetween(Category category, Date startDate, Date endDate, Pageable page);
 

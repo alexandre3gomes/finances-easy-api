@@ -1,5 +1,6 @@
 package net.finance.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,13 @@ public class ReportService {
 	private ReportBo reportBo;
 
 	@GetMapping("/byCategory/{budgetId}")
-	public ResponseEntity<List<CategoryAggregValuesDto>> byCategory(@PathVariable("budgetId") Integer budgetId) {
+	public ResponseEntity<List<CategoryAggregValuesDto>> byCategory(@PathVariable("budgetId") final Integer budgetId) {
 		return new ResponseEntity<>(reportBo.byCategory(budgetId), HttpStatus.OK);
+	}
+
+	@GetMapping("/byPeriod/{budgetId}")
+	public ResponseEntity<List<BigDecimal>> incomeByPeriod(@PathVariable("budgetId") final Integer budgetId) {
+		return new ResponseEntity<>(reportBo.incomeByPeriod(budgetId), HttpStatus.OK);
 	}
 
 }

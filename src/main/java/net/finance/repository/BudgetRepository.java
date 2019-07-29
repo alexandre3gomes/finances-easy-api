@@ -13,8 +13,8 @@ import net.finance.entity.BudgetPeriods;
 
 public interface BudgetRepository extends JpaRepository<Budget, Integer> {
 
-	@Query("select bp.budget, bp.idPeriod, bp.startDate, bp.endDate from BudgetPeriods bp where bp.budget.id = :budgetId order by bp.idPeriod")
-	Optional<List<BudgetPeriods>> getPeriodsByBudget(Integer budgetId);
+	@Query("select new net.finance.entity.BudgetPeriods(bp.budget, bp.idPeriod, bp.startDate, bp.endDate) from BudgetPeriods bp where bp.budget.id = :budgetId order by bp.idPeriod")
+	List<BudgetPeriods> getPeriodsByBudget(Integer budgetId);
 
 	@Query("select bp from BudgetPeriods bp where :now between bp.startDate and bp.endDate")
 	Optional<BudgetPeriods> getPeriodsByDate(Date now);

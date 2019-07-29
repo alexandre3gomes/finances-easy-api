@@ -14,11 +14,15 @@ import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "budget_periods")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class BudgetPeriods implements Serializable, Comparable<BudgetPeriods> {
 
 	/**
@@ -41,7 +45,7 @@ public class BudgetPeriods implements Serializable, Comparable<BudgetPeriods> {
 	private Date endDate;
 
 	@Override
-	public int compareTo(BudgetPeriods o) {
+	public int compareTo(final BudgetPeriods o) {
 		return startDate.after(o.startDate) ? 1 : 0;
 	}
 

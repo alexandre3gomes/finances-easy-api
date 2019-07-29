@@ -52,6 +52,9 @@ public class ExpenseBo {
 		} else if (expFilter.getCategoryId() != null
 				&& (expFilter.getStartDate() == null || expFilter.getEndDate() == null)) {
 			return expenseRepository.findByCategory(new Category(expFilter.getCategoryId()), pageReq);
+		} else if (expFilter.getCategoryId() == null
+				&& (expFilter.getStartDate() != null || expFilter.getEndDate() != null)) {
+			return expenseRepository.findByExpireAtBetween(expFilter.getStartDate(), expFilter.getEndDate(), pageReq);
 		} else {
 			return expenseRepository.findByCategoryAndExpireAtBetween(new Category(expFilter.getCategoryId()),
 					expFilter.getStartDate(), expFilter.getEndDate(), pageReq);
@@ -62,11 +65,13 @@ public class ExpenseBo {
 		return expenseRepository.save(dev);
 	}
 
-	public Optional<List<Expense>> getActualExpense() {
+	public Optional<List<Expense>> getActualExpense(final PageRequest pageReq) {
 		final Date now = Calendar.getInstance().getTime();
 		final Optional<BudgetPeriods> period = budgetRepository.getPeriodsByDate(now);
 		if (period.isPresent()) {
-			return expenseRepository.findByExpireAtBetween(period.get().getStartDate(), period.get().getEndDate());
+			return Optional.of(expenseRepository
+					.findByExpireAtBetween(period.get().getStartDate(), period.get().getEndDate(), pageReq)
+					.getContent());
 		} else {
 			return Optional.empty();
 		}

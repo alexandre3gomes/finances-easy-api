@@ -12,11 +12,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import com.querydsl.core.types.dsl.BooleanExpression;
+
 import lombok.NonNull;
 import net.finance.dto.ExpenseFilterDTO;
 import net.finance.entity.BudgetPeriods;
 import net.finance.entity.Category;
 import net.finance.entity.Expense;
+import net.finance.entity.QExpense;
 import net.finance.repository.BudgetRepository;
 import net.finance.repository.ExpenseRepository;
 
@@ -27,6 +30,7 @@ public class ExpenseBo {
 	@NonNull
 	private final ExpenseRepository expenseRepository;
 	private final BudgetRepository budgetRepository;
+	final QExpense expense = new QExpense("expense");
 
 	@Autowired
 	public ExpenseBo(final ExpenseRepository expenseRep, final BudgetRepository budgetRepository) {
@@ -47,18 +51,11 @@ public class ExpenseBo {
 	}
 
 	public Page<Expense> list(final PageRequest pageReq, final ExpenseFilterDTO expFilter) {
-		if (expFilter.getCategoryId() == null && (expFilter.getStartDate() == null || expFilter.getEndDate() == null)) {
-			return expenseRepository.findAll(pageReq);
-		} else if (expFilter.getCategoryId() != null
-				&& (expFilter.getStartDate() == null || expFilter.getEndDate() == null)) {
-			return expenseRepository.findByCategory(new Category(expFilter.getCategoryId()), pageReq);
-		} else if (expFilter.getCategoryId() == null
-				&& (expFilter.getStartDate() != null || expFilter.getEndDate() != null)) {
-			return expenseRepository.findByExpireAtBetween(expFilter.getStartDate(), expFilter.getEndDate(), pageReq);
-		} else {
-			return expenseRepository.findByCategoryAndExpireAtBetween(new Category(expFilter.getCategoryId()),
-					expFilter.getStartDate(), expFilter.getEndDate(), pageReq);
-		}
+		final BooleanExpression containsName = expense.name.containsIgnoreCase(expFilter.getName());
+		final BooleanExpression eqCategory = expense.category.eq(new Category(expFilter.getCategoryId()));
+		final BooleanExpression betweenDate = expense.expireAt.between(expFilter.getStartDate(),
+				expFilter.getEndDate());
+		return expenseRepository.findAll(containsName.and(eqCategory).and(betweenDate), pageReq);
 	}
 
 	public Expense update(final Expense dev) {
@@ -68,22 +65,13 @@ public class ExpenseBo {
 	public Optional<List<Expense>> getActualExpense(final PageRequest pageReq) {
 		final Date now = Calendar.getInstance().getTime();
 		final Optional<BudgetPeriods> period = budgetRepository.getPeriodsByDate(now);
+		final QExpense expense = new QExpense("expense");
 		if (period.isPresent()) {
-			return Optional.of(expenseRepository
-					.findByExpireAtBetween(period.get().getStartDate(), period.get().getEndDate(), pageReq)
-					.getContent());
+			final BooleanExpression betweenDate = expense.expireAt.between(period.get().getStartDate(),
+					period.get().getEndDate());
+			return Optional.of(expenseRepository.findAll(betweenDate, pageReq).getContent());
 		} else {
 			return Optional.empty();
 		}
 	}
-
-	public Page<Expense> getExpenseByCategory(final Category category, final PageRequest page) {
-		return expenseRepository.findByCategory(category, page);
-	}
-
-	public Page<Expense> getExpenseByCategoryAndDates(final Category category, final Date startDate, final Date endDate,
-			final PageRequest page) {
-		return expenseRepository.findByCategoryAndExpireAtBetween(category, startDate, endDate, page);
-	}
-
 }

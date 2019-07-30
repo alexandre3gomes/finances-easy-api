@@ -12,5 +12,6 @@ public class ExpenseFilterDTO {
 	Integer categoryId;
 	Date startDate;
 	Date endDate;
+	String name;
 
 }

@@ -56,12 +56,24 @@ public class ExpenseBo {
 			predicate = expense.name.containsIgnoreCase(expFilter.getName());
 		}
 		if (expFilter.getCategoryId() != null) {
-			predicate.and(expense.category.eq(new Category(expFilter.getCategoryId())));
+			if (predicate != null) {
+				predicate = predicate.and(expense.category.eq(new Category(expFilter.getCategoryId())));
+			} else {
+				predicate = expense.category.eq(new Category(expFilter.getCategoryId()));
+			}
 		}
 		if (expFilter.getStartDate() != null && expFilter.getEndDate() != null) {
-			predicate.and(expense.expireAt.between(expFilter.getStartDate(), expFilter.getEndDate()));
+			if (predicate != null) {
+				predicate = predicate.and(expense.expireAt.between(expFilter.getStartDate(), expFilter.getEndDate()));
+			} else {
+				predicate = expense.expireAt.between(expFilter.getStartDate(), expFilter.getEndDate());
+			}
 		}
-		return expenseRepository.findAll(predicate, pageReq);
+		if (predicate != null) {
+			return expenseRepository.findAll(predicate, pageReq);
+		} else {
+			return expenseRepository.findAll(pageReq);
+		}
 	}
 
 	public Expense update(final Expense dev) {

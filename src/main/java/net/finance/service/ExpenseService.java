@@ -61,7 +61,7 @@ public class ExpenseService {
 			@RequestParam(name = "end", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) final Date endDate,
 			@RequestParam(name = "name", required = false) final String name) {
 		final ExpenseFilterDTO expFilter = new ExpenseFilterDTO(category, startDate, endDate, name);
-		return new ResponseEntity<>(expenseBo.list(PageRequest.of(page, size, new Sort(direction, order)), expFilter),
+		return new ResponseEntity<>(expenseBo.list(expFilter, PageRequest.of(page, size, new Sort(direction, order))),
 				HttpStatus.OK);
 	}
 

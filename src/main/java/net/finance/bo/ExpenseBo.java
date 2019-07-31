@@ -50,12 +50,18 @@ public class ExpenseBo {
 		return expenseRepository.findById(id).get();
 	}
 
-	public Page<Expense> list(final PageRequest pageReq, final ExpenseFilterDTO expFilter) {
-		final BooleanExpression containsName = expense.name.containsIgnoreCase(expFilter.getName());
-		final BooleanExpression eqCategory = expense.category.eq(new Category(expFilter.getCategoryId()));
-		final BooleanExpression betweenDate = expense.expireAt.between(expFilter.getStartDate(),
-				expFilter.getEndDate());
-		return expenseRepository.findAll(containsName.and(eqCategory).and(betweenDate), pageReq);
+	public Page<Expense> list(final ExpenseFilterDTO expFilter, final PageRequest pageReq) {
+		BooleanExpression predicate = null;
+		if (expFilter.getName() != null) {
+			predicate = expense.name.containsIgnoreCase(expFilter.getName());
+		}
+		if (expFilter.getCategoryId() != null) {
+			predicate.and(expense.category.eq(new Category(expFilter.getCategoryId())));
+		}
+		if (expFilter.getStartDate() != null && expFilter.getEndDate() != null) {
+			predicate.and(expense.expireAt.between(expFilter.getStartDate(), expFilter.getEndDate()));
+		}
+		return expenseRepository.findAll(predicate, pageReq);
 	}
 
 	public Expense update(final Expense dev) {

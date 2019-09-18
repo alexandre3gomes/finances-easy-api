@@ -23,6 +23,7 @@
 .settings
 .classpath
 .project
+.idea
 
 # Liquibase #
 *.out.*

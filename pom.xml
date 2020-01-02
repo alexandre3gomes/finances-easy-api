@@ -112,8 +112,8 @@
         <version>1.8.0</version>  
         <configuration>
           <schemaVersion>V2</schemaVersion>
-          <resourceGroup>finances-easy-1577981352269-rg</resourceGroup>
-          <appName>finances-easy-1577981352269</appName>
+          <resourceGroup>finances-easy-rg</resourceGroup>
+          <appName>finances-easy</appName>
           <pricingTier>P1v2</pricingTier>
           <region>westeurope</region>
           <runtime>

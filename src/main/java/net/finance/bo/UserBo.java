@@ -50,6 +50,8 @@ public class UserBo {
 	}
 
 	public User update(final User user) {
+		User dbUser = userRep.findById(user.getId()).get();
+		user.setPassword(dbUser.getPassword());
 		return userRep.save(user);
 	}
 

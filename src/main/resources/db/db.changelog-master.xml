@@ -8,4 +8,5 @@
   <include file="changelog/02-budget-period.xml" relativeToChangelogFile="true"/>
   <include file="changelog/03-audit-data.xml" relativeToChangelogFile="true"/>
   <include file="changelog/04-drop-audit-data.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/05-savings-schema.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

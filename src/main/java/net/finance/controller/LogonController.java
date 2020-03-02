@@ -1,4 +1,4 @@
-package net.finance.service;
+package net.finance.controller;
 
 import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
@@ -23,7 +23,7 @@ import net.finance.entity.User;
 @RequestMapping("/public/logon")
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 @AllArgsConstructor(access = PACKAGE)
-public class LogonService {
+public class LogonController {
 
 	@NonNull
 	UserBo userBo;

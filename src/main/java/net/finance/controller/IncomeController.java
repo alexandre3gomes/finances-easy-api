@@ -1,4 +1,4 @@
-package net.finance.service;
+package net.finance.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,49 +16,48 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.NonNull;
-import net.finance.bo.BudgetBo;
-import net.finance.entity.Budget;
+import net.finance.bo.IncomeBo;
+import net.finance.entity.Income;
 
 @RestController
-@RequestMapping("/budget")
-public class BudgetService {
+@RequestMapping("/income")
+public class IncomeController {
 
 	@NonNull
-	private final BudgetBo budgetBo;
+	private final IncomeBo incomeBo;
 
 	@Autowired
-	public BudgetService(final BudgetBo budgetRepository) {
-		budgetBo = budgetRepository;
+	public IncomeController(final IncomeBo incomeBo) {
+		this.incomeBo = incomeBo;
 	}
 
 	@PostMapping("")
-	public ResponseEntity<Budget> create(@RequestBody final Budget budget) {
-		return new ResponseEntity<>(budgetBo.create(budget), HttpStatus.OK);
+	public ResponseEntity<Income> create(@RequestBody final Income income) {
+		return new ResponseEntity<>(incomeBo.create(income), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable("id") final Integer id) {
-		budgetBo.delete(id);
+		incomeBo.delete(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Budget> get(@PathVariable("id") final Integer id) {
-		return new ResponseEntity<>(budgetBo.get(id), HttpStatus.OK);
+	public ResponseEntity<Income> get(@PathVariable("id") final Integer id) {
+		return new ResponseEntity<>(incomeBo.get(id), HttpStatus.OK);
 	}
 
 	@GetMapping("")
-	public ResponseEntity<Page<Budget>> list(@RequestParam(defaultValue = "0") final int page,
-			@RequestParam(defaultValue = "10") final int size,
-			@RequestParam(defaultValue = "startDate") final String order,
+	public ResponseEntity<Page<Income>> list(@RequestParam(defaultValue = "0") final int page,
+			@RequestParam(defaultValue = "10") final int size, @RequestParam(defaultValue = "date") final String order,
 			@RequestParam(defaultValue = "DESC") final Sort.Direction direction) {
-		return new ResponseEntity<>(budgetBo.list(PageRequest.of(page, size, new Sort(direction, order))),
+		return new ResponseEntity<>(incomeBo.list(PageRequest.of(page, size, new Sort(direction, order))),
 				HttpStatus.OK);
 	}
 
 	@PostMapping("/update")
-	public ResponseEntity<Budget> update(@RequestBody final Budget budget) {
-		return new ResponseEntity<>(budgetBo.update(budget), HttpStatus.OK);
+	public ResponseEntity<Income> update(@RequestBody final Income income) {
+		return new ResponseEntity<>(incomeBo.update(income), HttpStatus.OK);
 	}
 
 }

@@ -59,11 +59,15 @@ public class User implements Serializable, UserDetails {
 	@OneToMany(mappedBy = "user")
 	@JsonIgnore
 	@Transient
-	private final List<Expense> expensies = new ArrayList<>();
+	private final List<Expense> expenses = new ArrayList<>();
 	@OneToMany(mappedBy = "user")
 	@JsonIgnore
 	@Transient
 	private final List<Income> incomes = new ArrayList<>();
+	@OneToMany(mappedBy = "user")
+	@JsonIgnore
+	@Transient
+	private final List<Savings> savings = new ArrayList<>();
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

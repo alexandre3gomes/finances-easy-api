@@ -1,4 +1,4 @@
-package net.finance.service;
+package net.finance.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,13 +22,13 @@ import net.finance.entity.User;
 
 @RestController()
 @RequestMapping("/user")
-public class UserService {
+public class UserController {
 
 	@NonNull
 	private final UserBo userBo;
 
 	@Autowired
-	public UserService(final UserBo userBo) {
+	public UserController(final UserBo userBo) {
 		this.userBo = userBo;
 	}
 

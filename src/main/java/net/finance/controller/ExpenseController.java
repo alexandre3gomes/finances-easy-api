@@ -1,4 +1,4 @@
-package net.finance.service;
+package net.finance.controller;
 
 import java.util.Date;
 
@@ -25,13 +25,13 @@ import net.finance.entity.Expense;
 
 @RestController
 @RequestMapping("/expense")
-public class ExpenseService {
+public class ExpenseController {
 
 	@NonNull
 	private final ExpenseBo expenseBo;
 
 	@Autowired
-	public ExpenseService(final ExpenseBo expenseBo) {
+	public ExpenseController(final ExpenseBo expenseBo) {
 		this.expenseBo = expenseBo;
 	}
 

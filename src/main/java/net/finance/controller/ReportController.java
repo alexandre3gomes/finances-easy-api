@@ -1,4 +1,4 @@
-package net.finance.service;
+package net.finance.controller;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -16,7 +16,7 @@ import net.finance.dto.report.CategoryAggregValuesDto;
 
 @RestController
 @RequestMapping("/report")
-public class ReportService {
+public class ReportController {
 
 	@Autowired
 	private ReportBo reportBo;

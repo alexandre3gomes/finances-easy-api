@@ -42,6 +42,8 @@ public class Category implements Serializable {
 	private Integer id;
 	@Column(name = "name")
 	private String name;
+	@Column(name = "savings")
+	private Boolean savings;
 	@JsonIgnore
 	@OneToMany(mappedBy = "category")
 	private Set<BudgetCategories> budgets;

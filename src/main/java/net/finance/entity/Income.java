@@ -42,4 +42,6 @@ public class Income implements Serializable {
 	private BigDecimal value;
 	@Column(name = "date", nullable = false)
 	private Date date;
+	@Column(name = "description")
+	private String description;
 }

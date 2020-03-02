@@ -1,4 +1,4 @@
-package net.finance.service;
+package net.finance.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,19 +21,19 @@ import net.finance.entity.Category;
 
 @RestController
 @RequestMapping("/category")
-public class CategoryService {
+public class CategoryController {
 
 	@NonNull
 	private final CategoryBo categoryBo;
 
 	@Autowired
-	public CategoryService(final CategoryBo categoryBo) {
+	public CategoryController(final CategoryBo categoryBo) {
 		this.categoryBo = categoryBo;
 	}
 
 	@PostMapping("")
-	public ResponseEntity<Category> create(@RequestBody final Category budget) {
-		return new ResponseEntity<>(categoryBo.create(budget), HttpStatus.OK);
+	public ResponseEntity<Category> create(@RequestBody final Category cat) {
+		return new ResponseEntity<>(categoryBo.create(cat), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")

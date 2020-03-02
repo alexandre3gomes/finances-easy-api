@@ -44,4 +44,6 @@ public class Expense implements Serializable {
 	private BigDecimal value;
 	@Column(name = "expire_at", nullable = false)
 	private Date expireAt;
+	@Column(name = "description")
+	private String description;
 }

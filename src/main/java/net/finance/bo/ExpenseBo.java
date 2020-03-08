@@ -1,19 +1,6 @@
 package net.finance.bo;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-
-import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Service;
-
 import com.querydsl.core.types.dsl.BooleanExpression;
-
 import lombok.NonNull;
 import net.finance.dto.ExpenseFilterDTO;
 import net.finance.entity.BudgetPeriods;
@@ -22,74 +9,76 @@ import net.finance.entity.Expense;
 import net.finance.entity.QExpense;
 import net.finance.repository.BudgetRepository;
 import net.finance.repository.ExpenseRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
 public class ExpenseBo {
 
-	@NonNull
-	private final ExpenseRepository expenseRepository;
-	private final BudgetRepository budgetRepository;
-	final QExpense expense = new QExpense("expense");
+    private final QExpense expense = new QExpense("expense");
+    @NonNull
+    private final ExpenseRepository expenseRepository;
+    private final BudgetRepository budgetRepository;
 
-	@Autowired
-	public ExpenseBo(final ExpenseRepository expenseRep, final BudgetRepository budgetRepository) {
-		expenseRepository = expenseRep;
-		this.budgetRepository = budgetRepository;
-	}
+    @Autowired
+    public ExpenseBo(ExpenseRepository expenseRep, BudgetRepository budgetRepository) {
+        expenseRepository = expenseRep;
+        this.budgetRepository = budgetRepository;
+    }
 
-	public Expense create(final Expense expense) {
-		return expenseRepository.save(expense);
-	}
+    public Expense create(Expense expense) {
+        return expenseRepository.save(expense);
+    }
 
-	public void delete(final Integer id) {
-		expenseRepository.deleteById(id);
-	}
+    public void delete(Integer id) {
+        expenseRepository.deleteById(id);
+    }
 
-	public Expense get(final Integer id) {
-		return expenseRepository.findById(id).get();
-	}
+    public Expense get(Integer id) {
+        return expenseRepository.findById(id).get();
+    }
 
-	public Page<Expense> list(final ExpenseFilterDTO expFilter, final PageRequest pageReq) {
-		BooleanExpression predicate = null;
-		if (expFilter.getName() != null) {
-			predicate = expense.name.containsIgnoreCase(expFilter.getName());
-		}
-		if (expFilter.getCategoryId() != null) {
-			if (predicate != null) {
-				predicate = predicate.and(expense.category.eq(new Category(expFilter.getCategoryId())));
-			} else {
-				predicate = expense.category.eq(new Category(expFilter.getCategoryId()));
-			}
-		}
-		if (expFilter.getStartDate() != null && expFilter.getEndDate() != null) {
-			if (predicate != null) {
-				predicate = predicate.and(expense.expireAt.between(expFilter.getStartDate(), expFilter.getEndDate()));
-			} else {
-				predicate = expense.expireAt.between(expFilter.getStartDate(), expFilter.getEndDate());
-			}
-		}
-		if (predicate != null) {
-			return expenseRepository.findAll(predicate, pageReq);
-		} else {
+    public Page<Expense> list(ExpenseFilterDTO expFilter, PageRequest pageReq) {
+        BooleanExpression predicate = null;
+        if (expFilter.getName() != null) predicate = expense.name.containsIgnoreCase(expFilter.getName());
+        if (expFilter.getCategoryId() != null) if (predicate != null)
+			predicate = predicate.and(expense.category.eq(new Category(expFilter.getCategoryId())));
+		else
+			predicate = expense.category.eq(new Category(expFilter.getCategoryId()));
+        if (expFilter.getStartDate() != null && expFilter.getEndDate() != null) if (predicate != null)
+			predicate = predicate.and(expense.expireAt.between(expFilter.getStartDate(), expFilter.getEndDate()));
+		else
+			predicate = expense.expireAt.between(expFilter.getStartDate(), expFilter.getEndDate());
+        if (expFilter.getUser() != null)
+			if (predicate != null) predicate = predicate.and(expense.user.eq(expFilter.getUser()));
+			else
+				predicate = expense.user.eq(expFilter.getUser());
+        if (predicate != null) return expenseRepository.findAll(predicate, pageReq);
+		else
 			return expenseRepository.findAll(pageReq);
-		}
-	}
+    }
 
-	public Expense update(final Expense dev) {
-		return expenseRepository.save(dev);
-	}
+    public Expense update(Expense dev) {
+        return expenseRepository.save(dev);
+    }
 
-	public Optional<List<Expense>> getActualExpense(final PageRequest pageReq) {
-		final Date now = Calendar.getInstance().getTime();
-		final Optional<BudgetPeriods> period = budgetRepository.getPeriodsByDate(now);
-		final QExpense expense = new QExpense("expense");
-		if (period.isPresent()) {
-			final BooleanExpression betweenDate = expense.expireAt.between(period.get().getStartDate(),
-					period.get().getEndDate());
-			return Optional.of(expenseRepository.findAll(betweenDate, pageReq).getContent());
-		} else {
-			return Optional.empty();
-		}
-	}
+    public Optional<List<Expense>> getActualExpense(PageRequest pageReq) {
+        Date now = Calendar.getInstance().getTime();
+        Optional<BudgetPeriods> period = budgetRepository.getPeriodsByDate(now);
+        QExpense expense = new QExpense("expense");
+        if (period.isPresent()) {
+            BooleanExpression betweenDate = expense.expireAt.between(period.get().getStartDate(),
+                    period.get().getEndDate());
+            return Optional.of(expenseRepository.findAll(betweenDate, pageReq).getContent());
+        } else return Optional.empty();
+    }
 }

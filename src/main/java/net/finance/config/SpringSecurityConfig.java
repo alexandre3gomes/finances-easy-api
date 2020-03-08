@@ -9,6 +9,7 @@ import java.util.Objects;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -27,6 +28,7 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 import lombok.experimental.FieldDefaults;
 import net.finance.auth.TokenAuthenticationFilter;
 import net.finance.auth.TokenAuthenticationProvider;
+import sun.misc.Request;
 
 @Configuration
 @EnableWebSecurity
@@ -62,7 +64,18 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(final WebSecurity web) {
-		web.ignoring().requestMatchers(SpringSecurityConfig.PUBLIC_URLS);
+		RequestMatcher SWAGGER_UI = new OrRequestMatcher(new AntPathRequestMatcher("/swagger-ui.html/**"));
+		RequestMatcher SWAGGER_API = new OrRequestMatcher(new AntPathRequestMatcher("/v2/api-docs"));
+		RequestMatcher SWAGGER_WEBJARS = new OrRequestMatcher(new AntPathRequestMatcher("/webjars/**"));
+		RequestMatcher SWAGGER_CONFIG = new OrRequestMatcher(new AntPathRequestMatcher("/configuration/**"));
+		RequestMatcher SWAGGER_RESOURCES = new OrRequestMatcher(new AntPathRequestMatcher("/swagger-resources/**"));
+		web.ignoring().requestMatchers(SpringSecurityConfig.PUBLIC_URLS)
+				.and().ignoring().requestMatchers(SWAGGER_API)
+				.and().ignoring().requestMatchers(SWAGGER_UI)
+				.and().ignoring().requestMatchers(SWAGGER_WEBJARS)
+				.and().ignoring().requestMatchers(SWAGGER_CONFIG)
+				.and().ignoring().requestMatchers(SWAGGER_RESOURCES)
+				.and().ignoring().mvcMatchers(HttpMethod.OPTIONS, "/**");
 	}
 
 	/**

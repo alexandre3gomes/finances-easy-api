@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RestController
@@ -40,16 +40,14 @@ public class DashboardController {
     @GetMapping("/actualExpense")
     public ResponseEntity<List<Expense>> getActualExpense() {
         Optional<List<Expense>> optExpenses = expenseBo.getActualExpense(PageRequest.of(0, Integer.MAX_VALUE));
-        List<Expense> expenses = new ArrayList<>();
-        if (optExpenses.isPresent()) expenses = optExpenses.get();
+        List<Expense> expenses = optExpenses.orElseThrow(NoSuchElementException::new);
         return new ResponseEntity<>(expenses, HttpStatus.OK);
     }
 
     @GetMapping("/actualIncome")
     public ResponseEntity<List<Income>> sumIncome() {
         Optional<List<Income>> optIncomes = incomeBo.getActualIncome();
-        List<Income> incomes = new ArrayList<>();
-        if (optIncomes.isPresent()) incomes = optIncomes.get();
+        List<Income> incomes = optIncomes.orElseThrow(NoSuchElementException::new);
         return new ResponseEntity<>(incomes, HttpStatus.OK);
     }
 

@@ -15,10 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
@@ -44,27 +41,27 @@ public class ExpenseBo {
     }
 
     public Expense get(Integer id) {
-        return expenseRepository.findById(id).get();
+        return expenseRepository.findById(id).orElseThrow(NoSuchElementException::new);
     }
 
     public Page<Expense> list(ExpenseFilterDTO expFilter, PageRequest pageReq) {
         BooleanExpression predicate = null;
         if (expFilter.getName() != null) predicate = expense.name.containsIgnoreCase(expFilter.getName());
         if (expFilter.getCategoryId() != null) if (predicate != null)
-			predicate = predicate.and(expense.category.eq(new Category(expFilter.getCategoryId())));
-		else
-			predicate = expense.category.eq(new Category(expFilter.getCategoryId()));
+            predicate = predicate.and(expense.category.eq(new Category(expFilter.getCategoryId())));
+        else
+            predicate = expense.category.eq(new Category(expFilter.getCategoryId()));
         if (expFilter.getStartDate() != null && expFilter.getEndDate() != null) if (predicate != null)
-			predicate = predicate.and(expense.expireAt.between(expFilter.getStartDate(), expFilter.getEndDate()));
-		else
-			predicate = expense.expireAt.between(expFilter.getStartDate(), expFilter.getEndDate());
+            predicate = predicate.and(expense.expireAt.between(expFilter.getStartDate(), expFilter.getEndDate()));
+        else
+            predicate = expense.expireAt.between(expFilter.getStartDate(), expFilter.getEndDate());
         if (expFilter.getUser() != null)
-			if (predicate != null) predicate = predicate.and(expense.user.eq(expFilter.getUser()));
-			else
-				predicate = expense.user.eq(expFilter.getUser());
+            if (predicate != null) predicate = predicate.and(expense.user.eq(expFilter.getUser()));
+            else
+                predicate = expense.user.eq(expFilter.getUser());
         if (predicate != null) return expenseRepository.findAll(predicate, pageReq);
-		else
-			return expenseRepository.findAll(pageReq);
+        else
+            return expenseRepository.findAll(pageReq);
     }
 
     public Expense update(Expense dev) {

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
+import java.util.NoSuchElementException;
 
 @Service
 @Transactional
@@ -32,7 +33,7 @@ public class SavingsBo {
     }
 
     public Savings get(Integer id) {
-        return savingsRepository.findById(id).get();
+        return savingsRepository.findById(id).orElseThrow(NoSuchElementException::new);
     }
 
     public Page<Savings> list(PageRequest pageReq) {

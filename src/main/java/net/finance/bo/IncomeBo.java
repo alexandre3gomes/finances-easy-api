@@ -1,67 +1,61 @@
 package net.finance.bo;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-
-import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Service;
-
 import lombok.NonNull;
 import net.finance.entity.BudgetPeriods;
 import net.finance.entity.Income;
 import net.finance.repository.BudgetRepository;
 import net.finance.repository.IncomeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.*;
 
 @Service
 @Transactional
 public class IncomeBo {
 
-	@NonNull
-	private final IncomeRepository incomeRepository;
+    @NonNull
+    private final IncomeRepository incomeRepository;
 
-	@NonNull
-	private final BudgetRepository budgetRepository;
+    @NonNull
+    private final BudgetRepository budgetRepository;
 
-	@Autowired
-	public IncomeBo(final IncomeRepository incomeRep, final BudgetRepository budgetRep) {
-		incomeRepository = incomeRep;
-		budgetRepository = budgetRep;
-	}
+    @Autowired
+    public IncomeBo(IncomeRepository incomeRep, BudgetRepository budgetRep) {
+        incomeRepository = incomeRep;
+        budgetRepository = budgetRep;
+    }
 
-	public Income create(final Income income) {
-		return incomeRepository.save(income);
-	}
+    public Income create(Income income) {
+        return incomeRepository.save(income);
+    }
 
-	public void delete(final Integer id) {
-		incomeRepository.deleteById(id);
-	}
+    public void delete(Integer id) {
+        incomeRepository.deleteById(id);
+    }
 
-	public Income get(final Integer id) {
-		return incomeRepository.findById(id).get();
-	}
+    public Income get(Integer id) {
+        return incomeRepository.findById(id).orElseThrow(NoSuchElementException::new);
+    }
 
-	public Page<Income> list(final PageRequest pageReq) {
-		return incomeRepository.findAll(pageReq);
-	}
+    public Page<Income> list(PageRequest pageReq) {
+        return incomeRepository.findAll(pageReq);
+    }
 
-	public Income update(final Income income) {
-		return incomeRepository.save(income);
-	}
+    public Income update(Income income) {
+        return incomeRepository.save(income);
+    }
 
-	public Optional<List<Income>> getActualIncome() {
-		final Date now = Calendar.getInstance().getTime();
-		final Optional<BudgetPeriods> period = budgetRepository.getPeriodsByDate(now);
-		if (period.isPresent()) {
+    public Optional<List<Income>> getActualIncome() {
+        Date now = Calendar.getInstance().getTime();
+        Optional<BudgetPeriods> period = budgetRepository.getPeriodsByDate(now);
+        if (period.isPresent())
 			return incomeRepository.findByDateBetween(period.get().getStartDate(), period.get().getEndDate());
-		} else {
+		else
 			return Optional.empty();
-		}
-	}
+    }
 
 }

@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import net.finance.entity.User;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -11,8 +13,8 @@ import java.util.Date;
 public class ExpenseFilterDTO {
 
     Integer categoryId;
-    Date startDate;
-    Date endDate;
+    LocalDateTime startDate;
+    LocalDateTime endDate;
     String name;
     User user;
 

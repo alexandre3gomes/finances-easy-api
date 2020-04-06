@@ -81,11 +81,10 @@ public class UserBo {
     @Profile("dev")
     public void initTestUser() {
         System.out.println("Creating test user...");
-        User admin = new User();
-        admin.setId(1);
-        admin.setName("Alexandre");
-        admin.setUsername("alexandre");
-        admin.setPassword("924d5413f06c0fba1ded3a11f61171ee");
+        User admin = User.builder()
+        .name("Alexandre")
+        .username("alexandre")
+        .password("924d5413f06c0fba1ded3a11f61171ee").build();
         loggedUsers.put("7cd2f9e1-a6e9-4675-9176-b9219b0fd8d8", admin);
     }
 

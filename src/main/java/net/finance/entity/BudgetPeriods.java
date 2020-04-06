@@ -1,22 +1,13 @@
 package net.finance.entity;
 
-import java.io.Serializable;
-import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "budget_periods")
@@ -38,15 +29,13 @@ public class BudgetPeriods implements Serializable, Comparable<BudgetPeriods> {
 	@Column(name = "idPeriod")
 	private Integer idPeriod;
 	@Column(name = "startDate", nullable = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date startDate;
+	private LocalDateTime startDate;
 	@Column(name = "endDate", nullable = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date endDate;
+	private LocalDateTime endDate;
 
 	@Override
 	public int compareTo(final BudgetPeriods o) {
-		return startDate.after(o.startDate) ? 1 : 0;
+		return startDate.isAfter(o.startDate) ? 1 : 0;
 	}
 
 }

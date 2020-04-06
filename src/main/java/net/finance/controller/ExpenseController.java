@@ -1,5 +1,6 @@
 package net.finance.controller;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.NonNull;
 import net.finance.bo.ExpenseBo;
 import net.finance.bo.UserBo;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @RestController
@@ -54,8 +56,8 @@ public class ExpenseController {
                                               @RequestParam(defaultValue = "expireAt") String order,
                                               @RequestParam(defaultValue = "DESC") Sort.Direction direction,
                                               @RequestParam(name = "category", required = false) Integer category,
-                                              @RequestParam(name = "start", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date startDate,
-                                              @RequestParam(name = "end", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date endDate,
+                                              @RequestParam(name = "start", required = false) LocalDateTime startDate,
+                                              @RequestParam(name = "end", required = false) LocalDateTime endDate,
                                               @RequestParam(name = "name", required = false) String name,
                                               @RequestParam(name = "user", required = false) Integer user) {
         ExpenseFilterDTO expFilter = new ExpenseFilterDTO(category, startDate, endDate, name, user != null ? userBo.get(user) : null);

@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -28,11 +31,9 @@ import net.finance.entity.User;
 @JsonComponent
 public class BudgetMapper {
 
-	private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX";
-
 	public static class BudgetSerializer extends JsonSerializer<Budget> {
 
-		SimpleDateFormat df = new SimpleDateFormat(DATE_FORMAT);
+		DateTimeFormatter df = DateTimeFormatter.ISO_DATE_TIME;
 
 		@Override
 		public void serialize(Budget value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
@@ -51,7 +52,7 @@ public class BudgetMapper {
 
 	public static class BudgetDeserializer extends JsonDeserializer<Budget> {
 
-		SimpleDateFormat df = new SimpleDateFormat(DATE_FORMAT);
+		DateTimeFormatter df = DateTimeFormatter.ISO_DATE_TIME;
 
 		@Override
 		public Budget deserialize(JsonParser p, DeserializationContext ctxt)
@@ -60,12 +61,8 @@ public class BudgetMapper {
 			final JsonNode json = p.getCodec().readTree(p);
 			final Budget ret = new Budget();
 			ret.setId(json.get("id").asInt());
-			try {
-				ret.setStartDate(df.parse(json.get("startDate").asText()));
-				ret.setEndDate(df.parse(json.get("endDate").asText()));
-			} catch (final ParseException e) {
-				e.printStackTrace();
-			}
+			ret.setStartDate(LocalDateTime.parse(json.get("startDate").asText(), df));
+			ret.setEndDate(LocalDateTime.parse(json.get("endDate").asText(), df));
 			ret.setBreakPeriod(json.get("breakperiod").asInt());
 			ret.setUser(mapper.readValue(json.get("user").traverse(), User.class));
 			final Iterator<JsonNode> it = json.get("categories").elements();

@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -50,8 +51,7 @@ public class IncomeBo {
     }
 
     public Optional<List<Income>> getActualIncome() {
-        Date now = Calendar.getInstance().getTime();
-        Optional<BudgetPeriods> period = budgetRepository.getPeriodsByDate(now);
+        Optional<BudgetPeriods> period = budgetRepository.getPeriodsByDate(LocalDateTime.now());
         if (period.isPresent())
 			return incomeRepository.findByDateBetween(period.get().getStartDate(), period.get().getEndDate());
 		else

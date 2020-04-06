@@ -1,5 +1,6 @@
 package net.finance.repository;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +17,6 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
 	@Query("select bc.category from BudgetCategories bc "
 			+ " left join BudgetPeriods bp on bc.budget.id = bp.budget.id "
 			+ " where :now between bp.startDate and bp.endDate")
-	List<Category> getCategoriesByPeriod(Date now);
+	List<Category> getCategoriesByPeriod(LocalDateTime now);
 
 }

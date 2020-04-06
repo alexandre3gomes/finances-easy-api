@@ -1,11 +1,8 @@
 package net.finance.config;
 
-import static lombok.AccessLevel.PRIVATE;
-import static org.springframework.http.HttpStatus.UNAUTHORIZED;
-import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
-
-import java.util.Objects;
-
+import lombok.experimental.FieldDefaults;
+import net.finance.auth.TokenAuthenticationFilter;
+import net.finance.auth.TokenAuthenticationProvider;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,10 +22,11 @@ import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
-import lombok.experimental.FieldDefaults;
-import net.finance.auth.TokenAuthenticationFilter;
-import net.finance.auth.TokenAuthenticationProvider;
-import sun.misc.Request;
+import java.util.Objects;
+
+import static lombok.AccessLevel.PRIVATE;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
+import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
 @EnableWebSecurity

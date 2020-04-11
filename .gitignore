@@ -24,6 +24,7 @@
 .classpath
 .project
 .idea
+*.iml
 
 # Liquibase #
 *.out.*
@@ -37,10 +38,9 @@ hs_err_pid*
 #Java#
 *META-INF*
 
-<<<<<<< HEAD
 #Gitpod
 .factorypath
-=======
+
 #Mac Os
 *DS_Store*
->>>>>>> 5c653ad65639e3b0293788dd2180245a82686d72
+

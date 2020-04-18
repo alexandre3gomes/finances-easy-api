@@ -1,0 +1,32 @@
+version: '3'
+services:
+
+  db:
+    image: "postgres:12-alpine"
+    container_name: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=123456
+
+  api:
+    build: .
+    container_name: api
+    ports:
+      - 8089:8089
+    depends_on:
+      - db
+
+  web:
+    build: ./../finances-easy-web
+    container_name: web
+    ports:
+      - 80:80
+    depends_on:
+      - api
+
+
+volumes:
+  postgres_data:

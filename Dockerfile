@@ -1,11 +1,11 @@
-FROM maven:3.3-jdk-8 as build
+FROM maven:3.6.3-jdk-11-slim as build
 WORKDIR /app
 COPY pom.xml .
 COPY src src
 RUN mvn dependency:go-offline -B
 RUN mvn package -DskipTests
 RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
-FROM openjdk:8-jdk-alpine
+FROM openjdk:11-slim
 ARG DEPENDENCY=/app/target/dependency
 COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF

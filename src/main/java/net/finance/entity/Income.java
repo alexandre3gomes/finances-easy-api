@@ -1,9 +1,7 @@
 package net.finance.entity;
 // Generated Dec 28, 2018 2:10:35 PM by Hibernate Tools 5.3.6.Final
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,7 +12,9 @@ import java.time.LocalDateTime;
 @Table(name = "income")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
+@Builder
 public class Income implements Serializable {
 
 	/**

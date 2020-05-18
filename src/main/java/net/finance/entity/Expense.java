@@ -1,8 +1,6 @@
 package net.finance.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,6 +12,8 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
+@AllArgsConstructor
+@Builder
 public class Expense implements Serializable {
 
 	/**

@@ -2,6 +2,7 @@ package net.finance.bo;
 
 import net.finance.entity.User;
 import net.finance.repository.UserRepository;
+import net.finance.util.BuildMockDataUtil;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +25,7 @@ public class UserBoTests {
 
     @Test
     public void testLogin() {
-        Optional userOpt = Optional.of(createUser());
+        Optional userOpt = Optional.of(BuildMockDataUtil.buildUser());
         Mockito.lenient().when(userRepo.getUserByUsernameAndPassword(ArgumentMatchers.anyString(), ArgumentMatchers.anyString()))
                 .thenReturn(userOpt);
         Optional<User> user = userBo.login("test", "test");
@@ -33,17 +34,11 @@ public class UserBoTests {
 
     @Test
     public void testLogout() {
-        Optional userOpt = Optional.of(createUser());
+        Optional userOpt = Optional.of(BuildMockDataUtil.buildUser());
         Mockito.lenient().when(userRepo.getUserByUsernameAndPassword(ArgumentMatchers.anyString(), ArgumentMatchers.anyString()))
                 .thenReturn(userOpt);
         Optional<User> user = userBo.login("test", "test");
         user.ifPresent((userLogged -> userBo.logout(userLogged)));
         Assert.assertFalse("User is still present", userBo.findByToken(user.get().getToken()).isPresent());
-    }
-
-    private static User createUser() {
-        return User.builder()
-                .name("Test User")
-                .username("test").build();
     }
 }

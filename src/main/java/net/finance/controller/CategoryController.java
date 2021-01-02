@@ -51,7 +51,7 @@ public class CategoryController {
 	public ResponseEntity<Page<Category>> list(@RequestParam(defaultValue = "0") final int page,
 			@RequestParam(defaultValue = "10") final int size, @RequestParam(defaultValue = "name") final String order,
 			@RequestParam(defaultValue = "ASC") final Sort.Direction direction) {
-		return new ResponseEntity<>(categoryBo.list(PageRequest.of(page, size, new Sort(direction, order))),
+		return new ResponseEntity<>(categoryBo.list(PageRequest.of(page, size, Sort.by(direction, order))),
 				HttpStatus.OK);
 	}
 

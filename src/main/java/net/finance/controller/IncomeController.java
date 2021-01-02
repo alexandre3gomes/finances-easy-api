@@ -51,7 +51,7 @@ public class IncomeController {
 	public ResponseEntity<Page<Income>> list(@RequestParam(defaultValue = "0") final int page,
 			@RequestParam(defaultValue = "10") final int size, @RequestParam(defaultValue = "date") final String order,
 			@RequestParam(defaultValue = "DESC") final Sort.Direction direction) {
-		return new ResponseEntity<>(incomeBo.list(PageRequest.of(page, size, new Sort(direction, order))),
+		return new ResponseEntity<>(incomeBo.list(PageRequest.of(page, size, Sort.by(direction, order))),
 				HttpStatus.OK);
 	}
 

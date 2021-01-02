@@ -9,8 +9,9 @@ services:
     ports:
       - 5432:5432
     environment:
+      - POSTGRES_URL=jdbc:postgresql://db:5432/finances
+      - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=123456
-
   api:
     build: .
     container_name: api

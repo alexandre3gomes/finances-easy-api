@@ -44,7 +44,7 @@ public class SavingsController {
     public ResponseEntity<Page<Savings>> list(@RequestParam(defaultValue = "0") int page,
                                               @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "createdDate") String order,
                                               @RequestParam(defaultValue = "DESC") Sort.Direction direction) {
-        return new ResponseEntity<>(savingsBo.list(PageRequest.of(page, size, new Sort(direction, order))),
+        return new ResponseEntity<>(savingsBo.list(PageRequest.of(page, size, Sort.by(direction, order))),
                 HttpStatus.OK);
     }
 

@@ -78,7 +78,7 @@ public class UserBo {
     }
 
     @Bean
-    @Profile("dev")
+    @Profile("local")
     public void initTestUser() {
         System.out.println("Creating test user...");
         User admin = User.builder()

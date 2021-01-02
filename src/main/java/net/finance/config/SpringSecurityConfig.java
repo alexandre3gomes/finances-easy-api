@@ -62,7 +62,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(final WebSecurity web) {
-		RequestMatcher SWAGGER_UI = new OrRequestMatcher(new AntPathRequestMatcher("/swagger-ui.html/**"));
+		RequestMatcher SWAGGER_UI = new OrRequestMatcher(new AntPathRequestMatcher("/swagger-ui/**"));
 		RequestMatcher SWAGGER_API = new OrRequestMatcher(new AntPathRequestMatcher("/v2/api-docs"));
 		RequestMatcher SWAGGER_WEBJARS = new OrRequestMatcher(new AntPathRequestMatcher("/webjars/**"));
 		RequestMatcher SWAGGER_CONFIG = new OrRequestMatcher(new AntPathRequestMatcher("/configuration/**"));

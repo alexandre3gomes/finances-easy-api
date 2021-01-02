@@ -57,7 +57,7 @@ public class UserController {
 	public ResponseEntity<Page<User>> list(@RequestParam(defaultValue = "0") final int page,
 			@RequestParam(defaultValue = "10") final int size, @RequestParam(defaultValue = "name") final String order,
 			@RequestParam(defaultValue = "DESC") final Sort.Direction direction) {
-		return new ResponseEntity<>(userBo.list(PageRequest.of(page, size, new Sort(direction, order))), HttpStatus.OK);
+		return new ResponseEntity<>(userBo.list(PageRequest.of(page, size, Sort.by(direction, order))), HttpStatus.OK);
 	}
 
 	@GetMapping("/logout")

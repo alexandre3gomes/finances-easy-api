@@ -59,7 +59,7 @@ public class ExpenseController {
                                               @RequestParam(name = "name", required = false) String name,
                                               @RequestParam(name = "user", required = false) Integer user) {
         ExpenseFilterDTO expFilter = new ExpenseFilterDTO(category, startDate, endDate, name, user != null ? userBo.get(user) : null);
-        return new ResponseEntity<>(expenseBo.list(expFilter, PageRequest.of(page, size, new Sort(direction, order))),
+        return new ResponseEntity<>(expenseBo.list(expFilter, PageRequest.of(page, size,  Sort.by(direction, order))),
                 HttpStatus.OK);
     }
 

@@ -52,7 +52,7 @@ public class BudgetController {
 			@RequestParam(defaultValue = "10") final int size,
 			@RequestParam(defaultValue = "startDate") final String order,
 			@RequestParam(defaultValue = "DESC") final Sort.Direction direction) {
-		return new ResponseEntity<>(budgetBo.list(PageRequest.of(page, size, new Sort(direction, order))),
+		return new ResponseEntity<>(budgetBo.list(PageRequest.of(page, size, Sort.by(direction, order))),
 				HttpStatus.OK);
 	}
 

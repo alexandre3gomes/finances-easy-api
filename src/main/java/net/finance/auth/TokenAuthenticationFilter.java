@@ -1,25 +1,22 @@
 package net.finance.auth;
 
-import static lombok.AccessLevel.PRIVATE;
-
-import java.io.IOException;
-import java.util.Optional;
-
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import lombok.experimental.FieldDefaults;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
-import com.google.common.net.HttpHeaders;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Optional;
 
-import lombok.experimental.FieldDefaults;
+import static lombok.AccessLevel.PRIVATE;
 
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingFilter {

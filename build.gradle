@@ -7,7 +7,6 @@ plugins {
     id "java-library"
     id "org.springframework.boot" version "2.4.1"
     id "io.spring.dependency-management" version "1.0.10.RELEASE"
-    id 'com.ewerk.gradle.plugins.querydsl' version "1.0.10"
 }
 
 java {
@@ -40,31 +39,10 @@ repositories {
 }
 
 ext {
-    queryDslVersion = "4.2.1"
     lombokVersion = "1.18.16"
     swaggerVersion = "3.0.0"
     postgresVersion = "42.2.5"
     jodaVersion = "2.10.1"
-}
-
-querydsl {
-    querydslDefault = true
-    jpa = true
-}
-
-configurations {
-    querydsl.extendsFrom compileClasspath
-}
-
-compileQuerydsl {
-    options.annotationProcessorPath = configurations.querydsl
-}
-
-def generatedClassesPath= "build/generated/sources/querydsl/main"
-
-querydsl {
-    jpa = true
-    querydslSourcesDir = generatedClassesPath
 }
 
 dependencies {
@@ -74,9 +52,7 @@ dependencies {
     implementation "org.mockito:mockito-core"
     implementation "org.postgresql:postgresql:$postgresVersion"
     implementation "org.apache.commons:commons-lang3"
-    implementation "com.google.guava:guava"
     implementation "joda-time:joda-time:$jodaVersion"
-    implementation "com.querydsl:querydsl-jpa:$queryDslVersion"
     implementation "io.springfox:springfox-swagger2:$swaggerVersion"
     implementation "io.springfox:springfox-swagger-ui:$swaggerVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
@@ -85,7 +61,6 @@ dependencies {
     testImplementation "org.springframework.security:spring-security-test"
     testImplementation "org.jetbrains.kotlin:kotlin-test"
     compileOnly "org.projectlombok:lombok"
-    compileOnly "com.querydsl:querydsl-apt:$queryDslVersion"
     annotationProcessor "org.projectlombok:lombok"
     testCompileOnly "org.projectlombok:lombok"
     testAnnotationProcessor "org.projectlombok:lombok"
@@ -98,4 +73,3 @@ description = "Finances easy API"
 tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
 }
-

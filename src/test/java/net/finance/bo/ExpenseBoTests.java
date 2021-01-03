@@ -1,6 +1,5 @@
 package net.finance.bo;
 
-import com.querydsl.core.types.dsl.BooleanExpression;
 import net.finance.dto.ExpenseFilterDTO;
 import net.finance.repository.BudgetRepository;
 import net.finance.repository.ExpenseRepository;
@@ -37,20 +36,20 @@ public class ExpenseBoTests {
     }
 
     public void testListWithNameFilter(){
-        Mockito.lenient().when(expenseRepository.findAll(ArgumentMatchers.any(BooleanExpression.class), ArgumentMatchers.any(PageRequest.class))).thenReturn(BuildMockDataUtil.buildPageOfExpenses());
+        Mockito.lenient().when(expenseRepository.findByExpireAtBetween(ArgumentMatchers.any(LocalDateTime.class), ArgumentMatchers.any(LocalDateTime.class))).thenReturn(BuildMockDataUtil.buildOptionalOfExpense());
         assertTrue("The size of returned list is different than ten",expenseBo.list(BuildMockDataUtil.buildExpenseFilterDTO(), PageRequest.of(1, 10)).getTotalElements() == 10);
     }
 
     public void testGetActualExpenseWithReturn(){
         Mockito.lenient().when(budgetRepository.getPeriodsByDate(ArgumentMatchers.any(LocalDateTime.class))).thenReturn(BuildMockDataUtil.buildOptionalOfBudgetPeriods());
-        Mockito.lenient().when(expenseRepository.findAll(ArgumentMatchers.any(BooleanExpression.class), ArgumentMatchers.any(PageRequest.class))).thenReturn(BuildMockDataUtil.buildPageOfExpenses());
-        assertTrue("The size of returned list is different than ten",expenseBo.getActualExpense(PageRequest.of(1, 10)).isPresent());
+        Mockito.lenient().when(expenseRepository.findByExpireAtBetween(ArgumentMatchers.any(LocalDateTime.class), ArgumentMatchers.any(LocalDateTime.class))).thenReturn(BuildMockDataUtil.buildOptionalOfExpense());
+        assertTrue("The size of returned list is different than ten",expenseBo.getActualExpense().isPresent());
     }
 
     public void testGetActualExpenseWithoutReturn(){
         Mockito.lenient().when(budgetRepository.getPeriodsByDate(ArgumentMatchers.any(LocalDateTime.class))).thenReturn(Optional.empty());
-        Mockito.lenient().when(expenseRepository.findAll(ArgumentMatchers.any(BooleanExpression.class), ArgumentMatchers.any(PageRequest.class))).thenReturn(BuildMockDataUtil.buildPageOfExpenses());
-        assertFalse("The returned list isn't empty",expenseBo.getActualExpense(PageRequest.of(1, 10)).isPresent());
+        Mockito.lenient().when(expenseRepository.findByExpireAtBetween(ArgumentMatchers.any(LocalDateTime.class), ArgumentMatchers.any(LocalDateTime.class))).thenReturn(BuildMockDataUtil.buildOptionalOfExpense());
+        assertFalse("The returned list isn't empty",expenseBo.getActualExpense().isPresent());
     }
 
 

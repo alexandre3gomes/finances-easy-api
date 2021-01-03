@@ -1,15 +1,18 @@
 package net.finance.repository;
 
-import javax.transaction.Transactional;
-
+import net.finance.entity.Expense;
 import org.springframework.data.jpa.repository.support.JpaRepositoryImplementation;
-import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 
-import net.finance.entity.Expense;
+import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Transactional
-public interface ExpenseRepository
-		extends JpaRepositoryImplementation<Expense, Integer>, QuerydslPredicateExecutor<Expense> {
+public interface ExpenseRepository extends JpaRepositoryImplementation<Expense, Integer> {
+
+    Optional<List<Expense>> findByExpireAtBetween(LocalDateTime startDate, LocalDateTime endDate);
+
 }

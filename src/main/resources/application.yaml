@@ -2,7 +2,7 @@ server:
   port: 8089
   ssl:
     key-store-type: PKCS12
-    enabled: true
+    enabled: false
     key-store: cert/keystore.p12
     key-store-password: spfc2408
     key-store-alias: finances
@@ -16,7 +16,7 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     properties:
-      show-sql: false
+      show-sql: true
       hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
       hibernate.temp.use_jdbc_metadata_defaults: false
-      hibernate.format_sql: false
+      hibernate.format_sql: true

@@ -8,7 +8,6 @@ import net.finance.dto.report.CategoryAggregValuesDto;
 import net.finance.entity.Expense;
 import net.finance.entity.Income;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,7 +38,7 @@ public class DashboardController {
 
     @GetMapping("/actualExpense")
     public ResponseEntity<List<Expense>> getActualExpense() {
-        Optional<List<Expense>> optExpenses = expenseBo.getActualExpense(PageRequest.of(0, Integer.MAX_VALUE));
+        Optional<List<Expense>> optExpenses = expenseBo.getActualExpense();
         List<Expense> expenses = optExpenses.orElseThrow(NoSuchElementException::new);
         return new ResponseEntity<>(expenses, HttpStatus.OK);
     }

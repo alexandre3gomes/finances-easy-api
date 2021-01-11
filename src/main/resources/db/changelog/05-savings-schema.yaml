@@ -1,0 +1,49 @@
+databaseChangeLog:
+  - changeSet:
+      id: 5
+      author: admin
+      changes:
+        - createTable:
+            tableName: savings
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: description
+                  type: varchar(200)
+              - column:
+                  name: value
+                  type: currency
+                  constraints:
+                    nullable: false
+              - column:
+                  name: date
+                  type: timestamp with time zone
+                  constraints:
+                    nullable: false
+        - addColumn:
+            tableName: category
+            columns:
+              - column:
+                  name: savings
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+        - addColumn:
+            tableName: expense
+            columns:
+              - column:
+                  name: description
+                  type: varchar(200)
+        - addColumn:
+            tableName: income
+            columns:
+              - column:
+                  name: description
+                  type: varchar(200)

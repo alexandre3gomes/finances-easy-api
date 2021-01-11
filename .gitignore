@@ -35,12 +35,15 @@ hs_err_pid*
 /target/
 /.metadata/
 
-#Java#
+#J ava #
 *META-INF*
 
-#Gitpod
+# Gitpod #
 .factorypath
 
-#Mac Os
+# Mac Os #
 *DS_Store*
 
+# Gradle #
+.gradle
+build/

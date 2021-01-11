@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: 4
+      author: admin
+      changes:
+        - dropColumn:
+            tableName: income
+            columnName: created_by
+        - dropColumn:
+            tableName: income
+            columnName: created_date
+        - dropColumn:
+            tableName: income
+            columnName: last_modified_by
+        - dropColumn:
+            tableName: income
+            columnName: last_modified_date
+        - dropColumn:
+            tableName: expense
+            columnName: created_by
+        - dropColumn:
+            tableName: expense
+            columnName: created_date
+        - dropColumn:
+            tableName: expense
+            columnName: last_modified_by
+        - dropColumn:
+            tableName: expense
+            columnName: last_modified_date

@@ -1,0 +1,158 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: admin
+      changes:
+        - createTable:
+            tableName: app_users
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: category
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: budget
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: app_user
+                  type: int
+                  constraints:
+                    nullable: false
+                    foreignKeyName: user_budget
+                    references: app_users(id)
+              - column:
+                  name: start_date
+                  type: timestamp with time zone
+              - column:
+                  name: end_date
+                  type: timestamp with time zone
+        - createTable:
+            tableName: budget_categories
+            columns:
+              - column:
+                  name: category_id
+                  type: int
+                  constraints:
+                    nullable: false
+                    foreignKeyName: category_bud_cat
+                    references: category(id)
+              - column:
+                  name: budget_id
+                  type: int
+                  constraints:
+                    nullable: false
+                    foreignKeyName: budget_bud_cat
+                    references: budget(id)
+              - column:
+                  name: value
+                  type: currency
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: expense
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: category
+                  type: int
+                  constraints:
+                    nullable: false
+                    foreignKeyName: category_expense
+                    references: category(id)
+              - column:
+                  name: app_user
+                  type: int
+                  constraints:
+                    nullable: false
+                    foreignKeyName: user_expense
+                    references: app_users(id)
+              - column:
+                  name: name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: value
+                  type: currency
+                  constraints:
+                    nullable: false
+              - column:
+                  name: expire_at
+                  type: timestamp with time zone
+        - createTable:
+            tableName: income
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: app_user
+                  type: int
+                  constraints:
+                    nullable: false
+                    foreignKeyName: user_expense
+                    references: app_users(id)
+              - column:
+                  name: name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: value
+                  type: currency
+                  constraints:
+                    nullable: false
+              - column:
+                  name: date
+                  type: timestamp with time zone
+

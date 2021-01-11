@@ -8,7 +8,7 @@ server:
     key-store-alias: finances
 spring:
   liquibase:
-    change-log: classpath:db/db.changelog-master.xml
+    change-log: classpath:db/db.changelog-master.yaml
   datasource:
     url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/finances}
     username: ${POSTGRES_USER:postgres}
@@ -16,12 +16,15 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     properties:
-      show-sql: true
       hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
       hibernate.temp.use_jdbc_metadata_defaults: false
       hibernate.format_sql: true
+    show-sql: true
 management:
   endpoints:
     web:
       exposure:
         include: "*"
+logging:
+  level:
+    "liquibase" : trace

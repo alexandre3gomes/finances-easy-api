@@ -14,11 +14,11 @@ jobs:
           java-version: '15'
           architecture: x64
       - name: Cache Gradle packages
-          uses: actions/cache@v2
-          with:
-            path: ~/.gradle/caches
-            key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
-            restore-keys: ${{ runner.os }}-gradle
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: ${{ runner.os }}-gradle
       - name: Run gradle build image
         run: ./gradlew bootBuildImage --imageName=rg.fr-par.scw.cloud/alexandre3gomes/finances-easy
       - name: Check out the repo

@@ -23,8 +23,7 @@ jobs:
         run: ./gradlew bootBuildImage --imageName=rg.fr-par.scw.cloud/alexandre3gomes/finances-easy
       - name: Check out the repo
         uses: actions/checkout@v2
-      - name: Push to Docker Hub
-      - name: Login to GitHub Container Registry
+      - name: Login to Scaleway Container Registry
         uses: docker/login-action@v1
         with:
           registry: rg.fr-par.scw.cloud/alexandre3gome

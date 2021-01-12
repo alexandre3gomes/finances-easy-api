@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
 class CorsFilter : Filter {
+
     @Autowired
     var environment: Environment? = null
     override fun doFilter(req: ServletRequest, res: ServletResponse, chain: FilterChain) {

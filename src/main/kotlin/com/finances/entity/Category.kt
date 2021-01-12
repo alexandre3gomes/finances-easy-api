@@ -1,5 +1,6 @@
 package com.finances.entity
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.*
 
 @Entity
@@ -18,6 +19,7 @@ data class Category(
     var id: Int = 0
 
     @OneToMany(mappedBy = "category")
+    @JsonIgnore
     val budgets: Set<BudgetCategories> = emptySet()
 
 }

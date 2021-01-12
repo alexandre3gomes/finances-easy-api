@@ -29,9 +29,5 @@ jobs:
           registry: rg.fr-par.scw.cloud/alexandre3gome
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
-      - name: Push
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          tags: |
-            rg.fr-par.scw.cloud/alexandre3gomes/finances-easy
+      - name: Push image to registry
+        run: docker push rg.fr-par.scw.cloud/alexandre3gomes/finances-easy

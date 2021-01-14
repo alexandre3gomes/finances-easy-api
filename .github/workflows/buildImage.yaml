@@ -20,7 +20,7 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
       - name: Run gradle build image
-        run: ./gradlew bootBuildImage --imageName=alexandre3gomes/finances-easy
+        run: ./gradlew bootBuildImage --imageName=alexandre3gomes/finances-easy-api
       - name: Login to Dockerhub Container Registry
         uses: docker/login-action@v1
         with:
@@ -29,4 +29,4 @@ jobs:
       - name: Extract the image version from git tag
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
       - name: Push image to registry
-        run: docker push alexandre3gomes/finances-easy:$RELEASE_VERSION
+        run: docker push alexandre3gomes/finances-easy-api

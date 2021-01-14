@@ -13,6 +13,6 @@ class LogonController(private val userBo: UserBo) {
     fun login(@RequestBody user: User): UserDTO = userBo.login(user.username, user.password)
 
     @GetMapping("/test")
-    fun test(): String = "Works"
+    fun test(): String = "Works edit"
 
 }

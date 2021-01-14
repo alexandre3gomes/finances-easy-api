@@ -13,7 +13,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=123456
   api:
-    build: .
+    image: "alexandre3gomes/finances-easy-api"
     container_name: api
     ports:
       - 8089:8089
@@ -21,13 +21,12 @@ services:
       - db
 
   web:
-    build: ./../finances-easy-web
+    image: "alexandre3gomes/finances-easy-web"
     container_name: web
     ports:
       - 80:80
     depends_on:
       - api
-
 
 volumes:
   postgres_data:

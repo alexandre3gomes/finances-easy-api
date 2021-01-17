@@ -1,4 +1,11 @@
 databaseChangeLog:
-  - includeAll:
-      path: changelog
-      relativeToChangelogFile: true
+  - include:
+      file: db/changelog/01-initial-schema.yaml
+  - include:
+      file: db/changelog/02-budget-period.yaml
+  - include:
+      file: db/changelog/03-audit-data.yaml
+  - include:
+      file: db/changelog/04-drop-audit-data.yaml
+  - include:
+      file: db/changelog/05-savings-schema.yaml

@@ -1,7 +1,7 @@
-name: Build app
+name: Build test app
 on:
   push:
-    branches: [ main ]
+    branches: [ dev ]
 
 jobs:
   Build:
@@ -14,7 +14,7 @@ jobs:
           java-version: '15'
           architecture: x64
       - name: Run gradle build image
-        run: ./gradlew bootBuildImage --imageName=alexandre3gomes/finances-easy-api
+        run: ./gradlew bootBuildImage --imageName=alexandre3gomes/finances-easy-api:dev
       - name: Cache Gradle packages
         uses: actions/cache@v2
         with:
@@ -27,4 +27,4 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
       - name: Push image to registry
-        run: docker push alexandre3gomes/finances-easy-api
+        run: docker push alexandre3gomes/finances-easy-api:dev

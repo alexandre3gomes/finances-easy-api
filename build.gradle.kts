@@ -26,6 +26,7 @@ repositories {
 extra["swaggerVersion"] = "3.0.0"
 extra["postgresVersion"] = "42.2.5"
 extra["jodaVersion"] = "2.10.1"
+extra["mockkVersion"] = "1.10.5"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -46,12 +47,13 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test")
+    testImplementation("io.mockk:mockk:${property("mockkVersion")}")
 }
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "11"
+        jvmTarget = "14"
     }
 }
 

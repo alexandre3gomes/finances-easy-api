@@ -42,6 +42,7 @@ dependencies {
     implementation("io.springfox:springfox-swagger2:${property("swaggerVersion")}")
     implementation("io.springfox:springfox-swagger-ui:${property("swaggerVersion")}")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("io.micrometer:micrometer-registry-prometheus")
     runtimeOnly("org.jetbrains.kotlin:kotlin-reflect:1.4.21")
     runtimeOnly("org.springframework.boot:spring-boot-devtools")
     testImplementation("org.springframework.boot:spring-boot-starter-test")

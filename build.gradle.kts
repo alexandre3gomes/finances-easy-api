@@ -26,6 +26,7 @@ repositories {
 extra["swaggerVersion"] = "3.0.0"
 extra["postgresVersion"] = "42.2.5"
 extra["jodaVersion"] = "2.10.1"
+extra["mockkVersion"] = "1.10.5"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -41,17 +42,19 @@ dependencies {
     implementation("io.springfox:springfox-swagger2:${property("swaggerVersion")}")
     implementation("io.springfox:springfox-swagger-ui:${property("swaggerVersion")}")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("io.micrometer:micrometer-registry-prometheus")
     runtimeOnly("org.jetbrains.kotlin:kotlin-reflect:1.4.21")
     runtimeOnly("org.springframework.boot:spring-boot-devtools")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test")
+    testImplementation("io.mockk:mockk:${property("mockkVersion")}")
 }
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "11"
+        jvmTarget = "14"
     }
 }
 

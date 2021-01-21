@@ -48,13 +48,15 @@ object BuildMockDataUtil {
                 LocalDateTime.parse("2020-12-31T23:59:59", DateTimeFormatter.ISO_DATE_TIME),
                 breakpoint.id)
         budget.id = 1
-        budget.periods = buildSetOfBudgetPeriods()
         budget.categories = buildSetOfBudgetCategories()
         return budget
     }
 
     fun buildSetOfBudgetCategories(): Set<BudgetCategories> {
-        val catBud = BudgetCategories(buildCategories()[0], buildBudget(BreakpointEnum.MONTHLY))
+        val catBud = BudgetCategories(buildCategories()[0], Budget(buildUser(),
+            LocalDateTime.parse("2020-01-01T00:00:00", DateTimeFormatter.ISO_DATE_TIME),
+            LocalDateTime.parse("2020-12-31T23:59:59", DateTimeFormatter.ISO_DATE_TIME),
+            BreakpointEnum.MONTHLY.id))
         catBud.value = BigDecimal.valueOf(100)
         return setOf(catBud)
     }

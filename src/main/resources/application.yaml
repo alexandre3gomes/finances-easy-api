@@ -3,7 +3,7 @@ server:
   ssl:
     key-store-type: PKCS12
     enabled: true
-    key-store: cert/finances-easy_com.p12
+    key-store: classpath:cert/finances-easy_com.p12
     key-store-password: 123456
     key-store-alias: finances-easy
 spring:

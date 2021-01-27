@@ -10,4 +10,4 @@ databaseChangeLog:
   - include:
       file: db/changelog/05-savings-schema.yaml
   - include:
-      file: db/changelog/06-remmove-app_users-columns.yaml
+      file: db/changelog/06-remove-app_users-columns.yaml

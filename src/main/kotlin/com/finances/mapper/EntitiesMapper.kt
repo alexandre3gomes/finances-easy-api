@@ -3,7 +3,7 @@ package com.finances.mapper
 import com.finances.dto.*
 import com.finances.entity.*
 
-fun User.toDTO() = UserDTO(id, name, username, token)
+fun User.toDTO() = UserDTO(id, name, username)
 
 fun Category.toDTO() = CategoryDTO(id, name, savings)
 

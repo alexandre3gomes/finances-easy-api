@@ -15,7 +15,6 @@ import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.util.AssertionErrors
 import java.time.LocalDateTime
 
-@SpringBootTest
 @ExtendWith(MockitoExtension::class)
 class BudgetBoTests() {
 

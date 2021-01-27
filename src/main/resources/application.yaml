@@ -1,11 +1,5 @@
 server:
   port: 8089
-  ssl:
-    key-store-type: PKCS12
-    enabled: false
-    key-store: classpath:cert/finances-easy_com.p12
-    key-store-password: 123456
-    key-store-alias: finances-easy
 spring:
   liquibase:
     change-log: classpath:db/db.changelog-master.yaml
@@ -18,8 +12,24 @@ spring:
     properties:
       hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
       hibernate.temp.use_jdbc_metadata_defaults: false
-      hibernate.format_sql: true
-    show-sql: true
+      hibernate.format_sql: false
+    show-sql: false
+  security:
+    oauth2:
+      client:
+        registration:
+          okta:
+            client-id: 0oa1gbqkbkTvwRSZS5d6
+            client-secret: iO2LQt5QWSz920Zz2ojfdZrOl1YydNJkX2HIAkmC
+            scope: openid,profile,email
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            authorization-grant-type: authorization_code
+        provider:
+          okta:
+            issuer-uri: https://dev-2225315.okta.com/oauth2/default
+      resourceserver:
+        jwt:
+          issuer-uri: https://dev-2225315.okta.com/oauth2/default
 management:
   endpoints:
     web:

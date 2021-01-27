@@ -25,7 +25,7 @@ fun Budget.toDTO() = BudgetDTO(
 )
 
 fun UserDTO.toEntity(): User {
-    val user = User(name, username, "")
+    val user = User(name, username)
     user.id = id
     return user
 }

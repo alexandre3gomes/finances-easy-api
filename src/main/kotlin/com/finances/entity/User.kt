@@ -8,11 +8,10 @@ import javax.persistence.*
 @Table(name = "app_users")
 data class User(
         val name: String = "",
-        private var username: String = "",
-        private var password: String = ""
-) : UserDetails {
+        var username: String = ""
+) {
 
-    constructor(id: Int, name: String, username: String, password: String): this(name, username, password)  {
+    constructor(id: Int, name: String, username: String): this(name, username)  {
         this.id = id
     }
 
@@ -38,19 +37,5 @@ data class User(
     @OneToMany(mappedBy = "user")
     @Transient
     private val savings: List<Savings> = mutableListOf()
-
-    override fun getAuthorities() = listOf<GrantedAuthority>()
-
-    override fun getPassword() = password
-
-    override fun getUsername() = username
-
-    override fun isAccountNonExpired() = true
-
-    override fun isAccountNonLocked() = true
-
-    override fun isCredentialsNonExpired() = true
-
-    override fun isEnabled() = true
 
 }

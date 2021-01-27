@@ -140,7 +140,7 @@ databaseChangeLog:
                   type: int
                   constraints:
                     nullable: false
-                    foreignKeyName: user_expense
+                    foreignKeyName: user_income
                     references: app_users(id)
               - column:
                   name: name

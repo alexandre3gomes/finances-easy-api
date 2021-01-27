@@ -19,4 +19,9 @@ object EncryptUtils {
             Optional.empty()
         }
     }
+
+    @JvmStatic
+    fun main(args: Array<String>) {
+        println(hashPassword("admin").get())
+    }
 }

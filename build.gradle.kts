@@ -30,7 +30,8 @@ extra["mockkVersion"] = "1.10.5"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.liquibase:liquibase-core")
@@ -49,6 +50,7 @@ dependencies {
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation("io.mockk:mockk:${property("mockkVersion")}")
+    testRuntimeOnly ("com.h2database:h2")
 }
 
 tasks.withType<KotlinCompile> {

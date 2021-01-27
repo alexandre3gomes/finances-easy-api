@@ -9,3 +9,5 @@ databaseChangeLog:
       file: db/changelog/04-drop-audit-data.yaml
   - include:
       file: db/changelog/05-savings-schema.yaml
+  - include:
+      file: db/changelog/06-remmove-app_users-columns.yaml

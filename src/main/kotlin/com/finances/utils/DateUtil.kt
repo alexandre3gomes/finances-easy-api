@@ -1,9 +1,8 @@
 package com.finances.utils
 
-import java.time.ZoneId
-import org.springframework.security.crypto.codec.Hex
 import java.time.LocalDateTime
-import java.util.*
+import java.time.ZoneId
+import java.util.Date
 
 object DateUtil {
 

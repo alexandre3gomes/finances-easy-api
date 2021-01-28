@@ -6,9 +6,14 @@ import com.finances.entity.Savings
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/savings")
@@ -24,9 +29,12 @@ class SavingsController(private val savingsBo: SavingsBo) {
     fun get(@PathVariable("id") id: Int): SavingsDTO = savingsBo.get(id)
 
     @GetMapping("")
-    fun list(@RequestParam(defaultValue = "0") page: Int,
-             @RequestParam(defaultValue = "10") size: Int, @RequestParam(defaultValue = "createdDate") order: String,
-             @RequestParam(defaultValue = "DESC") direction: Sort.Direction): Page<SavingsDTO> {
+    fun list(
+        @RequestParam(defaultValue = "0") page: Int,
+        @RequestParam(defaultValue = "10") size: Int,
+        @RequestParam(defaultValue = "createdDate") order: String,
+        @RequestParam(defaultValue = "DESC") direction: Sort.Direction
+    ): Page<SavingsDTO> {
         return savingsBo.list(PageRequest.of(page, size, Sort.by(direction, order)))
     }
 

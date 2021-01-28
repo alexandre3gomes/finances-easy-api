@@ -15,8 +15,6 @@ class ReportController(private val reportBo: ReportBo) {
     @GetMapping("/byCategory/{budgetId}")
     fun byCategory(@PathVariable("budgetId") budgetId: Int): List<CategoryAggregValuesDto> = reportBo.byCategory(budgetId)
 
-
     @GetMapping("/byPeriod/{budgetId}")
     fun incomeByPeriod(@PathVariable("budgetId") budgetId: Int): List<BigDecimal> = reportBo.incomeByPeriod(budgetId)
-
 }

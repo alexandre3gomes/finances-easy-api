@@ -6,12 +6,12 @@ plugins {
     kotlin("plugin.jpa") version "1.4.21"
     id("org.springframework.boot") version "2.4.1"
     id("io.spring.dependency-management") version "1.0.10.RELEASE"
+    id("org.jlleitschuh.gradle.ktlint") version "9.4.1"
 }
 
 group = "com.finances"
 version = "0.0.1-SNAPSHOT"
 description = "Finances easy API"
-
 
 repositories {
     mavenLocal()
@@ -50,7 +50,7 @@ dependencies {
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation("io.mockk:mockk:${property("mockkVersion")}")
-    testRuntimeOnly ("com.h2database:h2")
+    testRuntimeOnly("com.h2database:h2")
 }
 
 tasks.withType<KotlinCompile> {

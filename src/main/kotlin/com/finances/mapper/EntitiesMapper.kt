@@ -1,7 +1,19 @@
 package com.finances.mapper
 
-import com.finances.dto.*
-import com.finances.entity.*
+import com.finances.dto.BudgetCategoriesDTO
+import com.finances.dto.BudgetDTO
+import com.finances.dto.CategoryDTO
+import com.finances.dto.ExpenseDTO
+import com.finances.dto.IncomeDTO
+import com.finances.dto.SavingsDTO
+import com.finances.dto.UserDTO
+import com.finances.entity.Budget
+import com.finances.entity.BudgetCategories
+import com.finances.entity.Category
+import com.finances.entity.Expense
+import com.finances.entity.Income
+import com.finances.entity.Savings
+import com.finances.entity.User
 
 fun User.toDTO() = UserDTO(id, name, username)
 
@@ -16,12 +28,12 @@ fun Savings.toDTO() = SavingsDTO(id, description, value, user.toDTO(), createdDa
 fun BudgetCategories.toDTO() = BudgetCategoriesDTO(category.toDTO(), value)
 
 fun Budget.toDTO() = BudgetDTO(
-        id,
-        startDate,
-        endDate,
-        breakperiod,
-        user.toDTO(),
-        categories.map(BudgetCategories::toDTO)
+    id,
+    startDate,
+    endDate,
+    breakperiod,
+    user.toDTO(),
+    categories.map(BudgetCategories::toDTO)
 )
 
 fun UserDTO.toEntity(): User {

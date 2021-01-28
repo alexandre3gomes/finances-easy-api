@@ -1,17 +1,20 @@
 package com.finances.entity
 
-import org.springframework.security.core.GrantedAuthority
-import org.springframework.security.core.userdetails.UserDetails
-import javax.persistence.*
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
+import javax.persistence.Id
+import javax.persistence.OneToMany
+import javax.persistence.Table
 
 @Entity
 @Table(name = "app_users")
 data class User(
-        val name: String = "",
-        var username: String = ""
+    val name: String = "",
+    var username: String = ""
 ) {
 
-    constructor(id: Int, name: String, username: String): this(name, username)  {
+    constructor(id: Int, name: String, username: String) : this(name, username) {
         this.id = id
     }
 
@@ -37,5 +40,4 @@ data class User(
     @OneToMany(mappedBy = "user")
     @Transient
     private val savings: List<Savings> = mutableListOf()
-
 }

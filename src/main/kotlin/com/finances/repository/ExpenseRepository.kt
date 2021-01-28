@@ -4,7 +4,7 @@ import com.finances.entity.Expense
 import org.springframework.data.jpa.repository.support.JpaRepositoryImplementation
 import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
-import java.util.*
+import java.util.Optional
 import javax.transaction.Transactional
 
 @Repository

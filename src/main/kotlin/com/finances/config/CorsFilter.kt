@@ -35,8 +35,11 @@ class CorsFilter : Filter {
         } else {
             response.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE")
             response.setHeader("Access-Control-Max-Age", "3600")
-            response.setHeader("Access-Control-Allow-Headers", "authorization, content-type,"
-                    + "access-control-request-headers,access-control-request-method,accept,origin,authorization,x-requested-with")
+            response.setHeader(
+                "Access-Control-Allow-Headers",
+                "authorization, content-type," +
+                    "access-control-request-headers,access-control-request-method,accept,origin,authorization,x-requested-with"
+            )
             response.status = HttpServletResponse.SC_OK
         }
     }

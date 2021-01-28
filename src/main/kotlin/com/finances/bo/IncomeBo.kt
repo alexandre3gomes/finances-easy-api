@@ -10,7 +10,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
-import java.util.*
+import java.util.Optional
 
 @Service
 class IncomeBo(private val incomeRepository: IncomeRepository, private val budgetRepository: BudgetRepository) {
@@ -40,7 +40,7 @@ class IncomeBo(private val incomeRepository: IncomeRepository, private val budge
             val period: Optional<BudgetPeriods> = budgetRepository.getPeriodsByDate(LocalDateTime.now())
             return if (period.isPresent) {
                 incomeRepository.findByDateBetween(period.get().startDate, period.get().endDate)
-                        .orElseThrow { NoSuchElementException() }.map(Income::toDTO)
+                    .orElseThrow { NoSuchElementException() }.map(Income::toDTO)
             } else {
                 listOf()
             }

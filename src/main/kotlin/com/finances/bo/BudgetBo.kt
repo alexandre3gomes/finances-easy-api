@@ -12,7 +12,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
-import java.util.*
+import java.util.TreeSet
 
 @Service
 class BudgetBo(private val budgetRepository: BudgetRepository, private val categoryRepository: CategoryRepository) {
@@ -52,7 +52,7 @@ class BudgetBo(private val budgetRepository: BudgetRepository, private val categ
 
     fun buildPeriods(budget: Budget): Budget {
         budget.periods = splitInMonths(budget)
-        budget.categories.forEach {  it.budget = budget }
+        budget.categories.forEach { it.budget = budget }
         return budget
     }
 
@@ -71,7 +71,7 @@ class BudgetBo(private val budgetRepository: BudgetRepository, private val categ
                 if (budget.breakperiod == BreakpointEnum.MONTHLY.id) {
                     finalDate = sDate.plusMonths(1).minusDays(1).withHour(23).withMinute(59).withSecond(59)
                     sDate = finalDate.plusDays(1).withHour(0).withMinute(0)
-                            .withSecond(0)
+                        .withSecond(0)
                 } else {
                     sDate = sDate.withHour(0).withMinute(0).withSecond(0).plusWeeks(1)
                     finalDate = sDate.withHour(23).withMinute(59).withSecond(59).plusDays(-1)

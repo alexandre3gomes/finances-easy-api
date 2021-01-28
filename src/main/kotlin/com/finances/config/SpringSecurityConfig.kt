@@ -11,8 +11,6 @@ import org.springframework.security.web.util.matcher.RequestMatcher
 @Configuration
 class SpringSecurityConfig() : WebSecurityConfigurerAdapter() {
 
-
-
     override fun configure(http: HttpSecurity) {
         val publicPaths = listOf(PUBLIC_URLS, ACTUATOR, SWAGGER_UI, SWAGGER_API, SWAGGER_WEBJARS, SWAGGER_CONFIG, SWAGGER_RESOURCES)
         http.authorizeRequests()

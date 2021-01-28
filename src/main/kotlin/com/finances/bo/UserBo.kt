@@ -10,7 +10,6 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser
 import org.springframework.stereotype.Service
 import java.security.Principal
-import java.util.*
 
 @Service
 class UserBo(private val userRep: UserRepository) {
@@ -20,7 +19,6 @@ class UserBo(private val userRep: UserRepository) {
         val user: User? = userRep.getUserByUsername(userInfo.preferredUsername)
         return user?.toDTO() ?: userRep.save(User(userInfo.fullName, userInfo.preferredUsername)).toDTO()
     }
-
 
     fun delete(id: Int) {
         userRep.deleteById(id)
@@ -35,7 +33,6 @@ class UserBo(private val userRep: UserRepository) {
     }
 
     fun update(user: User): UserDTO {
-        val dbUser: User = userRep.findById(user.id).get()
         return userRep.save(User(user.id, user.name, user.username)).toDTO()
     }
 

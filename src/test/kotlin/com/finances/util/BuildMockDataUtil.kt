@@ -10,12 +10,11 @@ import com.finances.entity.Expense
 import com.finances.entity.Income
 import com.finances.entity.User
 import com.finances.enums.BreakpointEnum
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.PageImpl
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.Optional
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageImpl
 
 object BuildMockDataUtil {
     fun buildPageOfExpenses(): Page<Expense> {
@@ -40,15 +39,12 @@ object BuildMockDataUtil {
 
     fun buildCategories() = listOf(Category(1, "Test 1", false), Category(1, "Test 2", false))
 
-    fun buildOptionalOfBudgetPeriods(): Optional<BudgetPeriods> {
-        val budgetPeriod = BudgetPeriods(
-            buildBudget(BreakpointEnum.MONTHLY),
-            1,
-            LocalDateTime.parse("2020-01-01T00:00:00", DateTimeFormatter.ISO_DATE_TIME),
-            LocalDateTime.parse("2020-01-31T23:59:59", DateTimeFormatter.ISO_DATE_TIME)
-        )
-        return Optional.of(budgetPeriod)
-    }
+    fun buildBudgetPeriods(): BudgetPeriods = BudgetPeriods(
+        buildBudget(BreakpointEnum.MONTHLY),
+        1,
+        LocalDateTime.parse("2020-01-01T00:00:00", DateTimeFormatter.ISO_DATE_TIME),
+        LocalDateTime.parse("2020-01-31T23:59:59", DateTimeFormatter.ISO_DATE_TIME)
+    )
 
     fun buildBudget(breakpoint: BreakpointEnum): Budget {
         val budget = Budget(
@@ -86,8 +82,8 @@ object BuildMockDataUtil {
         return filter
     }
 
-    fun buildOptionalOfIncomes(): Optional<List<Income>> {
-        return Optional.of(listOf(Income(1, buildUser(), "Income", BigDecimal.valueOf(100), LocalDateTime.now(), "Income description")))
+    fun buildListOfIncomes(): List<Income> {
+        return listOf(Income(1, buildUser(), "Income", BigDecimal.valueOf(100), LocalDateTime.now(), "Income description"))
     }
 
     fun buildUser() = User("Test user", "test")
@@ -103,7 +99,7 @@ object BuildMockDataUtil {
             buildBudget(BreakpointEnum.MONTHLY),
             1,
             LocalDateTime.parse("2020-02-01T00:00:00", DateTimeFormatter.ISO_DATE_TIME),
-            LocalDateTime.parse("2020-02-31T23:59:59", DateTimeFormatter.ISO_DATE_TIME)
+            LocalDateTime.parse("2020-02-28T23:59:59", DateTimeFormatter.ISO_DATE_TIME)
         )
     )
 
@@ -118,10 +114,10 @@ object BuildMockDataUtil {
             buildBudget(BreakpointEnum.MONTHLY),
             1,
             LocalDateTime.parse("2020-02-01T00:00:00", DateTimeFormatter.ISO_DATE_TIME),
-            LocalDateTime.parse("2020-02-31T23:59:59", DateTimeFormatter.ISO_DATE_TIME)
+            LocalDateTime.parse("2020-02-28T23:59:59", DateTimeFormatter.ISO_DATE_TIME)
         )
     )
 
-    fun buildOptionalOfExpense(): Optional<List<Expense>> =
-        Optional.of(listOf(Expense(1, buildCategories()[0], buildUser(), "Expense", BigDecimal.valueOf(100), LocalDateTime.now(), "Expense description")))
+    fun buildListOfExpense(): List<Expense> =
+        listOf(Expense(1, buildCategories()[0], buildUser(), "Expense", BigDecimal.valueOf(100), LocalDateTime.now(), "Expense description"))
 }

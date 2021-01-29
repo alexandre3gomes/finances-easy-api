@@ -13,13 +13,13 @@ import com.finances.specifications.ExpensesSpec.categoryEquals
 import com.finances.specifications.ExpensesSpec.expireAtBetween
 import com.finances.specifications.ExpensesSpec.nameEquals
 import com.finances.specifications.ExpensesSpec.userEquals
+import java.time.LocalDateTime
+import java.util.Optional
+import kotlin.NoSuchElementException
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
-import java.time.LocalDateTime
-import java.util.Optional
-import kotlin.NoSuchElementException
 
 @Service
 class ExpenseBo(
@@ -60,14 +60,11 @@ class ExpenseBo(
         return expenseRepository.save(dev).toDTO()
     }
 
-    val actualExpense: List<ExpenseDTO>
-        get() {
-            val period: Optional<BudgetPeriods> = budgetRepository.getPeriodsByDate(LocalDateTime.now())
-            return if (period.isPresent) {
-                expenseRepository.findByExpireAtBetween(period.get().startDate, period.get().endDate)
-                    .orElseThrow { NoSuchElementException() }.map(Expense::toDTO)
-            } else {
-                listOf()
-            }
+    fun actualExpense(): List<ExpenseDTO> {
+        val period: BudgetPeriods? = budgetRepository.getPeriodsByDate(LocalDateTime.now())
+        if (period != null) {
+            return expenseRepository.findByExpireAtBetween(period.startDate, period.endDate).map(Expense::toDTO)
         }
+        return emptyList()
+    }
 }

@@ -6,11 +6,11 @@ import com.finances.entity.Income
 import com.finances.mapper.toDTO
 import com.finances.repository.BudgetRepository
 import com.finances.repository.IncomeRepository
+import java.time.LocalDateTime
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
-import java.time.LocalDateTime
-import java.util.Optional
+
 
 @Service
 class IncomeBo(private val incomeRepository: IncomeRepository, private val budgetRepository: BudgetRepository) {
@@ -35,14 +35,11 @@ class IncomeBo(private val incomeRepository: IncomeRepository, private val budge
         return incomeRepository.save(income).toDTO()
     }
 
-    val actualIncome: List<IncomeDTO>
-        get() {
-            val period: Optional<BudgetPeriods> = budgetRepository.getPeriodsByDate(LocalDateTime.now())
-            return if (period.isPresent) {
-                incomeRepository.findByDateBetween(period.get().startDate, period.get().endDate)
-                    .orElseThrow { NoSuchElementException() }.map(Income::toDTO)
-            } else {
-                listOf()
-            }
+    fun actualIncome(): List<IncomeDTO> {
+        val period: BudgetPeriods? = budgetRepository.getPeriodsByDate(LocalDateTime.now())
+        if (period != null) {
+            return incomeRepository.findByDateBetween(period.startDate, period.endDate).map(Income::toDTO)
         }
+        return emptyList()
+    }
 }

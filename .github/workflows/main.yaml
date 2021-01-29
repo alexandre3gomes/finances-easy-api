@@ -6,7 +6,6 @@ on:
 jobs:
   Build_Image:
     runs-on: ubuntu-latest
-    needs: [Tests]
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 15
@@ -24,7 +23,7 @@ jobs:
           restore-keys: ${{ runner.os }}-gradle
   Login_Dockerhub:
     runs-on: ubuntu-latest
-    needs: [ Tests ]
+    needs: [ Build_Image ]
     steps:
       - name: Login to Dockerhub Container Registry
         uses: docker/login-action@v1
@@ -33,7 +32,7 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
   Push_Image_Dockerhub:
     runs-on: ubuntu-latest
-    needs: [ Tests ]
+    needs: [ Login_Dockerhub ]
     steps:
       - name: Push image to registry
         run: docker push alexandre3gomes/finances-easy-api

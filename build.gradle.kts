@@ -27,6 +27,7 @@ extra["swaggerVersion"] = "3.0.0"
 extra["postgresVersion"] = "42.2.5"
 extra["jodaVersion"] = "2.10.1"
 extra["mockkVersion"] = "1.10.5"
+extra["springMockkVersion"] = "3.0.1"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -49,7 +50,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test")
-    testImplementation("io.mockk:mockk:${property("mockkVersion")}")
+    testImplementation("com.ninja-squad:springmockk:${property("springMockkVersion")}")
     testRuntimeOnly("com.h2database:h2")
 }
 

@@ -14,7 +14,7 @@ interface BudgetRepository : JpaRepository<Budget, Int> {
     fun getPeriodsByBudget(budgetId: Int?): List<BudgetPeriods>
 
     @Query("select bp from BudgetPeriods bp where :now between bp.startDate and bp.endDate")
-    fun getPeriodsByDate(now: LocalDateTime?): Optional<BudgetPeriods>
+    fun getPeriodsByDate(now: LocalDateTime?): BudgetPeriods?
 
     @Query(
         "select new com.finances.dto.report.PeriodValueDto(bp.startDate, bp.endDate, bc.value as plannedValue, sum(coalesce(ex.value, 0)) as actualValue) from BudgetPeriods bp" +

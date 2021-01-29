@@ -2,7 +2,13 @@ package com.finances.entity
 
 import java.math.BigDecimal
 import java.time.LocalDateTime
-import javax.persistence.*
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
+import javax.persistence.Id
+import javax.persistence.JoinColumn
+import javax.persistence.ManyToOne
+import javax.persistence.Table
 
 @Entity
 @Table(name = "income")
@@ -17,7 +23,11 @@ data class Income(
 ) {
 
     constructor(id: Int, user: User, name: String, value: BigDecimal, date: LocalDateTime, description: String?) : this(
-        user, name, value, date, description
+        user,
+        name,
+        value,
+        date,
+        description
     ) {
         this.id = id
     }

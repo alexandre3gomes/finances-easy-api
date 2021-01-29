@@ -5,7 +5,7 @@ import com.finances.entity.Expense
 import com.finances.entity.User
 import org.springframework.data.jpa.domain.Specification
 import java.time.LocalDateTime
-import java.util.*
+import java.util.Optional
 import javax.persistence.criteria.CriteriaBuilder
 import javax.persistence.criteria.Root
 
@@ -22,8 +22,11 @@ object ExpensesSpec {
     @JvmStatic
     fun expireAtBetween(startDate: LocalDateTime?, endDate: LocalDateTime?): Specification<Expense> {
         return Specification { expense: Root<Expense>, _, builder: CriteriaBuilder ->
-            if (startDate == null || endDate == null) builder.conjunction() else builder.between(expense.get("expireAt"),
-                    startDate, endDate)
+            if (startDate == null || endDate == null) builder.conjunction() else builder.between(
+                expense.get("expireAt"),
+                startDate,
+                endDate
+            )
         }
     }
 

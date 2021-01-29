@@ -6,8 +6,14 @@ import com.finances.entity.User
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
-import org.springframework.security.core.annotation.AuthenticationPrincipal
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RestController
 import java.security.Principal
 
 @RestController
@@ -31,7 +37,8 @@ class UserController(private val userBo: UserBo) {
     @GetMapping("")
     fun list(
         @RequestParam(defaultValue = "0") page: Int,
-        @RequestParam(defaultValue = "10") size: Int, @RequestParam(defaultValue = "name") order: String?,
+        @RequestParam(defaultValue = "10") size: Int,
+        @RequestParam(defaultValue = "name") order: String?,
         @RequestParam(defaultValue = "DESC") direction: Sort.Direction
     ): Page<UserDTO> {
         return userBo.list(PageRequest.of(page, size, Sort.by(direction, order)))

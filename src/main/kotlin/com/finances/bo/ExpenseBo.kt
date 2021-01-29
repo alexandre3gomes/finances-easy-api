@@ -18,13 +18,16 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
-import java.util.*
+import java.util.Optional
+import kotlin.NoSuchElementException
 
 @Service
-class ExpenseBo(private val expenseRepository: ExpenseRepository,
-                private val budgetRepository: BudgetRepository,
-                private val userRepository: UserRepository,
-                private val categoryRepository: CategoryRepository) {
+class ExpenseBo(
+    private val expenseRepository: ExpenseRepository,
+    private val budgetRepository: BudgetRepository,
+    private val userRepository: UserRepository,
+    private val categoryRepository: CategoryRepository
+) {
 
     fun create(expense: Expense): ExpenseDTO {
         return expenseRepository.save(expense).toDTO()
@@ -39,12 +42,19 @@ class ExpenseBo(private val expenseRepository: ExpenseRepository,
     }
 
     fun list(expFilter: ExpenseFilterDTO, pageReq: PageRequest): Page<ExpenseDTO> =
-            expenseRepository.findAll(Specification.where(nameEquals(expFilter.name)
-                    .and(categoryEquals(if (expFilter.categoryId > 0) categoryRepository.findById(expFilter.categoryId) else Optional.empty())
-                    .and(userEquals(if (expFilter.userId > 0) userRepository.findById(expFilter.userId) else Optional.empty())
-                    .and(expireAtBetween(expFilter.startDate, expFilter.endDate)))))
-                    ,pageReq).map(Expense::toDTO)
-
+        expenseRepository.findAll(
+            Specification.where(
+                nameEquals(expFilter.name)
+                    .and(
+                        categoryEquals(if (expFilter.categoryId > 0) categoryRepository.findById(expFilter.categoryId) else Optional.empty())
+                            .and(
+                                userEquals(if (expFilter.userId > 0) userRepository.findById(expFilter.userId) else Optional.empty())
+                                    .and(expireAtBetween(expFilter.startDate, expFilter.endDate))
+                            )
+                    )
+            ),
+            pageReq
+        ).map(Expense::toDTO)
 
     fun update(dev: Expense): ExpenseDTO {
         return expenseRepository.save(dev).toDTO()
@@ -55,7 +65,7 @@ class ExpenseBo(private val expenseRepository: ExpenseRepository,
             val period: Optional<BudgetPeriods> = budgetRepository.getPeriodsByDate(LocalDateTime.now())
             return if (period.isPresent) {
                 expenseRepository.findByExpireAtBetween(period.get().startDate, period.get().endDate)
-                        .orElseThrow { NoSuchElementException() }.map(Expense::toDTO)
+                    .orElseThrow { NoSuchElementException() }.map(Expense::toDTO)
             } else {
                 listOf()
             }

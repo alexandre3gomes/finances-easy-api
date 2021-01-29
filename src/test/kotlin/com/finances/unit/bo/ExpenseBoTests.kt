@@ -9,7 +9,7 @@ import com.finances.repository.UserRepository
 import com.finances.util.BuildMockDataUtil
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
-import java.util.*
+import java.util.Optional
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired

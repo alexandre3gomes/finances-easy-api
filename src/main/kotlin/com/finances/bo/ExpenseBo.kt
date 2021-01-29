@@ -14,7 +14,7 @@ import com.finances.specifications.ExpensesSpec.expireAtBetween
 import com.finances.specifications.ExpensesSpec.nameEquals
 import com.finances.specifications.ExpensesSpec.userEquals
 import java.time.LocalDateTime
-import java.util.*
+import java.util.Optional
 import kotlin.NoSuchElementException
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest

@@ -6,8 +6,6 @@ import com.finances.mapper.toDTO
 import com.finances.repository.UserRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken
-import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser
 import org.springframework.stereotype.Service
 import java.security.Principal
 
@@ -15,9 +13,8 @@ import java.security.Principal
 class UserBo(private val userRep: UserRepository) {
 
     fun managerUser(principal: Principal): UserDTO {
-        val userInfo = (principal as OAuth2AuthenticationToken).principal as DefaultOidcUser
-        val user: User? = userRep.getUserByUsername(userInfo.preferredUsername)
-        return user?.toDTO() ?: userRep.save(User(userInfo.fullName, userInfo.preferredUsername)).toDTO()
+        val user: User? = userRep.getUserByUsername(principal.name)
+        return user?.toDTO() ?: userRep.save(User("Need to be changed", principal.name)).toDTO()
     }
 
     fun delete(id: Int) {

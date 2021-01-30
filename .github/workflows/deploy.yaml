@@ -16,4 +16,4 @@ jobs:
         personalAccessToken: ${{ secrets.DIGITALOCEAN_TOKEN }}
         clusterName: k8s-main
     - name: Deployment rollout
-      run: kubectl rollout restart deployments finances-easy-api
+      run: kubectl -n finances rollout restart deployments finances-easy-api

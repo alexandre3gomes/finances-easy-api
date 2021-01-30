@@ -30,6 +30,7 @@ jobs:
   build:
     name: Build application
     needs:
+      - lint
       - test
     runs-on: ubuntu-latest
     steps:

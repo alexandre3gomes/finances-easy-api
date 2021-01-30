@@ -3,7 +3,8 @@ on:
   pull_request:
 
 jobs:
-  Lint:
+  lint:
+    name: Lint check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -14,7 +15,8 @@ jobs:
           architecture: x64
       - name: Run gradle klint
         run: ./gradlew ktlintFormat
-  Test:
+  test:
+    name: Unit Tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

@@ -10,11 +10,11 @@ import com.finances.entity.Expense
 import com.finances.entity.Income
 import com.finances.entity.User
 import com.finances.enums.BreakpointEnum
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageImpl
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.PageImpl
 
 object BuildMockDataUtil {
     fun buildPageOfExpenses(): Page<Expense> {

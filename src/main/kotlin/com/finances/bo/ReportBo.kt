@@ -6,8 +6,8 @@ import com.finances.entity.Income
 import com.finances.repository.BudgetRepository
 import com.finances.repository.CategoryRepository
 import com.finances.repository.IncomeRepository
-import java.math.BigDecimal
 import org.springframework.stereotype.Service
+import java.math.BigDecimal
 
 @Service
 class ReportBo(

@@ -1,8 +1,8 @@
 package com.finances.repository
 
 import com.finances.entity.Income
-import java.time.LocalDateTime
 import org.springframework.data.jpa.repository.JpaRepository
+import java.time.LocalDateTime
 
 interface IncomeRepository : JpaRepository<Income, Int> {
 

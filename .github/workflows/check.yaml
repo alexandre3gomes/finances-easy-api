@@ -1,0 +1,50 @@
+name: Run tests
+on:
+  pull_request:
+
+jobs:
+  lint:
+    name: Lint check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 15
+        uses: actions/setup-java@v1
+        with:
+          java-version: '15'
+          architecture: x64
+      - name: Run gradle klint
+        run: ./gradlew ktlintFormat
+  test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 15
+        uses: actions/setup-java@v1
+        with:
+          java-version: '15'
+          architecture: x64
+      - name: Run tests
+        run: ./gradlew test
+  build:
+    name: Build application
+    needs:
+      - lint
+      - test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 15
+        uses: actions/setup-java@v1
+        with:
+          java-version: '15'
+          architecture: x64
+      - name: Run gradle build
+        run: ./gradlew build
+      - name: Cache Gradle packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: ${{ runner.os }}-gradle

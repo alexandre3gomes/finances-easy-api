@@ -49,7 +49,7 @@ class ReportBoTests {
     @Test
     fun testIncomeByPeriodWithReturn() {
         every { budgetRepository.getPeriodsByBudget(any()) } returns BuildMockDataUtil.buildListOfBudgetPeriods()
-        every { incomeRepository.findByDateBetween( any(), any()) } returns BuildMockDataUtil.buildListOfIncomes()
+        every { incomeRepository.findByDateBetween(any(), any()) } returns BuildMockDataUtil.buildListOfIncomes()
         assertThat(reportBo.incomeByPeriod(1).size == 2).isTrue
     }
 

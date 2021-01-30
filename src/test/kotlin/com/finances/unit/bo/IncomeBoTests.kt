@@ -14,7 +14,6 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig
 @SpringJUnitConfig(IncomeBo::class)
 class IncomeBoTests {
 
-
     @Autowired
     lateinit var incomeBo: IncomeBo
 

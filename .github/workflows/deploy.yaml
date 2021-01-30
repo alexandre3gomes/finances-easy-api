@@ -1,0 +1,16 @@
+name: Deploy app
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    name: Production deployment
+    runs-on: ubuntu-latest
+    steps:
+    - uses: matootie/dokube@v1.3.3
+      with:
+        personalAccessToken: ${{ secrets.DIGITALOCEAN_TOKEN }}
+        clusterName: my-fabulous-cluster
+      - name: Deployment rollout
+        run: kubectl rollout restart deployments finances-easy-api

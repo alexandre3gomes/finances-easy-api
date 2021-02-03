@@ -26,8 +26,8 @@ class BudgetBoTests() {
 
     @Test
     fun createBudgetMonthlyBreakpoint() {
-        val budget = BuildMockDataUtil.buildBudget(BreakpointEnum.MONTHLY)
-        val newBudget = budgetBo.buildPeriods(budget)
+        val budget = BuildMockDataUtil.buildListOfBudgets(BreakpointEnum.MONTHLY)
+        val newBudget = budgetBo.buildPeriods(budget[0])
         assertThat(
             newBudget.periods.stream()
                 .allMatch { (_, _, startDate, endDate) -> startDate.month == endDate.month }
@@ -36,8 +36,8 @@ class BudgetBoTests() {
 
     @Test
     fun createBudgetWeeklyBreakpoint() {
-        val budget = BuildMockDataUtil.buildBudget(BreakpointEnum.WEEKLY)
-        val newBudget = budgetBo.buildPeriods(budget)
+        val budget = BuildMockDataUtil.buildListOfBudgets(BreakpointEnum.WEEKLY)
+        val newBudget = budgetBo.buildPeriods(budget[0])
         assertThat(
             newBudget.periods.stream()
                 .allMatch { (_, _, startDate, endDate) ->
@@ -48,7 +48,7 @@ class BudgetBoTests() {
 
     @Test
     fun testGetActualValues() {
-        every { catRepo.getCategoriesByPeriod(any()) } returns BuildMockDataUtil.buildCategories()
+        every { catRepo.getCategoriesByPeriod(any()) } returns BuildMockDataUtil.buildListOfCategories()
         every { budgetRepo.getAggregateValueByDate(any(), any()) } returns BuildMockDataUtil.buildPeriodValues()
         val actual = budgetBo.actualBalance.stream().mapToDouble { (_, periodValue) -> periodValue!![0].actualValue!!.toDouble() }.sum()
         assertThat(actual == 300.0).isTrue

@@ -3,6 +3,7 @@ package com.finances.entity
 import java.time.LocalDateTime
 import javax.persistence.CascadeType
 import javax.persistence.Entity
+import javax.persistence.FetchType
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
@@ -31,7 +32,7 @@ data class Budget(
     @OrderBy("idPeriod")
     var periods: Set<BudgetPeriods> = setOf()
 
-    @OneToMany(mappedBy = "budget", cascade = [CascadeType.ALL])
+    @OneToMany(mappedBy = "budget", cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
     var categories: Set<BudgetCategories> = setOf()
 
     override fun toString(): String {

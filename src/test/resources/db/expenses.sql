@@ -1,0 +1,2 @@
+insert into expense (id, category, app_user, name, value, expire_at, description) values (1, 1, 1, 'Expense Test', 50, '2021-02-01 10:27:35', 'Description Test');
+insert into expense (id, category, app_user, name, value, expire_at, description) values (2, 2, 1, 'Expense Test 1', 100, '2021-02-01 10:32:46', 'Description Test 1');

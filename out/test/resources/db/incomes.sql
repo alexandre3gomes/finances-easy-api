@@ -1,0 +1,2 @@
+insert into income (id, app_user, name, value, date, description) values (1, 1, 'Income Test', 100, '2020-01-01 01:46:56', 'Description Test');
+insert into income (id, app_user, name, value, date, description) values (2, 1, 'Tncome Test 1', 200, '2020-02-01 01:45:56', 'Description Dest 1');

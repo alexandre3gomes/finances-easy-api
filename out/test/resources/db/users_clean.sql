@@ -1,0 +1,1 @@
+delete from app_users;

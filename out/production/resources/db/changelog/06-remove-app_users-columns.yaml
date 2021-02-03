@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - changeSet:
+      id: 6
+      author: admin
+      changes:
+        - dropColumn:
+            tableName: app_users
+            columnName: password

@@ -34,7 +34,7 @@ class ReportBoTests {
 
     @Test
     fun testByCategoryWithReturn() {
-        every { categoryRepository.getCategoriesByBudget(any()) } returns BuildMockDataUtil.buildCategories()
+        every { categoryRepository.getCategoriesByBudget(any()) } returns BuildMockDataUtil.buildListOfCategories()
         every { budgetRepository.getValuesByCategories(any(), any()) } returns BuildMockDataUtil.buildPeriodValues()
         assertThat(reportBo.byCategory(1).size == 2).isTrue
     }

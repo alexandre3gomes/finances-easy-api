@@ -8,10 +8,6 @@ services:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - 5432:5432
-    environment:
-      - POSTGRES_URL=jdbc:postgresql://db:5432/finances
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=123456
   api:
     image: "alexandre3gomes/finances-easy-api"
     container_name: api
@@ -19,9 +15,13 @@ services:
       - 8089:8089
     depends_on:
       - db
+    environment:
+      - POSTGRES_URL=jdbc:postgresql://db:5432/finances
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123456
 
   web:
-    image: "alexandre3gomes/finances-easy-web"
+    build: ./../finances-easy-web
     container_name: web
     ports:
       - 80:80

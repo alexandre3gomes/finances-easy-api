@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2
+      author: admin
+      changes:
+        - createTable:
+            tableName: budget_periods
+            columns:
+              - column:
+                  name: budget_id
+                  type: int
+                  constraints:
+                    nullable: false
+                    foreignKeyName: budget_bud_periods
+                    references: budget(id)
+              - column:
+                  name: id_period
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: start_date
+                  type: timestamp with time zone
+              - column:
+                  name: end_date
+                  type: timestamp with time zone
+        - addColumn:
+            tableName: budget
+            columns:
+              - column:
+                  name: breakperiod
+                  type: int

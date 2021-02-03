@@ -1,0 +1,2 @@
+insert into savings (id, description, app_user, value, created_date) values (1, 'Savings Test', 1, 300, '2020-01-01 11:36:02');
+insert into savings (id, description, app_user, value, created_date) values (2, 'Savings Test 1', 1, 400, '2020-01-01 11:36:27');

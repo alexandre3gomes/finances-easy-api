@@ -8,6 +8,7 @@ import com.finances.entity.BudgetPeriods
 import com.finances.entity.Category
 import com.finances.entity.Expense
 import com.finances.entity.Income
+import com.finances.entity.Savings
 import com.finances.entity.User
 import com.finances.enums.BreakpointEnum
 import org.springframework.data.domain.Page
@@ -17,6 +18,31 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 object BuildMockDataUtil {
+
+    fun buildListOfCategories() = listOf(Category(1, "Test 1", false), Category(1, "Test 2", false))
+
+    fun buildListOfExpense(): List<Expense> =
+        listOf(Expense(1, buildListOfCategories()[0], buildUser(), "Expense", BigDecimal.valueOf(100), LocalDateTime.now(), "Expense description"))
+
+    fun buildListOfIncomes(): List<Income> {
+        return listOf(Income(1, buildUser(), "Income", BigDecimal.valueOf(100), LocalDateTime.now(), "Income description"))
+    }
+
+    fun buildListOfSavings(): List<Savings> =
+        listOf(Savings(buildUser(), "Savings test", BigDecimal.TEN, LocalDateTime.now()))
+
+    fun buildListOfBudgets(breakpoint: BreakpointEnum): List<Budget> {
+        val budget = Budget(
+            buildUser(),
+            LocalDateTime.parse("2020-01-01T00:00:00", DateTimeFormatter.ISO_DATE_TIME),
+            LocalDateTime.parse("2020-12-31T23:59:59", DateTimeFormatter.ISO_DATE_TIME),
+            breakpoint.id
+        )
+        budget.id = 1
+        budget.categories = buildSetOfBudgetCategories()
+        return listOf(budget)
+    }
+
     fun buildPageOfExpenses(): Page<Expense> {
         val expenses = mutableListOf<Expense>()
         for (x in 0..9) {
@@ -37,30 +63,16 @@ object BuildMockDataUtil {
         return listOf(periodValueDto)
     }
 
-    fun buildCategories() = listOf(Category(1, "Test 1", false), Category(1, "Test 2", false))
-
     fun buildBudgetPeriods(): BudgetPeriods = BudgetPeriods(
-        buildBudget(BreakpointEnum.MONTHLY),
+        buildListOfBudgets(BreakpointEnum.MONTHLY)[0],
         1,
         LocalDateTime.parse("2020-01-01T00:00:00", DateTimeFormatter.ISO_DATE_TIME),
         LocalDateTime.parse("2020-01-31T23:59:59", DateTimeFormatter.ISO_DATE_TIME)
     )
 
-    fun buildBudget(breakpoint: BreakpointEnum): Budget {
-        val budget = Budget(
-            buildUser(),
-            LocalDateTime.parse("2020-01-01T00:00:00", DateTimeFormatter.ISO_DATE_TIME),
-            LocalDateTime.parse("2020-12-31T23:59:59", DateTimeFormatter.ISO_DATE_TIME),
-            breakpoint.id
-        )
-        budget.id = 1
-        budget.categories = buildSetOfBudgetCategories()
-        return budget
-    }
-
     fun buildSetOfBudgetCategories(): Set<BudgetCategories> {
         val catBud = BudgetCategories(
-            buildCategories()[0],
+            buildListOfCategories()[0],
             Budget(
                 buildUser(),
                 LocalDateTime.parse("2020-01-01T00:00:00", DateTimeFormatter.ISO_DATE_TIME),
@@ -82,21 +94,17 @@ object BuildMockDataUtil {
         return filter
     }
 
-    fun buildListOfIncomes(): List<Income> {
-        return listOf(Income(1, buildUser(), "Income", BigDecimal.valueOf(100), LocalDateTime.now(), "Income description"))
-    }
-
     fun buildUser() = User("Test user", "test")
 
     fun buildListOfBudgetPeriods(): List<BudgetPeriods> = listOf(
         BudgetPeriods(
-            buildBudget(BreakpointEnum.MONTHLY),
+            buildListOfBudgets(BreakpointEnum.MONTHLY)[0],
             1,
             LocalDateTime.parse("2020-01-01T00:00:00", DateTimeFormatter.ISO_DATE_TIME),
             LocalDateTime.parse("2020-01-31T23:59:59", DateTimeFormatter.ISO_DATE_TIME)
         ),
         BudgetPeriods(
-            buildBudget(BreakpointEnum.MONTHLY),
+            buildListOfBudgets(BreakpointEnum.MONTHLY)[0],
             1,
             LocalDateTime.parse("2020-02-01T00:00:00", DateTimeFormatter.ISO_DATE_TIME),
             LocalDateTime.parse("2020-02-28T23:59:59", DateTimeFormatter.ISO_DATE_TIME)
@@ -105,19 +113,16 @@ object BuildMockDataUtil {
 
     fun buildSetOfBudgetPeriods(): Set<BudgetPeriods> = setOf(
         BudgetPeriods(
-            buildBudget(BreakpointEnum.MONTHLY),
+            buildListOfBudgets(BreakpointEnum.MONTHLY)[0],
             1,
             LocalDateTime.parse("2020-01-01T00:00:00", DateTimeFormatter.ISO_DATE_TIME),
             LocalDateTime.parse("2020-01-31T23:59:59", DateTimeFormatter.ISO_DATE_TIME)
         ),
         BudgetPeriods(
-            buildBudget(BreakpointEnum.MONTHLY),
+            buildListOfBudgets(BreakpointEnum.MONTHLY)[0],
             1,
             LocalDateTime.parse("2020-02-01T00:00:00", DateTimeFormatter.ISO_DATE_TIME),
             LocalDateTime.parse("2020-02-28T23:59:59", DateTimeFormatter.ISO_DATE_TIME)
         )
     )
-
-    fun buildListOfExpense(): List<Expense> =
-        listOf(Expense(1, buildCategories()[0], buildUser(), "Expense", BigDecimal.valueOf(100), LocalDateTime.now(), "Expense description"))
 }

@@ -46,7 +46,7 @@ class ExpenseBoTests {
     @Test
     fun testListWithNameFilter() {
         every { expenseRepository.findAll(any(), ofType(Pageable::class)) } returns BuildMockDataUtil.buildPageOfExpenses()
-        every { catRepository.findById(any()) } returns Optional.of(BuildMockDataUtil.buildCategories()[0])
+        every { catRepository.findById(any()) } returns Optional.of(BuildMockDataUtil.buildListOfCategories()[0])
         every { userRepository.findById(any()) } returns Optional.of(BuildMockDataUtil.buildUser())
         assertThat(
             expenseBo.list(BuildMockDataUtil.buildExpenseFilterDTO(), PageRequest.of(1, 10)).totalElements == 10L

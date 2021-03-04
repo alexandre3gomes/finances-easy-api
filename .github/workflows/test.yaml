@@ -1,0 +1,19 @@
+name: Run tests
+on:
+  push:
+    branches:
+      - dev
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Save container image
+        id: image-save
+        uses: Consensys/kubernetes-action@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        with:
+          args: get deploy finances-easy-api -o jsonpath="{..image}"
+      - name: Print image
+        run:
+          echo ${{ steps.image-save.outputs.result }}

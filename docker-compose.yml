@@ -21,7 +21,7 @@ services:
       - POSTGRES_PASSWORD=123456
 
   web:
-    build: ./../finances-easy-web
+    image: "alexandre3gomes/finances-easy-web"
     container_name: web
     ports:
       - 80:80

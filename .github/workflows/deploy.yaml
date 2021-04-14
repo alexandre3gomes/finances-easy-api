@@ -17,7 +17,7 @@ jobs:
         with:
           host: ${{ secrets.PROD_HOST }}
           username: ${{ secrets.PROD_USER }}
-          key: ${{ secrets.EC2_PEM }}
+          key: ${{ secrets.PROD_KEY }}
           port: ${{ secrets.PROD_PORT }}
           script: |
             cd /home/ubuntu

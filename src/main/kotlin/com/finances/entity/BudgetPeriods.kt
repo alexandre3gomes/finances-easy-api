@@ -9,7 +9,7 @@ import javax.persistence.Table
 
 @Entity
 @Table(name = "budget_periods")
-data class BudgetPeriods(
+class BudgetPeriods(
     @Id
     @ManyToOne
     var budget: Budget,

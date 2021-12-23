@@ -13,7 +13,7 @@ import javax.persistence.Table
 
 @Entity
 @Table(name = "budget_categories")
-data class BudgetCategories(
+class BudgetCategories(
     @ManyToOne
     @JoinColumn(name = "category_id", insertable = false, updatable = false)
     var category: Category,
@@ -32,7 +32,7 @@ data class BudgetCategories(
 }
 
 @Embeddable
-data class BudgetCategoriesId(
+class BudgetCategoriesId(
     @Column(name = "category_id")
     var categoryId: Int,
     @Column(name = "budget_id")

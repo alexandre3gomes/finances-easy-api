@@ -10,7 +10,7 @@ import javax.persistence.Table
 
 @Entity
 @Table(name = "category")
-data class Category(
+class Category(
     val name: String = "",
     val savings: Boolean = false
 ) {

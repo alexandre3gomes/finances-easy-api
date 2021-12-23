@@ -15,7 +15,7 @@ import javax.persistence.Table
 
 @Entity
 @Table(name = "budget")
-data class Budget(
+class Budget(
     @JoinColumn(name = "app_user", referencedColumnName = "id")
     @ManyToOne
     var user: User,
@@ -34,16 +34,4 @@ data class Budget(
 
     @OneToMany(mappedBy = "budget", cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
     var categories: Set<BudgetCategories> = setOf()
-
-    override fun toString(): String {
-        return "user:$user, startDate: $startDate, endDate: $endDate, breakperiod: $breakperiod"
-    }
-
-    override fun hashCode(): Int {
-        return id
-    }
-
-    override fun equals(other: Any?): Boolean {
-        return super.equals(other)
-    }
 }

@@ -12,7 +12,7 @@ import javax.persistence.Table
 
 @Entity
 @Table(name = "savings")
-data class Savings(
+class Savings(
     @JoinColumn(name = "app_user", referencedColumnName = "id")
     @ManyToOne
     val user: User,

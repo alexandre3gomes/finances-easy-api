@@ -30,7 +30,7 @@ class BudgetBoTests() {
         val newBudget = budgetBo.buildPeriods(budget[0])
         assertThat(
             newBudget.periods.stream()
-                .allMatch { (_, _, startDate, endDate) -> startDate.month == endDate.month }
+                .allMatch { it.startDate.month == it.endDate.month }
         ).isTrue
     }
 
@@ -40,8 +40,9 @@ class BudgetBoTests() {
         val newBudget = budgetBo.buildPeriods(budget[0])
         assertThat(
             newBudget.periods.stream()
-                .allMatch { (_, _, startDate, endDate) ->
-                    endDate.minusWeeks(1).plusDays(1).withHour(0).withMinute(0).withSecond(0).compareTo(startDate) == 0
+                .allMatch {
+                    it.endDate.minusWeeks(1).plusDays(1).withHour(0)
+                        .withMinute(0).withSecond(0).compareTo(it.startDate) == 0
                 }
         ).isTrue
     }

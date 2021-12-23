@@ -9,7 +9,7 @@ import javax.persistence.Table
 
 @Entity
 @Table(name = "app_users")
-data class User(
+class User(
     val name: String = "",
     var username: String = ""
 ) {

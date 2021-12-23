@@ -2,18 +2,11 @@ package com.finances.entity
 
 import java.io.Serializable
 import java.math.BigDecimal
-import javax.persistence.Column
-import javax.persistence.Embeddable
-import javax.persistence.EmbeddedId
-import javax.persistence.Entity
-import javax.persistence.JoinColumn
-import javax.persistence.ManyToOne
-import javax.persistence.PrePersist
-import javax.persistence.Table
+import javax.persistence.*
 
 @Entity
 @Table(name = "budget_categories")
-data class BudgetCategories(
+class BudgetCategories(
     @ManyToOne
     @JoinColumn(name = "category_id", insertable = false, updatable = false)
     var category: Category,
@@ -32,7 +25,7 @@ data class BudgetCategories(
 }
 
 @Embeddable
-data class BudgetCategoriesId(
+class BudgetCategoriesId(
     @Column(name = "category_id")
     var categoryId: Int,
     @Column(name = "budget_id")

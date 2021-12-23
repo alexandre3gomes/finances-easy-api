@@ -8,13 +8,9 @@ services:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - 5432:5432
-  mongo:
-    image: "mongo"
-    container_name: mongo
-    volumes:
-      - mongo_data:/data/db
-    ports:
-      - 27017:27017
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123456
   api:
     image: "alexandre3gomes/finances-easy-api"
     container_name: api
@@ -26,15 +22,6 @@ services:
       - POSTGRES_URL=jdbc:postgresql://db:5432/finances
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=123456
-  chat:
-    image: "alexandre3gomes/chat-service"
-    container_name: chat
-    ports:
-      - 8080:8080
-    depends_on:
-      - mongo
-    environment:
-      - MONGO_URI=mongodb+srv://finances:finances@cluster0.1n7zl.mongodb.net/chat?retryWrites=true&w=majority
   web:
     image: "alexandre3gomes/finances-easy-web"
     container_name: web
@@ -42,7 +29,15 @@ services:
       - 8080:8080
     depends_on:
       - api
+  prometheus:
+    image: alexandre3gomes/prometheus
+    container_name: prometheus
+    ports:
+      - 9000:9090
+    volumes:
+      - prometheus_data:/prometheus
 
 volumes:
   postgres_data:
   mongo_data:
+  prometheus_data:

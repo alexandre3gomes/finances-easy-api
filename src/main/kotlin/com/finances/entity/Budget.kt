@@ -28,10 +28,18 @@ class Budget(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Int = 0
 
-    @OneToMany(mappedBy = "budget", cascade = [CascadeType.ALL])
+    @OneToMany(mappedBy = "budget", cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
     @OrderBy("idPeriod")
-    var periods: Set<BudgetPeriods> = setOf()
+    val periods: MutableSet<BudgetPeriods> = mutableSetOf()
 
     @OneToMany(mappedBy = "budget", cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
-    var categories: Set<BudgetCategories> = setOf()
+    val categories: MutableSet<BudgetCategories> = mutableSetOf()
+
+    fun addPeriod(period: BudgetPeriods) {
+        periods.add(period)
+    }
+
+    fun addCategory(category: BudgetCategories) {
+        categories.add(category)
+    }
 }

@@ -28,7 +28,7 @@ class SpringSecurityConfig() : WebSecurityConfigurerAdapter() {
     companion object {
         private val PUBLIC_URLS: RequestMatcher = OrRequestMatcher(AntPathRequestMatcher("/public/**"))
         private val SWAGGER_UI: RequestMatcher = OrRequestMatcher(AntPathRequestMatcher("/swagger-ui/**"))
-        private val SWAGGER_API: RequestMatcher = OrRequestMatcher(AntPathRequestMatcher("/v2/api-docs"))
+        private val SWAGGER_API: RequestMatcher = OrRequestMatcher(AntPathRequestMatcher("/v3/api-docs/**"))
         private val SWAGGER_WEBJARS: RequestMatcher = OrRequestMatcher(AntPathRequestMatcher("/webjars/**"))
         private val SWAGGER_CONFIG: RequestMatcher = OrRequestMatcher(AntPathRequestMatcher("/configuration/**"))
         private val SWAGGER_RESOURCES: RequestMatcher = OrRequestMatcher(AntPathRequestMatcher("/swagger-resources/**"))

@@ -8,4 +8,8 @@ interface PeriodValueDto {
     fun getEndDate(): LocalDateTime
     fun getPlannedValue(): BigDecimal
     fun getActualValue(): BigDecimal
+    fun setStartDate(startDate: LocalDateTime): LocalDateTime
+    fun setEndDate(endDate: LocalDateTime): LocalDateTime
+    fun setPlannedValue(planned: BigDecimal): BigDecimal
+    fun setActualValue(actual: BigDecimal): BigDecimal
 }

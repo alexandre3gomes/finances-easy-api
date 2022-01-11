@@ -13,6 +13,7 @@ import com.finances.entity.User
 import com.finances.enums.BreakpointEnum
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
+import org.springframework.data.projection.SpelAwareProxyProjectionFactory
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -39,7 +40,9 @@ object BuildMockDataUtil {
             breakpoint.id
         )
         budget.id = 1
-        budget.categories = buildSetOfBudgetCategories()
+        buildSetOfBudgetCategories().forEach {
+            budget.categories.add(it)
+        }
         return listOf(budget)
     }
 
@@ -54,12 +57,12 @@ object BuildMockDataUtil {
     }
 
     fun buildPeriodValues(): List<PeriodValueDto> {
-        val periodValueDto = PeriodValueDto(
-            LocalDateTime.parse("2020-01-01T00:00:00", DateTimeFormatter.ISO_DATE_TIME),
-            LocalDateTime.parse("2020-01-31T23:59:59", DateTimeFormatter.ISO_DATE_TIME),
-            BigDecimal.valueOf(100),
-            BigDecimal.valueOf(150)
-        )
+        val factory = SpelAwareProxyProjectionFactory()
+        val periodValueDto = factory.createProjection(PeriodValueDto::class.java)
+        periodValueDto.setActualValue(BigDecimal.valueOf(100))
+        periodValueDto.setPlannedValue(BigDecimal.valueOf(150))
+        periodValueDto.setStartDate(LocalDateTime.parse("2020-01-01T00:00:00", DateTimeFormatter.ISO_DATE_TIME))
+        periodValueDto.setEndDate(LocalDateTime.parse("2020-01-31T23:59:59", DateTimeFormatter.ISO_DATE_TIME))
         return listOf(periodValueDto)
     }
 

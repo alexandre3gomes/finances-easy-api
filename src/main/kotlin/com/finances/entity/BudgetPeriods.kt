@@ -17,7 +17,7 @@ class BudgetPeriods(
     @ManyToOne
     @JoinColumn(name = "budget_id", insertable = false, updatable = false)
     var budget: Budget,
-    @Transient
+    @Column(name = "id_period", insertable = false, updatable = false)
     val idPeriod: Int,
     var startDate: LocalDateTime = LocalDateTime.now(),
     var endDate: LocalDateTime = LocalDateTime.now()

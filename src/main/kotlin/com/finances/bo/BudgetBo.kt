@@ -63,9 +63,8 @@ class BudgetBo(private val budgetRepository: BudgetRepository, private val categ
             val eDate = budget.endDate
             var idPeriod = 0
             while (sDate.isBefore(eDate)) {
-                val budPed = BudgetPeriods(budget)
+                val budPed = BudgetPeriods(budget, idPeriod)
                 budPed.budget = budget
-                budPed.idPeriod = idPeriod
                 budPed.startDate = sDate
                 var finalDate: LocalDateTime?
                 if (budget.breakperiod == BreakpointEnum.MONTHLY.id) {

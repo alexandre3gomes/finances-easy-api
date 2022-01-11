@@ -4,7 +4,7 @@ plugins {
     kotlin("jvm") version "1.5.10"
     kotlin("plugin.spring") version "1.5.10"
     kotlin("plugin.jpa") version "1.5.10"
-    id("org.springframework.boot") version "2.5.1"
+    id("org.springframework.boot") version "2.6.2"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     id("org.jlleitschuh.gradle.ktlint") version "10.2.0"
 }
@@ -28,6 +28,7 @@ extra["postgresVersion"] = "42.2.5"
 extra["jodaVersion"] = "2.10.1"
 extra["mockkVersion"] = "1.10.5"
 extra["springMockkVersion"] = "3.0.1"
+extra["restAssuredVersion"] = "4.4.0"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -51,6 +52,7 @@ dependencies {
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation("com.ninja-squad:springmockk:${property("springMockkVersion")}")
+    testImplementation("io.rest-assured:kotlin-extensions:${property("restAssuredVersion")}")
     testRuntimeOnly("com.h2database:h2")
 }
 

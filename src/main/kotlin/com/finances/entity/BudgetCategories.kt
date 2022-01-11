@@ -32,9 +32,9 @@ class BudgetCategories(
 }
 
 @Embeddable
-class BudgetCategoriesId(
+data class BudgetCategoriesId(
     @Column(name = "category_id")
-    var categoryId: Int,
+    val categoryId: Int,
     @Column(name = "budget_id")
-    var budgetId: Int
+    val budgetId: Int
 ) : Serializable

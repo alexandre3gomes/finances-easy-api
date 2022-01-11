@@ -4,28 +4,24 @@ import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.ResponseStatus
-import java.lang.NullPointerException
-import java.util.NoSuchElementException
 
 @ControllerAdvice
 class ServiceExceptionHandler {
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(NullPointerException::class)
-    fun handleGenericError() {
-        // JUST MAPPING HTTP STATUS
-    }
+    @ResponseBody
+    fun handleGenericError(ex: NullPointerException) = ex.message
 
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(DataIntegrityViolationException::class)
-    fun handleConstraintException() {
-        // JUST MAPPING HTTP STATUS
-    }
+    @ResponseBody
+    fun handleConstraintException(ex: DataIntegrityViolationException) = ex.message
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ExceptionHandler(NoSuchElementException::class)
-    fun handleNoContentException() {
-        // JUST MAPPING HTTP STATUS
-    }
+    @ResponseBody
+    fun handleNoContentException(ex: NoSuchElementException) = ex.message
 }

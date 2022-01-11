@@ -42,5 +42,4 @@ class Budget(
     fun addCategory(category: BudgetCategories) {
         categories.add(category)
     }
-
 }

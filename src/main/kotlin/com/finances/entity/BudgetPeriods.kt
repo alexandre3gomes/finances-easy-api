@@ -34,7 +34,6 @@ class BudgetPeriods(
     override fun compareTo(other: BudgetPeriods): Int {
         return if (startDate.isAfter(other.startDate)) 1 else 0
     }
-
 }
 
 @Embeddable

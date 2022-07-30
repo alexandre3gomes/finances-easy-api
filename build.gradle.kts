@@ -1,10 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.5.10"
-    kotlin("plugin.spring") version "1.5.10"
-    kotlin("plugin.jpa") version "1.5.10"
-    id("org.springframework.boot") version "2.6.2"
+    kotlin("jvm") version "1.7.10"
+    kotlin("plugin.spring") version "1.7.10"
+    kotlin("plugin.jpa") version "1.7.10"
+    id("org.springframework.boot") version "2.7.2"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     id("org.jlleitschuh.gradle.ktlint") version "10.2.0"
 }
@@ -29,6 +29,7 @@ extra["jodaVersion"] = "2.10.1"
 extra["mockkVersion"] = "1.10.5"
 extra["springMockkVersion"] = "3.0.1"
 extra["restAssuredVersion"] = "4.4.0"
+extra["poiVersion"] = "5.2.2"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -45,6 +46,8 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-security:${property("springdocVersion")}")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("io.micrometer:micrometer-registry-prometheus")
+    implementation("org.apache.poi:poi:${property("poiVersion")}")
+    implementation("org.apache.poi:poi-ooxml:${property("poiVersion")}")
     runtimeOnly("org.jetbrains.kotlin:kotlin-reflect:1.4.21")
     runtimeOnly("org.springframework.boot:spring-boot-devtools")
     testImplementation("org.springframework.boot:spring-boot-starter-test")

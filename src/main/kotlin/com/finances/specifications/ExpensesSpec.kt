@@ -5,7 +5,7 @@ import com.finances.entity.Expense
 import com.finances.entity.User
 import org.springframework.data.jpa.domain.Specification
 import java.time.LocalDateTime
-import java.util.Optional
+import java.util.*
 import javax.persistence.criteria.CriteriaBuilder
 import javax.persistence.criteria.Root
 
@@ -15,7 +15,7 @@ object ExpensesSpec {
     fun nameEquals(name: String?): Specification<Expense> {
         return Specification { expense: Root<Expense>, _, builder: CriteriaBuilder ->
             if (name.isNullOrBlank()) builder.conjunction()
-            else builder.like(builder.lower(expense.get("name")), "%${name.toLowerCase()}%")
+            else builder.like(builder.lower(expense.get("name")), "%${name.lowercase(Locale.getDefault())}%")
         }
     }
 

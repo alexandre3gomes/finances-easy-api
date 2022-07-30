@@ -1,17 +1,19 @@
 package com.finances.config
 
+import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
+import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 import org.springframework.security.web.util.matcher.NegatedRequestMatcher
 import org.springframework.security.web.util.matcher.OrRequestMatcher
 import org.springframework.security.web.util.matcher.RequestMatcher
 
 @Configuration
-class SpringSecurityConfig() : WebSecurityConfigurerAdapter() {
+class SpringSecurityConfig() {
 
-    override fun configure(http: HttpSecurity) {
+    @Bean
+    fun configure(http: HttpSecurity): SecurityFilterChain {
         val publicPaths = listOf(PUBLIC_URLS, ACTUATOR, SWAGGER_UI, SWAGGER_API, SWAGGER_WEBJARS, SWAGGER_CONFIG, SWAGGER_RESOURCES)
         http.authorizeRequests()
             .requestMatchers(OrRequestMatcher(publicPaths))
@@ -23,6 +25,7 @@ class SpringSecurityConfig() : WebSecurityConfigurerAdapter() {
             .and()
             .oauth2ResourceServer()
             .jwt()
+        return http.build()
     }
 
     companion object {

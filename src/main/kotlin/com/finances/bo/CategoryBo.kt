@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service
 @Service
 class CategoryBo(private val categoryRep: CategoryRepository) {
 
-    fun create(budget: Category): CategoryDTO {
-        return categoryRep.save(budget).toDTO()
+    fun create(category: Category): CategoryDTO {
+        return categoryRep.save(category).toDTO()
     }
 
     fun delete(id: Int) {

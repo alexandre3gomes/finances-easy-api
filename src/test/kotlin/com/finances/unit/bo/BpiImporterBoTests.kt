@@ -38,13 +38,13 @@ class BpiImporterBoTests {
         assertThat(list.size).isEqualTo(14)
         assertThat(list.first().name).isEqualTo("22/07 COMPRA ELEC 3928577/99 PIZZA HUT SETUBAL   2910-435 SE")
         assertThat(list.first().value).isEqualTo(BigDecimal.valueOf(21.20))
-        assertThat(list.first().expireAt.toLocalDate()).isEqualTo(LocalDate.of(2022, 7,22))
+        assertThat(list.first().expireAt.toLocalDate()).isEqualTo(LocalDate.of(2022, 7, 22))
         assertThat(list.first().user.name).isEqualTo("test")
         assertThat(list.last().name).isEqualTo("14/07 COMPRA ELEC 3928577/91 LIDL AGRADECE       1070-060 ES")
         assertThat(list.last().value).isEqualTo(BigDecimal.valueOf(0.99))
-        assertThat(list.last().expireAt.toLocalDate()).isEqualTo(LocalDate.of(2022, 7,14))
-        assertThat(list[6].expireAt.toLocalDate()).isEqualTo(LocalDate.of(2022,7,17))
-        assertThat(list[7].expireAt.toLocalDate()).isEqualTo(LocalDate.of(2022,7,17))
+        assertThat(list.last().expireAt.toLocalDate()).isEqualTo(LocalDate.of(2022, 7, 14))
+        assertThat(list[6].expireAt.toLocalDate()).isEqualTo(LocalDate.of(2022, 7, 17))
+        assertThat(list[7].expireAt.toLocalDate()).isEqualTo(LocalDate.of(2022, 7, 17))
     }
 
     @WithMockUser("admin")
@@ -72,7 +72,7 @@ class BpiImporterBoTests {
         val date = importerBo.convertToDate("05-02-2022")
         assertThat(date).isNotNull
         assertThat(date).isInstanceOf(LocalDate::class.java)
-        assertThat(date).isEqualTo(LocalDate.of(2022,2,5))
+        assertThat(date).isEqualTo(LocalDate.of(2022, 2, 5))
     }
 
     @Test

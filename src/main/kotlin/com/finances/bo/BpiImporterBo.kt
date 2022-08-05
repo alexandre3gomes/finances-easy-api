@@ -4,7 +4,6 @@ import com.finances.entity.Category
 import com.finances.entity.Expense
 import com.finances.repository.ExpenseRepository
 import com.finances.repository.UserRepository
-import org.apache.poi.ss.usermodel.Cell
 import org.apache.poi.ss.usermodel.CellType
 import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.ss.usermodel.WorkbookFactory
@@ -31,7 +30,7 @@ class BpiImporterBo(
     private val VALUE_IDX = 3
 
     override fun import(inputStream: InputStream): List<Expense> {
-       return expenseRepository.saveAll(convertToExpenses(inputStream))
+        return convertToExpenses(inputStream)
     }
 
     override fun convertToDate(dateValue: String): LocalDate? {
@@ -45,7 +44,6 @@ class BpiImporterBo(
     override fun convertToExpenses(inputStream: InputStream): List<Expense> {
         val auth = SecurityContextHolder.getContext().authentication ?: throw UserPrincipalNotFoundException(null)
         val user = userRepository.getUserByUsername(auth.name)
-        val defaultCategory = Category(1, "Category Test", false)
         val sheet = WorkbookFactory.create(inputStream).getSheetAt(0)
         val listExpense = mutableListOf<Expense>()
         for (row in sheet) {
@@ -54,9 +52,16 @@ class BpiImporterBo(
                     val expireAt = workoutExpireAt(row)
                     val name = row.getCell(DESCRIPTION_IDX).stringCellValue
                     val value = row.getCell(VALUE_IDX).numericCellValue
-                    if(value < 0) {
+                    if (value < 0) {
                         listExpense.add(
-                            Expense(defaultCategory, user, name, BigDecimal.valueOf(value * -1), expireAt, "Imported automatically")
+                            Expense(
+                                Category("Change me", false),
+                                user,
+                                name,
+                                BigDecimal.valueOf(value * -1),
+                                expireAt,
+                                "Imported automatically"
+                            )
                         )
                     }
                     break

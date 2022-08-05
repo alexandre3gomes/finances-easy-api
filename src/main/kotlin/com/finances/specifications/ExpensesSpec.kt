@@ -5,7 +5,8 @@ import com.finances.entity.Expense
 import com.finances.entity.User
 import org.springframework.data.jpa.domain.Specification
 import java.time.LocalDateTime
-import java.util.*
+import java.util.Locale
+import java.util.Optional
 import javax.persistence.criteria.CriteriaBuilder
 import javax.persistence.criteria.Root
 

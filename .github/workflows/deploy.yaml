@@ -2,7 +2,7 @@ name: Deploy app
 on:
   workflow_run:
     workflows:
-      - "Build Image"
+      - Build Jar
     types:
       - completed
 
@@ -11,16 +11,17 @@ jobs:
     name: Production deployment
     runs-on: ubuntu-latest
     steps:
-      - name: Update image
-        id: fetch-lastest-image
-        uses: appleboy/ssh-action@master
+      - name: Download jar
+        uses: actions/download-artifact@v2
         with:
-          host: ${{ secrets.PROD_HOST }}
-          username: ${{ secrets.PROD_USER }}
-          key: ${{ secrets.PROD_KEY }}
-          port: ${{ secrets.PROD_PORT }}
-          script: |
-            cd /home/ubuntu
-            sudo docker-compose -p finances down
-            sudo docker-compose -p finances pull
-            sudo docker-compose -p finances up -d
+          name: jar
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v20
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: finances-easy-api
+          environment_name: finances-easy-api
+          version_label: finances-easy-api
+          region: eu-west-1
+          deployment_package: finances-easy-api-1.0.0.jar

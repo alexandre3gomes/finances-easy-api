@@ -1,0 +1,26 @@
+name: Deploy app docker
+on:
+  workflow_run:
+    workflows:
+      - "Build Image"
+    types:
+      - completed
+
+jobs:
+  deploy:
+    name: Production deployment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update image
+        id: fetch-lastest-image
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.PROD_HOST }}
+          username: ${{ secrets.PROD_USER }}
+          key: ${{ secrets.PROD_KEY }}
+          port: ${{ secrets.PROD_PORT }}
+          script: |
+            cd /home/ubuntu
+            sudo docker-compose -p finances down
+            sudo docker-compose -p finances pull
+            sudo docker-compose -p finances up -d

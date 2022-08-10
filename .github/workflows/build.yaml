@@ -16,7 +16,7 @@ jobs:
           java-version: '17'
           architecture: x64
       - name: Build gradle
-        run: ./gradlew build
+        run: ./gradlew build -x test
       - name: Cache Gradle packages
         uses: actions/cache@v2
         with:

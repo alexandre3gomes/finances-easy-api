@@ -16,17 +16,15 @@ jobs:
           java-version: '17'
           architecture: x64
       - name: Build gradle
-        run: ./gradlew build -x test
+        run: ./gradlew bootJar
       - name: Cache Gradle packages
         uses: actions/cache@v2
         with:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
-      - name: Rename jar
-        run: mv build/libs/finances-easy-api-0.0.1-SNAPSHOT.jar finances-easy-api.jar
       - name: Archive artifact
         uses: actions/upload-artifact@v2
         with:
           name: jar
-          path: finances-easy-api.jar
+          path: finances-easy-api*.jar

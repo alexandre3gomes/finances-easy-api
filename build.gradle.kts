@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "com.finances"
-version = "0.0.1-SNAPSHOT"
+version = "1.0.0"
 description = "Finances easy API"
 
 repositories {

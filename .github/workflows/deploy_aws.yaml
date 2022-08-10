@@ -1,4 +1,4 @@
-name: Deploy app
+name: Deploy app AWS
 on:
   workflow_run:
     workflows:
@@ -24,4 +24,4 @@ jobs:
           environment_name: finances-easy-api
           version_label: finances-easy-api
           region: eu-west-1
-          deployment_package: finances-easy-api.jar
+          deployment_package: finances-easy-api*.jar

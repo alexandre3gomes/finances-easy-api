@@ -32,6 +32,11 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: jar
+      - name: Generate build number
+        id: buildnumber
+        uses: einaregilsson/build-number@v3
+        with:
+          token: ${{secrets.github_token}}
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v20
         with:
@@ -39,6 +44,6 @@ jobs:
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: finances-easy-api
           environment_name: finances-easy-api
-          version_label:  ${{ env.GITHUB_REF }}
+          version_label:  ${{ steps.buildnumber.outputs.build_number }}
           region: eu-west-1
           deployment_package: finances-easy-api-1.0.0.jar

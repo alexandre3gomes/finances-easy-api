@@ -44,6 +44,6 @@ jobs:
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: finances-easy-api
           environment_name: finances-easy-api
-          version_label:  ${{ steps.buildnumber.outputs.build_number }}
+          version_label: finances-easy-api-${{ steps.buildnumber.outputs.build_number }}
           region: eu-west-1
           deployment_package: finances-easy-api-1.0.0.jar

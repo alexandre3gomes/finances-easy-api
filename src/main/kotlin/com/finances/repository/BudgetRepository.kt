@@ -16,7 +16,7 @@ interface BudgetRepository : JpaRepository<Budget, Int> {
     fun getPeriodsByDate(now: LocalDateTime?): BudgetPeriods?
 
     @Query(
-        "select bp.startDate, bp.endDate, bc.value as plannedValue, sum(coalesce(ex.value, 0)) as actualValue from BudgetPeriods bp" +
+        "select bp.startDate as startDate, bp.endDate as endDate, bc.value as plannedValue, sum(coalesce(ex.value, 0)) as actualValue from BudgetPeriods bp" +
             " left join Budget b on bp.budget = b.id" + " left join BudgetCategories bc on bc.budget = b.id" +
             " left join Category cat on bc.category = cat.id" +
             " left join Expense ex on cat.id = ex.category and ex.expireAt between bp.startDate and bp.endDate" +
@@ -26,7 +26,7 @@ interface BudgetRepository : JpaRepository<Budget, Int> {
     fun getValuesByCategories(budgetId: Int?, categoryId: Int?): List<PeriodValueDto>
 
     @Query(
-        "select bp.startDate, bp.endDate, bc.value as plannedValue, sum(coalesce(ex.value, 0)) as actualValue from BudgetPeriods bp" +
+        "select bp.startDate as startDate, bp.endDate as endDate, bc.value as plannedValue, sum(coalesce(ex.value, 0)) as actualValue from BudgetPeriods bp" +
             " left join Budget b on bp.budget = b.id" + " left join BudgetCategories bc on bc.budget = b.id" +
             " left join Category cat on bc.category = cat.id" +
             " left join Expense ex on cat.id = ex.category and ex.expireAt between bp.startDate and bp.endDate" +

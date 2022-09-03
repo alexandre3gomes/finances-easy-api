@@ -2,7 +2,7 @@ name: Build Jar
 on:
   push:
     branches:
-      - dev
+      - main
 
 jobs:
   build-jar:

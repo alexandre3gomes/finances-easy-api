@@ -48,6 +48,7 @@ dependencies {
     implementation("io.micrometer:micrometer-registry-prometheus")
     implementation("org.apache.poi:poi:${property("poiVersion")}")
     implementation("org.apache.poi:poi-ooxml:${property("poiVersion")}")
+    implementation("com.google.cloud.tools:appengine-gradle-plugin:2.4.5")
     runtimeOnly("org.jetbrains.kotlin:kotlin-reflect:1.4.21")
     runtimeOnly("org.springframework.boot:spring-boot-devtools")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -72,3 +73,4 @@ tasks.withType<Test> {
 tasks.withType<org.springframework.boot.gradle.tasks.bundling.BootBuildImage> {
     imageName = "alexandre3gomes/finances-easy-api"
 }
+

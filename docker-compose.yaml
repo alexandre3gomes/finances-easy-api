@@ -7,15 +7,25 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
-      - 5432:5432
+      - "5432:5432"
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=123456
+  db_admin:
+    image: dpage/pgadmin4
+    volumes:
+      - pg_admin_data:/var/lib/pgadmin
+      - pg_admin_data:/pgadmin4/servers.json
+    ports:
+      - "8000:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=alexandre3gomes@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=123456
   api:
     image: "alexandre3gomes/finances-easy-api:dev"
     container_name: api
     ports:
-      - 8089:8089
+      - "8089:8089"
     depends_on:
       - db
     environment:
@@ -26,18 +36,18 @@ services:
     image: "alexandre3gomes/finances-easy-web"
     container_name: web
     ports:
-      - 8080:8080
+      - "8080:8080"
     depends_on:
       - api
   prometheus:
     image: alexandre3gomes/prometheus
     container_name: prometheus
     ports:
-      - 9000:9090
+      - "9000:9090"
     volumes:
       - prometheus_data:/prometheus
 
 volumes:
   postgres_data:
-  mongo_data:
   prometheus_data:
+  pg_admin_data:

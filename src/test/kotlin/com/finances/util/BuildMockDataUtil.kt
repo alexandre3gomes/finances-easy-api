@@ -58,11 +58,11 @@ object BuildMockDataUtil {
 
     fun buildPeriodValues(): List<PeriodValueDto> {
         val factory = SpelAwareProxyProjectionFactory()
-        val periodValueDto = factory.createProjection(PeriodValueDto::class.java)
-        periodValueDto.setActualValue(BigDecimal.valueOf(100))
-        periodValueDto.setPlannedValue(BigDecimal.valueOf(150))
-        periodValueDto.setStartDate(LocalDateTime.parse("2020-01-01T00:00:00", DateTimeFormatter.ISO_DATE_TIME))
-        periodValueDto.setEndDate(LocalDateTime.parse("2020-01-31T23:59:59", DateTimeFormatter.ISO_DATE_TIME))
+        val values = mutableMapOf("actualValue" to BigDecimal.valueOf(150).toString())
+        values["plannedValue"] = BigDecimal.valueOf(150).toString()
+        values["startDate"] = LocalDateTime.parse("2020-01-01T00:00:00", DateTimeFormatter.ISO_DATE_TIME).toString()
+        values["endDate"] = LocalDateTime.parse("2020-01-31T23:59:59", DateTimeFormatter.ISO_DATE_TIME).toString()
+        val periodValueDto = factory.createProjection(PeriodValueDto::class.java, values)
         return listOf(periodValueDto)
     }
 

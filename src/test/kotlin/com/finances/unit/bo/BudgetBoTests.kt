@@ -51,7 +51,7 @@ class BudgetBoTests() {
     fun testGetActualValues() {
         every { catRepo.getCategoriesByPeriod(any()) } returns BuildMockDataUtil.buildListOfCategories()
         every { budgetRepo.getAggregateValueByDate(any(), any()) } returns BuildMockDataUtil.buildPeriodValues()
-        val actual = budgetBo.actualBalance.stream().mapToDouble { (_, periodValue) -> periodValue!![0].getActualValue().toDouble() }.sum()
-        assertThat(actual == 200.0).isTrue
+        val actual = budgetBo.actualBalance.stream().mapToDouble { (_, periodValue) -> periodValue!![0].actualValue.toDouble() }.sum()
+        assertThat(actual == 300.0).isTrue
     }
 }
